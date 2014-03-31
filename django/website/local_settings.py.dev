@@ -23,7 +23,6 @@ DATABASES = {
     }
 }
 
-EMAIL_HOST = 'localhost'
 
 # turn off caching
 CACHES = {
@@ -49,8 +48,7 @@ if 'test' in sys.argv:
     )
 
 
-CELERY_EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # vi: ft=python
