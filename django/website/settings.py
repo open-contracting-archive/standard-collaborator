@@ -116,15 +116,9 @@ DJANGO_APPS = (
     'django.contrib.admin',
 )
 THIRD_PARTY_APPS = (
-    'south',  # Database migration helpers:
-    #
-    'crispy_forms',  # Form layouts
+    'south',
     'django_extensions',
-    'easy_thumbnails',
-    'registration',
     'haystack',
-    #
-    #
 )
 
 # Apps specific for this project go here.
@@ -325,7 +319,7 @@ if DEBUG is False:
     ALLOWED_HOSTS = [
         '.ocds.stage.aptivate.org',
         'www.ocds.stage.aptivate.org',
-        'fen-vz-standard-collaborator-stage.fen.aptivate.org',
+        'fen-vz-ocds-stage.fen.aptivate.org',
         'fen-vz-standard-collaborator-dev.fen.aptivate.org',
         'standard-collaborator.dev.aptivate.org',
         'standard-collaborator.stage.aptivate.org',

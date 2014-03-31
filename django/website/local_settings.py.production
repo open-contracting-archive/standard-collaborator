@@ -10,8 +10,8 @@ DEPLOY_ENV_NAME = "Production Server"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'standard-collaborator',                      # Or path to database file if using sqlite3.
-        'USER': 'standard-collabo',                      # Not used with sqlite3.
+        'NAME': 'standardcollaborator',                      # Or path to database file if using sqlite3.
+        'USER': 'standardcollabo',                      # Not used with sqlite3.
         'PASSWORD': private_settings.DB_PASSWORD,                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
