@@ -12,7 +12,7 @@ project_name = "standard-collaborator"
 
 # The django apps that are part of this project - used for running tests
 # and migrations
-django_apps = []
+django_apps = ['main']
 
 # repository type can be "cvs", "svn" or "git"
 #repo_type = "svn"
