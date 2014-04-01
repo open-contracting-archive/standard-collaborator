@@ -1,6 +1,6 @@
 import private_settings
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 # used in admin template so we know which site we're looking at
