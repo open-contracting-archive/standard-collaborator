@@ -86,13 +86,15 @@ def link_webserver_conf(maintenance=False):
     require('vcs_root_dir', provided_by=env.valid_envs)
     if env.webserver is None:
         return
+    # TODO: if you want to deploy this separate to opencontracting then
+    # you need to uncomment various lines below
     # create paths in the vcs checkout
     vcs_config_stub = path.join(env.vcs_root_dir, env.webserver, env.environment)
-    vcs_config_live = vcs_config_stub + '.conf'
+    #vcs_config_live = vcs_config_stub + '.conf'
     vcs_config_include = vcs_config_stub + '_include.conf'
 
     # create paths in the webserver config
-    webserver_conf = fablib._webserver_conf_path()
+    #webserver_conf = fablib._webserver_conf_path()
     webserver_include = _webserver_include_path()
 
     # ensure the includes dir exists
@@ -100,11 +102,11 @@ def link_webserver_conf(maintenance=False):
     fablib._create_dir_if_not_exists(webserver_include_dir)
 
     # ensure the main file is linked properly
-    if not files.exists(vcs_config_live):
-        utils.abort('No %s conf file found - expected %s' %
-                (env.webserver, vcs_config_live))
-    fablib._delete_file(webserver_conf)
-    fablib._link_files(vcs_config_live, webserver_conf)
+    #if not files.exists(vcs_config_live):
+    #    utils.abort('No %s conf file found - expected %s' %
+    #            (env.webserver, vcs_config_live))
+    #fablib._delete_file(webserver_conf)
+    #fablib._link_files(vcs_config_live, webserver_conf)
 
     # now manage the include file
     if maintenance:
@@ -117,9 +119,9 @@ def link_webserver_conf(maintenance=False):
         fablib._link_files(vcs_config_include, webserver_include)
 
     # debian has sites-available/sites-enabled split with links
-    if fablib._linux_type() == 'debian':
-        webserver_conf_enabled = webserver_conf.replace('available', 'enabled')
-        fablib._link_files(webserver_conf, webserver_conf_enabled)
+    #if fablib._linux_type() == 'debian':
+    #    webserver_conf_enabled = webserver_conf.replace('available', 'enabled')
+    #    fablib._link_files(webserver_conf, webserver_conf_enabled)
     fablib.webserver_configtest()
 
 
