@@ -1,20 +1,30 @@
 {% extends 'base.html' %}
-{% load assets %}
-
-{% block extrahead %}
-{% assets "css_all" %}
-    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-{% endassets %}
-{% endblock extrahead %}
 
 {% block content %}
-    <div class="container">
+    <div class="navbar navbar-inverse">
+        <div class="container">
+        <h3>Open Contracting Data Standard Collaborator
+            <span id="intro-minimize" class="glyphicon glyphicon-chevron-up" data-toggle="collapse" data-target="#intro"></span>
+        </h3>
+        <div id="intro" class="collapse in">
+            <p>An explanation of what's going on.</p>
+        </div>
+        </div>
+    </div>
+    <div class="main container">
     {{ standard|safe }}
     </div>
 {% endblock content %}
 
 {% block javascript %}
-{% assets "js_all" %}
-    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-{% endassets %}
+    <script>
+    $('#intro').on('hidden.bs.collapse', function () {
+        $('#intro-minimize').toggleClass('glyphicon-chevron-up')
+                            .toggleClass('glyphicon-chevron-down');
+    })
+    $('#intro').on('shown.bs.collapse', function () {
+        $('#intro-minimize').toggleClass('glyphicon-chevron-up')
+                            .toggleClass('glyphicon-chevron-down');
+    })
+    </script>
 {% endblock javascript %}

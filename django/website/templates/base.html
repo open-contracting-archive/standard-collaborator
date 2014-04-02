@@ -7,6 +7,10 @@
   <title>OCDS Draft Standard</title>
   <meta name="description" content="OCDS Draft Standard">
   <meta name="author" content="Sarah Bird">
+  {% load assets %}
+  {% assets "css_all" %}
+      <link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet"/>
+  {% endassets %}
   {% block extrahead %}
   {% endblock extrahead %}
 </head>
@@ -14,6 +18,16 @@
 <body>
     {% block content %}
     {% endblock content %}
+    <footer>
+        <div class="container">
+        <p>Site built with <a href="http://getbootstrap.com">bootstrap</a>, 
+        <a href="http://subtlepatterns.com">subtle patterns</a>, and <a href="http://github.com/somerandomdude/iconic/">iconic</a>. Any problems with the site, please contact us through <a href="https://github.com/open-contracting/open-contracting.github.io/issues">github</a>.
+        </p>
+        </div>
+    </footer>
+    {% assets "js_all" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
     {% block javascript %}
     {% endblock javascript %}
     <script>
