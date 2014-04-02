@@ -1,4 +1,4 @@
-from dye import tasklib
+from dye.tasklib.django import _manage_py
 
 
 def post_deploy(environment):
@@ -10,5 +10,5 @@ def post_deploy(environment):
 
 
 def build_webassets():
-    tasklib._manage_py(['assets', 'clean'])
-    tasklib._manage_py(['assets', 'build'])
+    _manage_py(['assets', 'clean'])
+    _manage_py(['assets', 'build'])
