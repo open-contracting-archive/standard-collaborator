@@ -1,7 +1,20 @@
 {% extends 'base.html' %}
+{% load assets %}
+
+{% block extrahead %}
+{% assets "css_all" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+{% endblock extrahead %}
 
 {% block content %}
-
-    <h1>Standard</h1>
+    <div class="container">
     {{ standard|safe }}
+    </div>
 {% endblock content %}
+
+{% block javascript %}
+{% assets "js_all" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+{% endblock javascript %}
