@@ -22,3 +22,9 @@ django-debug-toolbar
 
 # app
 markdown
+
+# CSS and assets
+django-assets==0.8
+pyScss==1.2.0.post3
+cssmin==0.2.0
+argparse==1.2.1

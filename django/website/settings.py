@@ -95,6 +95,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django_assets.finders.AssetsFinder',
 )
 ########## END STATIC FILE CONFIGURATION
 
@@ -119,6 +120,7 @@ THIRD_PARTY_APPS = (
     'south',
     'django_extensions',
     'haystack',
+    'django_assets',
 )
 
 # Apps specific for this project go here.
