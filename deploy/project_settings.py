@@ -74,8 +74,8 @@ test_cmd = ' manage.py test -v0 ' + ' '.join(django_apps)
 # production server - if commented out then the production task will abort
 host_list = {
     #'production':   ['lin-' + project_name + '.aptivate.org:48001'],
-    'production':      ['fen-vz-ocds-stage.fen.aptivate.org'],
-    #'staging':      ['fen-vz-' + project_name + '-stage.fen.aptivate.org'],
+    'staging':      ['fen-vz-ocds-stage.fen.aptivate.org'],
+    'production':      ['ocds01.external.aptivate.org'],
     #'staging_test': ['fen-vz-' + project_name + '.fen.aptivate.org'],
     #'dev_server':   ['fen-vz-' + project_name + '-dev.fen.aptivate.org'],
 }
@@ -83,7 +83,7 @@ host_list = {
 # this is the default git branch to use on each server
 default_branch = {
     'production':   'master',
-    #'staging':      'master',
+    'staging':      'master',
     #'staging_test': 'master',
     #'dev_server':   'develop',
 }

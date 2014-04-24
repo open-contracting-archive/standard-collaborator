@@ -32,8 +32,16 @@ HAYSTACK_CONNECTIONS = {
 }
 #
 
-EMAIL_HOST = 'localhost'
-
-EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+try:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.sendgrid.net'
+    EMAIL_HOST_PASSWORD = private_settings.SENDGRID_PASSWORD
+    EMAIL_HOST_USER = private_settings.SENDGRID_USERNAME
+    EMAIL_PORT = 587
+    SERVER_EMAIL = 'carers-ocds@aptivate.org'
+    EMAIL_USE_TLS = True
+    DEBUG = False
+except Exception as e:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
 
 # vi: ft=python
