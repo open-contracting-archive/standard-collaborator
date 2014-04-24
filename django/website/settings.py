@@ -320,12 +320,10 @@ if DEBUG is False:
     # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
     #ALLOWED_HOSTS = ["*"]
     ALLOWED_HOSTS = [
-        '.ocds.stage.aptivate.org',
-        'www.ocds.stage.aptivate.org',
+        '.',
+        'www.',
         'fen-vz-ocds-stage.fen.aptivate.org',
-        'fen-vz-standard-collaborator-dev.fen.aptivate.org',
-        'standard-collaborator.dev.aptivate.org',
-        'standard-collaborator.stage.aptivate.org',
+        'ocds.aptivate.org',
     ]
     ########## END SITE CONFIGURATION
 
