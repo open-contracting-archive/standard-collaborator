@@ -16,6 +16,7 @@ standard_scss = Bundle('scss/standard.scss',
                        depends='scss/*.scss')
 
 css = Bundle('bower_components/bootstrap/dist/css/bootstrap.min.css',
+             'css/open-iconic-bootstrap.css',
              standard_scss,
              output='css/site.css')
 register('css_all', css)
