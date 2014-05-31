@@ -16,20 +16,87 @@
 </head>
 
 <body>
-    {% block content %}
-    {% endblock content %}
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="#" class="navbar-brand">Open Contracting Data Standard Collaborator</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" data-toggle="modal" data-target="#about"><span id="intro-minimize" class="oi oi-info" aria-hidden="true"></span></a></li>
+                <li><a href="#" data-toggle="modal" data-target="#login"><span id="intro-minimize" class="oi oi-comment-square" aria-hidden="true"></span></a></li>
+                <li><a href="#" data-toggle="modal" data-target="#changeVersion"><span id="intro-minimize" class="oi oi-fork" aria-hidden="true"></span></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="main container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    
+    <!-- OVERLAY DIALOGS -->
+    <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="About" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">About</h4>
+                </div>
+                <div class="modal-body">
+                    <p>This is a project of the open contracting project</p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal fade" id="changeVersion" tabindex="-1" role="dialog" aria-labelledby="ChangeVersion" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">See other versions of the standard</h4>
+                </div>
+                <div class="modal-body">
+                    <p>See the master branch.</p>
+                    <p>See the previous releases.</p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Login</h4>
+                </div>
+                <div class="modal-body">
+                <p>In order to comment on the standard, we ask you to login. Login is currently restricted, but will be opened up soon.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <footer>
         <div class="container">
-        <p>Site built with <a href="http://getbootstrap.com">bootstrap</a>, 
-        <a href="http://subtlepatterns.com">subtle patterns</a>, and <a href="http://github.com/somerandomdude/iconic/">iconic</a>. Any problems with the site, please contact us through <a href="https://github.com/open-contracting/open-contracting.github.io/issues">github</a>.
+        <p>A site of the <a href="http://open-contracting.github.io/">Open Contracting Data Standard</a>.
+        Site built with <a href="http://getbootstrap.com">bootstrap</a>, 
+        <a href="http://subtlepatterns.com">subtle patterns</a>, 
+        and <a href="https://useiconic.com/open">open iconic</a>. 
+        Any problems with the site, please contact us through <a href="https://github.com/open-contracting/open-contracting.github.io/issues">github</a>.
         </p>
         </div>
     </footer>
+    
     {% assets "js_all" %}
         <script type="text/javascript" src="{{ ASSET_URL }}"></script>
     {% endassets %}
+
     {% block javascript %}
     {% endblock javascript %}
+
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

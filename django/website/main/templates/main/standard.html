@@ -1,30 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="navbar navbar-inverse">
-        <div class="container">
-        <h3>Open Contracting Data Standard Collaborator
-            <span id="intro-minimize" class="glyphicon glyphicon-chevron-up" data-toggle="collapse" data-target="#intro"></span>
-        </h3>
-        <div id="intro" class="collapse in">
-            <p>An explanation of what's going on.</p>
-        </div>
-        </div>
-    </div>
-    <div class="main container">
     {{ standard|safe }}
-    </div>
 {% endblock content %}
 
 {% block javascript %}
-    <script>
-    $('#intro').on('hidden.bs.collapse', function () {
-        $('#intro-minimize').toggleClass('glyphicon-chevron-up')
-                            .toggleClass('glyphicon-chevron-down');
-    })
-    $('#intro').on('shown.bs.collapse', function () {
-        $('#intro-minimize').toggleClass('glyphicon-chevron-up')
-                            .toggleClass('glyphicon-chevron-down');
-    })
-    </script>
 {% endblock javascript %}

@@ -3,7 +3,7 @@ from django_assets import Bundle, register
 # JAVASCRIPT
 
 js = Bundle('bower_components/jquery/dist/jquery.js',
-            'bower_components/bootstrap/js/collapse.js',
+            'bower_components/bootstrap/js/modal.js',
             filters='rjsmin',
             output='js/site.js')
 register('js_all', js)
