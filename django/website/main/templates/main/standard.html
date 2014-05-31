@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% block extranav %}
-<li><a href="#" data-toggle="modal" data-target="#changeVersion"><span id="intro-minimize" class="oi oi-fork" aria-hidden="true"></span></a></li>
+<li><a href="#" title="Change versions" data-toggle="modal" data-target="#changeVersion"><span id="intro-minimize" class="oi oi-fork" aria-hidden="true"></span></a></li>
 {% endblock extranav %}
 
 {% block content %}
+    <h1>Open Contracting Data Standard - {% if current_release.is_master %}master{% else %}{{ current_release.name }}{% endif %}</h1>
+    <p>Last modified: {{ current_release.last_modified }}</p>
+    <hr>
     {{ standard|safe }}
     <div class="modal fade" id="changeVersion" tabindex="-1" role="dialog" aria-labelledby="ChangeVersion" aria-hidden="true">
         <div class="modal-dialog modal-lg">
