@@ -364,3 +364,17 @@ else:
 
 
 ########## Your stuff: Below this line define 3rd party libary settings
+STANDARD_GITHUB_REPO = 'birdsarah/teststandard'
+STANDARD_FILE_PATH = 'standard/standard.md'
+
+if hasattr(private_settings, 'GITHUB_API_CLIENT_ID'):
+    GITHUB_API_CLIENT_ID = private_settings.GITHUB_API_CLIENT_ID
+else:
+    GITHUB_API_CLIENT_ID = None
+
+if hasattr(private_settings, 'GITHUB_API_CLIENT_SECRET'):
+    GITHUB_API_CLIENT_SECRET = private_settings.GITHUB_API_CLIENT_SECRET
+else:
+    GITHUB_API_CLIENT_SECRET = None
+
+

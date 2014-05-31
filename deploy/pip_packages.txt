@@ -21,6 +21,7 @@ django-extensions==1.3.3
 django-debug-toolbar
 
 # app
+PyGithub
 markdown
 
 # CSS and assets
