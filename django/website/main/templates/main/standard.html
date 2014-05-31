@@ -1,7 +1,33 @@
 {% extends 'base.html' %}
+{% block extranav %}
+<li><a href="#" data-toggle="modal" data-target="#changeVersion"><span id="intro-minimize" class="oi oi-fork" aria-hidden="true"></span></a></li>
+{% endblock extranav %}
 
 {% block content %}
     {{ standard|safe }}
+    <div class="modal fade" id="changeVersion" tabindex="-1" role="dialog" aria-labelledby="ChangeVersion" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Change release</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <ul>
+                            {% for release in other_releases %}
+                            <li><a href="{% url 'standard' release.name %}">{{ release.name }}</a> (Released on: {{ release.last_modified }})</li>
+                            {% endfor %}
+
+                            {% if not current_release.is_master %}
+                            <li><a href="{% url 'standard' 'master' %}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits. The last edit was on {{ current_release.last_modified }}</li>
+                            {% endif %}
+                        </ul>
+                    </p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 {% endblock content %}
 
 {% block javascript %}
