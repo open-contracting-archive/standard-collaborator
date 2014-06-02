@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="http://assets.annotateit.org/annotator/v1.2.9/annotator.min.css">
+{% endblock extrahead %}
+
 {% block extranav %}
 <li><a href="#" title="Change versions" data-toggle="modal" data-target="#changeVersion"><span id="intro-minimize" class="oi oi-fork" aria-hidden="true"></span></a></li>
 {% endblock extranav %}
 
 {% block content %}
-    <h1>Open Contracting Data Standard - {% if current_release.is_master %}master{% else %}{{ current_release.name }}{% endif %}</h1>
+<h1>Open Contracting Data Standard - {{ current_release.display_name }}</h1>
     <p>Last modified: {{ current_release.last_modified }}</p>
     <hr>
-    {{ standard|safe }}
+    <div id="annotatable">
+        {{ standard|safe }}
+    </div>
     <div class="modal fade" id="changeVersion" tabindex="-1" role="dialog" aria-labelledby="ChangeVersion" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -19,7 +26,7 @@
                     <p>
                         <ul>
                             {% for release in other_releases %}
-                            <li><a href="{% url 'standard' release.name %}">{{ release.name }}</a> (Released on: {{ release.last_modified }})</li>
+                            <li><a href="{% url 'standard' release.display_name %}">{{ release.name }}</a> (Released on: {{ release.last_modified }})</li>
                             {% endfor %}
 
                             {% if not current_release.is_master %}
@@ -34,4 +41,55 @@
 {% endblock content %}
 
 {% block javascript %}
+    <script src="http://assets.annotateit.org/annotator/v1.2.9/annotator-full.min.js"></script>
+    <script>
+    jQuery(function ($) {
+        var PROJECTNAME = 'ocdsstandard',
+            VERSION = '{% if current_release.is_master %}{{ current_release.commit }}{% else %}{{ current_release.display_name }}{% endif %}',
+            URI = '{{ request.build_absolute_uri }}#{% if current_release.is_master %}{{ current_release.commit }}{% endif %}',
+            SITE_UNIQUE_ID = '{{ site_unique_id }}',
+            PAGE_UNIQUE_ID = SITE_UNIQUE_ID + VERSION;
+
+        a = $('#annotatable').annotator(
+            {% if not request.user.is_authenticated %}
+               { readOnly: true }
+            {% endif %}
+            );
+        a.annotator('setupPlugins', {},
+                   {Tags: false,
+                    Filter: false,
+                    {% if request.user.is_authenticated %}
+                    Auth: {
+                        tokenUrl: '{% url 'token' %}'
+                        },
+                    {% endif %}
+                    Store: {
+                        annotationData: {
+                        'project': PROJECTNAME,
+                        'version': VERSION,
+                        'uri': URI,
+                        'siteuid': SITE_UNIQUE_ID,
+                        'pageuid': PAGE_UNIQUE_ID,
+                        },
+                        loadFromSearch: {
+                        'uri': URI,
+                        'limit': 1000,
+                        },
+                        showViewPermissionsCheckbox: false,
+                        showEditPermissionsCheckbox: false,
+                    },
+                    Permissions: {
+                        showViewPermissionsCheckbox: false,
+                        showEditPermissionsCheckbox: false,
+                        user: '{{ request.user.username }}',
+                        permissions: {
+                            'read':   ["group:__world__"],
+                            'update': ["{{ request.user.username }}"],
+                            'delete': ["{{ request.user.username }}"],
+                            'admin':  ["{{ request.user.username }}"],
+                        },
+                    },
+                   });
+    });
+    </script>
 {% endblock javascript %}

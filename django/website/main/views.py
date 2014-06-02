@@ -57,12 +57,15 @@ class StandardView(TemplateView):
         self.repo = get_repo()
         self.current_release = self.repo
         self.current_release.is_master = True
+        self.current_release.commit = self.repo.get_commits()[0].sha
+        self.current_release.display_name = 'master'
         self.other_releases = []
         for tag in self.repo.get_tags():
+            tag.display_name = tag.name
+            tag.is_master = False
             if tag.name == self.release:
                 cleaned_release = tag.name
                 self.current_release = tag
-                self.current_release.is_master = False
             else:
                 self.other_releases.append(tag)
 
@@ -81,5 +84,6 @@ class StandardView(TemplateView):
             'standard': rendered_standard,
             'current_release': self.current_release,
             'other_releases': self.other_releases,
+            'site_unique_id': settings.SITE_UNIQUE_ID,
         })
         return context

@@ -387,4 +387,11 @@ if hasattr(private_settings, 'GITHUB_API_CLIENT_SECRET'):
 else:
     GITHUB_API_CLIENT_SECRET = None
 
+if hasattr(private_settings, 'SITE_UNIQUE_ID'):
+    SITE_UNIQUE_ID = private_settings.SITE_UNIQUE_ID
+else:
+    SITE_UNIQUE_ID = 'SiteIDNeedsSetting'
 
+# We must have these
+ANNOTATEIT_KEY = private_settings.ANNOTATEIT_KEY
+ANNOTATEIT_SECRET = private_settings.ANNOTATEIT_SECRET
