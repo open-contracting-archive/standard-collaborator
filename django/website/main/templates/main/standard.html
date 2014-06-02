@@ -46,7 +46,7 @@
     jQuery(function ($) {
         var PROJECTNAME = 'ocdsstandard',
             VERSION = '{% if current_release.is_master %}{{ current_release.commit }}{% else %}{{ current_release.display_name }}{% endif %}',
-            URI = '{{ request.build_absolute_uri }}#{% if current_release.is_master %}{{ current_release.commit }}{% endif %}',
+            URI = '{{ request.build_absolute_uri }}',
             SITE_UNIQUE_ID = '{{ site_unique_id }}',
             PAGE_UNIQUE_ID = SITE_UNIQUE_ID + VERSION;
 
@@ -55,41 +55,40 @@
                { readOnly: true }
             {% endif %}
             );
-        a.annotator('setupPlugins', {},
-                   {Tags: false,
-                    Filter: false,
-                    {% if request.user.is_authenticated %}
-                    Auth: {
-                        tokenUrl: '{% url 'token' %}'
-                        },
-                    {% endif %}
-                    Store: {
-                        annotationData: {
-                        'project': PROJECTNAME,
-                        'version': VERSION,
-                        'uri': URI,
-                        'siteuid': SITE_UNIQUE_ID,
-                        'pageuid': PAGE_UNIQUE_ID,
-                        },
-                        loadFromSearch: {
-                        'uri': URI,
-                        'limit': 1000,
-                        },
-                        showViewPermissionsCheckbox: false,
-                        showEditPermissionsCheckbox: false,
-                    },
-                    Permissions: {
-                        showViewPermissionsCheckbox: false,
-                        showEditPermissionsCheckbox: false,
-                        user: '{{ request.user.username }}',
-                        permissions: {
-                            'read':   ["group:__world__"],
-                            'update': ["{{ request.user.username }}"],
-                            'delete': ["{{ request.user.username }}"],
-                            'admin':  ["{{ request.user.username }}"],
-                        },
-                    },
-                   });
+        a.annotator('setupPlugins', {}, {
+            {% if request.user.is_authenticated %}
+                Auth: {tokenUrl: '{% url 'token' %}'},
+            {% else %}
+                Auth: false,
+            {% endif %}
+
+            Tags: false,
+            Filter: false,
+            Store: {
+                annotationData: {
+                'project': PROJECTNAME,
+                'version': VERSION,
+                'uri': URI,
+                'siteuid': SITE_UNIQUE_ID,
+                'pageuid': PAGE_UNIQUE_ID,
+                },
+                loadFromSearch: {
+                'uri': URI,
+                'limit': 1000,
+                },
+            },
+            Permissions: {
+                showViewPermissionsCheckbox: false,
+                showEditPermissionsCheckbox: false,
+                user: '{{ request.user.username }}',
+                permissions: {
+                    'read':   ["group:__world__"],
+                    'update': ["{{ request.user.username }}"],
+                    'delete': ["{{ request.user.username }}"],
+                    'admin':  ["{{ request.user.username }}"],
+                },
+            },
+        });
     });
     </script>
 {% endblock javascript %}
