@@ -33,5 +33,8 @@ footer {
 
 /* CONTENT */
 img {
-    width: 100%; /* Responsive images */
+    /* Responsive images */
+    max-width: 100%; 
+    height: auto !important;
+    -ms-interpolation-mode: bicubic; 
 }
