@@ -15,25 +15,27 @@ def get_repo():
     return repo
 
 
-def get_standard_from_github(repo, release="master"):
+def get_standard_from_github(repo, path='README.md', release="master"):
     """
     Get the standard markdown file from Github repo and decode it.
     Requires a repo and a valid release string. Does not check whether release
     string is valid to reduce calls to API.
     """
-    contents = repo.get_contents(settings.STANDARD_FILE_PATH, ref=release)
+    contents = repo.get_contents(path, ref=release)
     return contents.decoded_content
 
 
-def render_markdown(repo=None, release=None, mdfile=None):
+def render_markdown(repo=None, path=None, release=None, mdfile=None):
     rendered = ""
     if mdfile:
         with open(mdfile, 'r') as f:
             rendered = markdown(f.read(),
                                 extensions=['footnotes', 'sane_lists', 'toc'])
     if repo:
-        rendered = markdown(get_standard_from_github(repo, release=release),
-                            extensions=['footnotes', 'sane_lists', 'toc'])
+        rendered = markdown(
+            get_standard_from_github(repo, path=path, release=release),
+            extensions=['footnotes', 'sane_lists', 'toc']
+        )
     return rendered
 
 
@@ -49,9 +51,6 @@ class LatestView(RedirectView):
 
 class StandardView(TemplateView):
     template_name = 'main/standard.html'
-    doc_path = path.abspath(
-        path.join(settings.BASE_DIR, pardir, pardir, 'STANDARD.md')
-    )
 
     def get(self, request, *args, **kwargs):
         self.release = kwargs.get('release')
@@ -81,9 +80,14 @@ class StandardView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super(StandardView, self).get_context_data(*args, **kwargs)
         rendered_standard = render_markdown(repo=self.repo,
+                                            path='standard/standard.md',
                                             release=self.release)
+        rendered_vocabulary = render_markdown(repo=self.repo,
+                                              path='standard/vocabulary.md',
+                                              release=self.release)
         context.update({
             'standard': rendered_standard,
+            'vocabulary': rendered_vocabulary,
             'current_release': self.current_release,
             'other_releases': self.other_releases,
             'site_unique_id': settings.SITE_UNIQUE_ID,
