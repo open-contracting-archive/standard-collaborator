@@ -375,7 +375,6 @@ CACHES = {
 
 ########## Your stuff: Below this line define 3rd party libary settings
 STANDARD_GITHUB_REPO = 'open-contracting/standard'
-STANDARD_FILE_PATH = 'standard/standard.md'
 
 if hasattr(private_settings, 'GITHUB_API_CLIENT_ID'):
     GITHUB_API_CLIENT_ID = private_settings.GITHUB_API_CLIENT_ID
