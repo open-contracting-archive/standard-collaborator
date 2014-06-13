@@ -29,12 +29,10 @@
         <li class="active"><a href="#tabs-1" data-toggle="tab">Main</a></li>
         <li><a href="#tabs-2" data-toggle="tab">Definitions</a></li>
     </ul>
-    <div class="tab-content">
-        <div class="tab-pane active" id="tabs-1">
-            <div id="annotatable"> {{ standard|safe }} </div>
-        </div>
-        <div class="tab-pane" id="tabs-2">
-            <div id="annotatable"> {{ vocabulary|safe }} </div>
+    <div id="annotatable"> 
+        <div class="tab-content">
+            <div class="tab-pane active" id="tabs-1"> {{ standard|safe }} </div>
+            <div class="tab-pane" id="tabs-2"> {{ vocabulary|safe }} </div>
         </div>
     </div>
     <div class="modal fade" id="changeVersion" tabindex="-1" role="dialog" aria-labelledby="ChangeVersion" aria-hidden="true">
