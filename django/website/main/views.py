@@ -76,7 +76,6 @@ class StandardView(TemplateView):
 
         if cleaned_release != self.release:
             # We didn't get a correct release request, so redirect
-            print 'redirecting'
             return HttpResponseRedirect(reverse('latest'))
         else:
             return super(StandardView, self).get(request, *args, **kwargs)
