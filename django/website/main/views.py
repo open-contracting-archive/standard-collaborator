@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, RedirectView
 
-from github import Github
+from github import Github, UnknownObjectException
 from markdown import markdown
 
 
@@ -21,8 +21,12 @@ def get_standard_from_github(repo, path='README.md', release="master"):
     Requires a repo and a valid release string. Does not check whether release
     string is valid to reduce calls to API.
     """
-    contents = repo.get_contents(path, ref=release)
-    return contents.decoded_content
+    try:
+        contents = repo.get_contents(path, ref=release)
+        document = contents.decoded_content
+    except UnknownObjectException:
+        document = '<br />'
+    return document
 
 
 def render_markdown(repo=None, path=None, release=None, mdfile=None):
