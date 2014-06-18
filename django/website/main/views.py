@@ -34,7 +34,10 @@ def render_markdown(repo=None, path=None, release=None, mdfile=None):
     if mdfile:
         with open(mdfile, 'r') as f:
             rendered = markdown(f.read(),
-                                extensions=['footnotes', 'sane_lists', 'toc'])
+                                extensions=['footnotes',
+                                            'sane_lists',
+                                            'toc',
+                                            'extra'])
     if repo:
         rendered = markdown(
             get_standard_from_github(repo, path=path, release=release),
