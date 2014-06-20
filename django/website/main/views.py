@@ -91,8 +91,6 @@ class StandardView(TemplateView):
         rendered_vocabulary = render_markdown(repo=self.repo,
                                               path='standard/vocabulary.md',
                                               release=self.release)
-        rendered_standard = render_markdown(mdfile="/home/bird/Dev/opencontracting/standard/standard/standard.md")
-        rendered_vocabulary = render_markdown(mdfile="/home/bird/Dev/opencontracting/standard/standard/vocabulary.md")
         context.update({
             'standard': rendered_standard,
             'vocabulary': rendered_vocabulary,
