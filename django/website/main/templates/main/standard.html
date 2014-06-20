@@ -52,11 +52,11 @@
                     <p>
                         <ul>
                             {% for release in other_releases %}
-                            <li><a href="{% url 'standard' release.name %}">{{ release.display_name|title }}</a> (Released on: {{ release.commit.stats.last_modified }})</li>
+                            <li><a href="{% url 'standard' release.name %}">{{ release.display_name|title }}</a> (Last modified: {{ release.commit.stats.last_modified }})</li>
                             {% endfor %}
 
                             {% if not current_release.is_master %}
-                            <li><a href="{% url 'standard' 'master' %}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits. The last edit was on {{ current_release.commit.stats.last_modified }}</li>
+                            <li><a href="{% url 'standard' 'master' %}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits. (Last modified: {{ current_release.commit.stats.last_modified }})</li>
                             {% endif %}
                         </ul>
                     </p>
