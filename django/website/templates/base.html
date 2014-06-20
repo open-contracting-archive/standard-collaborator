@@ -22,8 +22,8 @@
                 <a href="{% url 'latest' %}" title="Go to latest release" class="navbar-brand">Open Contracting Data Standard Collaborator</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" title="About" data-toggle="modal" data-target="#about"><span id="intro-minimize" class="oi oi-info" aria-hidden="true"></span></a></li>
-                <li><a href="#" title="Comment" data-toggle="modal" data-target="#login"><span id="intro-minimize" class="oi oi-comment-square" aria-hidden="true"></span></a></li>
+                <li><a href="/" title="Home"><span class="oi oi-home navicon" aria-hidden="true"></span></a></li>
+                <li><a href="#" title="Help" data-toggle="modal" data-target="#help"><span class="oi oi-question-mark navicon" aria-hidden="true"></span></a></li>
                 {% block extranav %}
                 {% endblock extranav %}
             </ul>
@@ -35,35 +35,26 @@
     </div>
     
     <!-- OVERLAY DIALOGS -->
-    <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="About" aria-hidden="true">
+    <div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="Help" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">About</h4>
+                    <h4 class="modal-title">Help</h4>
                 </div>
                 <div class="modal-body">
-                    <p>This is a project of the open contracting project</p>
+                    <p>
+                        In order to comment, you must be logged in. To log in, click the <span class="oi oi-account-login" aria-hidden="true"></span>
+                        button in the top bar. After logging in you can select senctences or paragraphs in the document and an icon will appear, as shown in the
+                        image below. Click the icon and enter text to view it.
+                    </p>
+                    <p>
+                        <img src="{{ STATIC_URL }}images/annotation_demo.png" width="150px"/>
+                    </p>
+                    <p>
+                        If you are having any problems, please don't hesitate to email us on our <a href="https://groups.google.com/a/webfoundation.org/forum/#!forum/public-ocds">mailing list</a>.
+                    </p>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Comment</h4>
-                </div>
-                <div class="modal-body">
-                <p>You must be logged in to comment on the standard.</p>
-                <p>Click <a href="{% url 'admin:index' %}">here</a> to go to the login page. (You will need to manually return to this page, sorry
-                for the inconvenient, we'll be improving this soon.)</p>
-                <p>If you would like a login, please request one on our <a href="https://groups.google.com/a/webfoundation.org/forum/#!forum/public-ocds">mailing list</a>.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

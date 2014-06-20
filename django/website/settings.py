@@ -114,19 +114,23 @@ DJANGO_APPS = (
     # 'django.contrib.humanize',
 
     # Admin
-    'django.contrib.admin',
 )
 THIRD_PARTY_APPS = (
     'south',
     'django_extensions',
     'haystack',
     'django_assets',
+    'registration',
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
     # Your stuff: custom apps go here
     'main',
+    'custom_registration',
+
+    # Admin needs to go last
+    'django.contrib.admin',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

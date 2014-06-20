@@ -5,7 +5,12 @@
 {% endblock extrahead %}
 
 {% block extranav %}
-<li><a href="#" title="Change versions" data-toggle="modal" data-target="#changeVersion"><span id="intro-minimize" class="oi oi-fork" aria-hidden="true"></span></a></li>
+{% if request.user.is_authenticated %}
+<li><a title="Logout" href="{% url 'auth_logout' %}?next={{ request.path }}"><span class="oi oi-account-logout navicon" aria-hidden="true"></span></a></li>
+{% else %}
+<li><a title="Login" href="{% url 'auth_login' %}?next={{ request.path }}" title="About"><span class="oi oi-account-login navicon" aria-hidden="true"></span></a></li>
+{% endif %}
+<li><a href="#" title="Change versions" data-toggle="modal" data-target="#changeVersion"><span class="oi oi-fork navicon" aria-hidden="true"></span></a></li>
 {% endblock extranav %}
 
 {% block content %}
@@ -35,6 +40,20 @@
             <div class="tab-pane" id="tabs-2"> {{ vocabulary|safe }} </div>
         </div>
     </div>
+    <!-- OVERLAY DIALOGS -->
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Comment</h4>
+                </div>
+                <div class="modal-body">
+                    <p>You must be logged in to comment on the standard.</p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <div class="modal fade" id="changeVersion" tabindex="-1" role="dialog" aria-labelledby="ChangeVersion" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">

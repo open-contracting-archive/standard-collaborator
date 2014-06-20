@@ -25,6 +25,7 @@ django-braces
 PyJWT
 PyGithub
 markdown
+-e hg+https://bitbucket.org/birdsarah/django-registration/@django1.6#egg=registration
 
 # CSS and assets
 django-assets==0.8
