@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
-
 {% load i18n %}
+{% load bootstrap %}
 
 {% block content %}
+<br/>
 <form method="post" action=".">
   {% csrf_token %} 
-  {{ form.as_p }}
-
+  {{ form | bootstrap }}
   <button type="submit" class="btn btn-success">{% trans 'Log in' %}</button>
   <a href="{% url 'auth_password_reset' %}" class="btn btn-default">Reset password</a>
   <input type="hidden" name="next" value="{{ next}}" />

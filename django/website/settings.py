@@ -121,6 +121,7 @@ THIRD_PARTY_APPS = (
     'haystack',
     'django_assets',
     'registration',
+    'bootstrapform',
 )
 
 # Apps specific for this project go here.
