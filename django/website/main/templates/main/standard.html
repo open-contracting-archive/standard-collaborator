@@ -15,7 +15,7 @@
 
 {% block content %}
     <h1>Open Contracting Data Standard - {{ current_release.display_name|title }}</h1>
-    <p>Last modified: {{ current_release.last_modified }}</p>
+    <p>Last modified: {{ current_release.commit.stats.last_modified }}</p>
     <div class="panel panel-primary">
         <div class="panel-heading">
         <h4 class="panel-title"> <span class="glyphicon glyphicon-question-sign"></span> Share your comments</h4>
@@ -52,11 +52,11 @@
                     <p>
                         <ul>
                             {% for release in other_releases %}
-                            <li><a href="{% url 'standard' release.name %}">{{ release.display_name|title }}</a> (Released on: {{ release.last_modified }})</li>
+                            <li><a href="{% url 'standard' release.name %}">{{ release.display_name|title }}</a> (Released on: {{ release.commit.stats.last_modified }})</li>
                             {% endfor %}
 
                             {% if not current_release.is_master %}
-                            <li><a href="{% url 'standard' 'master' %}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits. The last edit was on {{ current_release.last_modified }}</li>
+                            <li><a href="{% url 'standard' 'master' %}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits. The last edit was on {{ current_release.commit.stats.last_modified }}</li>
                             {% endif %}
                         </ul>
                     </p>
