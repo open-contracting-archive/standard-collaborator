@@ -15,7 +15,11 @@
 
 {% block content %}
     <h1>Open Contracting Data Standard - {{ current_release.display_name|title }}</h1>
-    <p>Last modified: {{ current_release.commit.stats.last_modified }}</p>
+    {% if current_release.is_master %}
+        <p>Last modified: {{ current_release.last_modified }}</p>
+    {% else %}
+        <p>Released on: {{ current_release.commit.stats.last_modified }}</p>
+    {% endif %}
     <div class="panel panel-primary">
         <div class="panel-heading">
         <h4 class="panel-title"> <span class="glyphicon glyphicon-question-sign"></span> Share your comments</h4>
