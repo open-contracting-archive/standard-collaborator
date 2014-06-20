@@ -75,7 +75,7 @@ test_cmd = ' manage.py test -v0 ' + ' '.join(django_apps)
 host_list = {
     #'production':   ['lin-' + project_name + '.aptivate.org:48001'],
     'staging':      ['fen-vz-ocds-stage.fen.aptivate.org'],
-    'production':      ['ocds01.external.aptivate.org'],
+    'production':      ['ocds.open-contracting.org'],
     #'staging_test': ['fen-vz-' + project_name + '.fen.aptivate.org'],
     #'dev_server':   ['fen-vz-' + project_name + '-dev.fen.aptivate.org'],
 }
