@@ -69,7 +69,7 @@ class StandardView(TemplateView):
         self.current_release.display_name = 'master'
         self.other_releases = []
         for tag in self.repo.get_tags():
-            tag.display_name = tag.name.replace('_', ' ')
+            tag.display_name = tag.name.replace('__', '.').replace('_', ' ')
             tag.is_master = False
             if tag.name == self.release:
                 cleaned_release = tag.name
