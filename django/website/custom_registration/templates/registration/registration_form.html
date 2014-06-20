@@ -4,6 +4,7 @@
 
 {% block content %}
 <br/>
+<p>Your <strong>username</strong> is used to identify who made comments on the standard, so please choose something easy to recognize e.g. SarahBird.</p>
 <form method="post" action=".">
   {% csrf_token %}
   {{ form | bootstrap }}
