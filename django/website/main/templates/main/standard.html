@@ -74,6 +74,9 @@
     <script src="http://assets.annotateit.org/annotator/v1.2.9/annotator-full.min.js"></script>
     <script>
     jQuery(function ($) {
+      if ($('html').is('.ie6, .ie7, .ie8, .ie9')) {
+        alert("This site does not work with Internet Explorer 9 or earlier. Please use a more recent version of Internet Explorer, or an open-source browser such as Firefox"); 
+      } else {
         var PROJECTNAME = 'ocdsstandard',
             VERSION = '{% if current_release.is_master %}{{ current_release.commit }}{% else %}{{ current_release.display_name }}{% endif %}',
             URI = '{{ request.build_absolute_uri }}',
@@ -121,6 +124,7 @@
                 'limit': 1000,
             },
         });
+      }
     });
     </script>
 {% endblock javascript %}
