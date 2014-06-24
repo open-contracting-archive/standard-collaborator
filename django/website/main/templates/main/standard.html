@@ -120,7 +120,11 @@
                 'pageuid': PAGE_UNIQUE_ID,
             },
             loadFromSearch: {
-                'pageuid': PAGE_UNIQUE_ID.toLowerCase(),
+                {% if version %}
+                    'version': '{{ version }}',
+                {% else %}
+                    'pageuid': PAGE_UNIQUE_ID.toLowerCase(),
+                {% endif %}
                 'limit': 1000,
             },
         });

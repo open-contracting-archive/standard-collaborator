@@ -61,6 +61,9 @@ class StandardView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         self.release = kwargs.get('release')
+        if not self.release:
+            self.commit = kwargs.get('commit')
+            self.release = 'master'
         cleaned_release = "master"
         self.repo = get_repo()
         self.current_release = self.repo
@@ -77,7 +80,7 @@ class StandardView(TemplateView):
             else:
                 self.other_releases.append(tag)
 
-        if cleaned_release != self.release:
+        if not self.commit and cleaned_release != self.release:
             # We didn't get a correct release request, so redirect
             return HttpResponseRedirect(reverse('latest'))
         else:
@@ -98,5 +101,10 @@ class StandardView(TemplateView):
             'other_releases': self.other_releases,
             'site_unique_id': settings.SITE_UNIQUE_ID,
             'form': AuthenticationForm()
+        })
+
+        if self.commit:
+        context.update({
+            'version': self.commit
         })
         return context
