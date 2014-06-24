@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import LatestVersion, CachedStandard
 
-# Register your models here.
+admin.site.register(LatestVersion)
+admin.site.register(CachedStandard)
