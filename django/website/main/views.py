@@ -104,7 +104,7 @@ class StandardView(TemplateView):
         })
 
         if self.commit:
-        context.update({
-            'version': self.commit
-        })
+            context.update({
+                'version': self.commit
+            })
         return context
