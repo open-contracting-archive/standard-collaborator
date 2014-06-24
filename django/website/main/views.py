@@ -15,12 +15,15 @@ def get_repo():
     return repo
 
 
-def get_standard_from_github(repo, path='README.md', release="master"):
+def get_standard_from_github(repo, path='README.md',
+                             release="master", commit=None):
     """
     Get the standard markdown file from Github repo and decode it.
     Requires a repo and a valid release string. Does not check whether release
     string is valid to reduce calls to API.
     """
+    if commit:
+        release = commit
     try:
         contents = repo.get_contents(path, ref=release)
         document = contents.decoded_content
@@ -29,7 +32,8 @@ def get_standard_from_github(repo, path='README.md', release="master"):
     return document
 
 
-def render_markdown(repo=None, path=None, release=None, mdfile=None):
+def render_markdown(repo=None, path=None, release=None,
+                    mdfile=None, commit=None):
     rendered = ""
     if mdfile:
         with open(mdfile, 'r') as f:
@@ -40,7 +44,8 @@ def render_markdown(repo=None, path=None, release=None, mdfile=None):
                                             'extra'])
     if repo:
         rendered = markdown(
-            get_standard_from_github(repo, path=path, release=release),
+            get_standard_from_github(repo, path=path,
+                                     release=release, commit=commit),
             extensions=['footnotes', 'sane_lists', 'toc']
         )
     return rendered
@@ -61,9 +66,6 @@ class StandardView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         self.release = kwargs.get('release')
-        if not self.release:
-            self.commit = kwargs.get('commit')
-            self.release = 'master'
         cleaned_release = "master"
         self.repo = get_repo()
         self.current_release = self.repo
@@ -80,7 +82,7 @@ class StandardView(TemplateView):
             else:
                 self.other_releases.append(tag)
 
-        if not self.commit and cleaned_release != self.release:
+        if cleaned_release != self.release:
             # We didn't get a correct release request, so redirect
             return HttpResponseRedirect(reverse('latest'))
         else:
@@ -103,8 +105,31 @@ class StandardView(TemplateView):
             'form': AuthenticationForm()
         })
 
-        if self.commit:
-            context.update({
-                'version': self.commit
-            })
+        return context
+
+
+class CommitView(TemplateView):
+    template_name = 'main/standard.html'
+
+    def get(self, request, *args, **kwargs):
+        self.commit = kwargs.get('commitid')
+        self.repo = get_repo()
+        return super(CommitView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(CommitView, self).get_context_data(*args, **kwargs)
+        rendered_standard = render_markdown(repo=self.repo,
+                                            path='standard/standard.md',
+                                            commit=self.commit)
+        rendered_vocabulary = render_markdown(repo=self.repo,
+                                              path='standard/vocabulary.md',
+                                              commit=self.commit)
+        context.update({
+            'commit': self.commit,
+            'standard': rendered_standard,
+            'vocabulary': rendered_vocabulary,
+            'site_unique_id': settings.SITE_UNIQUE_ID,
+            'form': AuthenticationForm()
+        })
+
         return context

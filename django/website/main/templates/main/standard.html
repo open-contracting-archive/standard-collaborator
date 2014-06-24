@@ -34,6 +34,32 @@
             
         </div>
     </div>
+    {% if current_release.is_master %}
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span>You are viewing master, comments may not appear if they were on previous versions of master.</h4>
+        </div>
+        <div class="panel-body">
+            <p>You are reading the latest version of the standard.</p>
+            <p>The master document is a living document that is changing as we update it. </p>
+            <p>This version of master is identified by its unique id: {{ current_release.commit }}</p>
+            <p>Any comments you make will not show up if master is updated, but will always be available <a href="{% url 'commit' current_release.commit %}">here</a></p>
+        </div>
+    </div>
+    {% endif %}
+    {% if commit %}
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span>You are the version of the standard at commit {{ commit }}.</h4>
+        </div>
+        <div class="panel-body">
+            <p>The lastest version of the standard is always changing.</p>
+            <p>The <a href="{% url 'standard' 'master' %}">master document</a> is a living document that is changing as we update it.</p>
+            <p>This is a specific version of the standard from {{ current_release.commit.stats.last_modified }} for viewing comments on this specific version.</p>
+            <p>You may have eneded here by mistake and want to view the <a href="{% url 'standard' 'latest' %}">latest released version of the standard</a>.</p>
+        </div>
+    </div>
+    {% endif %}
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tabs-1" data-toggle="tab">Main</a></li>
         <li><a href="#tabs-2" data-toggle="tab">Definitions</a></li>
@@ -120,8 +146,8 @@
                 'pageuid': PAGE_UNIQUE_ID,
             },
             loadFromSearch: {
-                {% if version %}
-                    'version': '{{ version }}',
+                {% if commit %}
+                    'version': '{{ commit }}',
                 {% else %}
                     'pageuid': PAGE_UNIQUE_ID.toLowerCase(),
                 {% endif %}
