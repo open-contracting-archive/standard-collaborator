@@ -1,11 +1,15 @@
+from datetime import datetime
 from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.exceptions import MultipleObjectsReturned
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, RedirectView
 
 from github import Github, UnknownObjectException
 from markdown import markdown
+
+from .models import LatestVersion, CachedStandard
 
 
 def get_repo():
@@ -15,15 +19,29 @@ def get_repo():
     return repo
 
 
-def get_standard_from_github(repo, path='README.md',
-                             release="master", commit=None):
+def get_ordered_tags(repo):
+    tags = repo.get_tags()
+    list_tags = list(tags)
+    date_format = '%a, %d %b %Y %H:%M:%S %Z'
+    sorted_tags = \
+        sorted(
+            list_tags,
+            key=lambda t: datetime.strptime(t.commit.stats.last_modified,
+                                            date_format)
+        )
+    reversed_sorted = sorted_tags[::-1]
+    latest_version = LatestVersion.objects.get()
+    latest_version.tag_name = reversed_sorted[0].name
+    latest_version.save()
+    return reversed_sorted
+
+
+def get_document_from_github(repo, path='README.md', release="master"):
     """
     Get the standard markdown file from Github repo and decode it.
     Requires a repo and a valid release string. Does not check whether release
     string is valid to reduce calls to API.
     """
-    if commit:
-        release = commit
     try:
         contents = repo.get_contents(path, ref=release)
         document = contents.decoded_content
@@ -32,32 +50,48 @@ def get_standard_from_github(repo, path='README.md',
     return document
 
 
-def render_markdown(repo=None, path=None, release=None,
-                    mdfile=None, commit=None):
-    rendered = ""
-    if mdfile:
-        with open(mdfile, 'r') as f:
-            rendered = markdown(f.read(),
-                                extensions=['footnotes',
-                                            'sane_lists',
-                                            'toc',
-                                            'extra'])
-    if repo:
-        rendered = markdown(
-            get_standard_from_github(repo, path=path,
-                                     release=release, commit=commit),
-            extensions=['footnotes', 'sane_lists', 'toc']
-        )
-    return rendered
+def render_markdown(document):
+    return markdown(document, extensions=['footnotes', 'sane_lists', 'toc'])
+
+
+def get_from_file(mdfile):
+    with open(mdfile, 'r') as f:
+        document = f.read()
+    return document
+
+
+def get_document_from_cache(repo, path, release):
+    try:
+        cached = CachedStandard.objects.get(tag_name=release)
+        if path == 'standard/standard.md':
+            document = cached.standard
+        if path == 'standard/vocabulary.md':
+            document = cached.vocabulary
+    except CachedStandard.DoesNotExist:
+        document = get_document_from_github_and_cache(repo, path, release)
+    return document
+
+
+def get_document_from_github_and_cache(repo, path, release):
+    document = get_document_from_github(repo, path=path, release=release)
+    to_cache, created = CachedStandard.objects.get_or_create(tag_name=release)
+    if path == 'standard/standard.md':
+        to_cache.standard = document
+    if path == 'standard/vocabulary.md':
+        to_cache.vocabulary = document
+    to_cache.save()
+    return document
 
 
 class LatestView(RedirectView):
     permanent = False
 
     def get_redirect_url(self, *args, **kwargs):
-        repo = get_repo()
-        latest_release_name = repo.get_tags()[0].name
-        kwargs.update({'release': latest_release_name})
+        try:
+            latest_release = LatestVersion.objects.get().tag_name
+        except MultipleObjectsReturned:
+            latest_release = 'master'
+        kwargs.update({'release': latest_release})
         return reverse('standard', kwargs=kwargs)
 
 
@@ -67,13 +101,11 @@ class StandardView(TemplateView):
     def get(self, request, *args, **kwargs):
         self.release = kwargs.get('release')
         cleaned_release = "master"
-        self.repo = get_repo()
-        self.current_release = self.repo
-        self.current_release.is_master = True
-        self.current_release.commit = self.repo.get_commits()[0].sha
-        self.current_release.display_name = 'master'
         self.other_releases = []
-        for tag in self.repo.get_tags():
+
+        self.repo = get_repo()
+        ordered_tags = get_ordered_tags(self.repo)
+        for tag in ordered_tags:
             tag.display_name = tag.name.replace('__', '.').replace('_', ' ')
             tag.is_master = False
             if tag.name == self.release:
@@ -81,6 +113,12 @@ class StandardView(TemplateView):
                 self.current_release = tag
             else:
                 self.other_releases.append(tag)
+
+        if self.release == 'master':
+            self.current_release = self.repo
+            self.current_release.is_master = True
+            self.current_release.commit = self.repo.get_commits()[0].sha
+            self.current_release.display_name = 'master'
 
         if cleaned_release != self.release:
             # We didn't get a correct release request, so redirect
@@ -90,12 +128,32 @@ class StandardView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(StandardView, self).get_context_data(*args, **kwargs)
-        rendered_standard = render_markdown(repo=self.repo,
-                                            path='standard/standard.md',
-                                            release=self.release)
-        rendered_vocabulary = render_markdown(repo=self.repo,
-                                              path='standard/vocabulary.md',
-                                              release=self.release)
+        if self.current_release.is_master:
+            # Always go to github
+            rendered_standard = render_markdown(
+                get_document_from_github(repo=self.repo,
+                                         path='standard/standard.md',
+                                         release=self.release)
+            )
+            rendered_vocabulary = render_markdown(
+                get_document_from_github(repo=self.repo,
+                                         path='standard/vocabulary.md',
+                                         release=self.release)
+            )
+        else:
+            # Try and get from cache
+            # (goes to github and caches if not available)
+            rendered_standard = render_markdown(
+                get_document_from_cache(repo=self.repo,
+                                        path='standard/standard.md',
+                                        release=self.release)
+            )
+            rendered_vocabulary = render_markdown(
+                get_document_from_cache(repo=self.repo,
+                                        path='standard/vocabulary.md',
+                                        release=self.release)
+            )
+
         context.update({
             'standard': rendered_standard,
             'vocabulary': rendered_vocabulary,
@@ -118,12 +176,16 @@ class CommitView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(CommitView, self).get_context_data(*args, **kwargs)
-        rendered_standard = render_markdown(repo=self.repo,
-                                            path='standard/standard.md',
-                                            commit=self.commit)
-        rendered_vocabulary = render_markdown(repo=self.repo,
-                                              path='standard/vocabulary.md',
-                                              commit=self.commit)
+        rendered_standard = render_markdown(
+            get_document_from_cache(repo=self.repo,
+                                    path='standard/standard.md',
+                                    release=self.commit)
+        )
+        rendered_vocabulary = render_markdown(
+            get_document_from_cache(repo=self.repo,
+                                    path='standard/vocabulary.md',
+                                    release=self.commit)
+        )
         context.update({
             'commit': self.commit,
             'standard': rendered_standard,
