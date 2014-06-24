@@ -55,7 +55,7 @@
         <div class="panel-body">
             <p>The lastest version of the standard is always changing.</p>
             <p>The <a href="{% url 'standard' 'master' %}">master document</a> is a living document that is changing as we update it.</p>
-            <p>This is a specific version of the standard from {{ current_release.commit.stats.last_modified }} for viewing comments on this specific version.</p>
+            <p>This is a specific version of the standard for viewing comments on this specific version ({{ commit }}).</p>
             <p>You may have eneded here by mistake and want to view the <a href="{% url 'standard' 'latest' %}">latest released version of the standard</a>.</p>
         </div>
     </div>
