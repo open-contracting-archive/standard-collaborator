@@ -64,9 +64,15 @@ def get_document_from_cache(repo, path, release):
     try:
         cached = CachedStandard.objects.get(tag_name=release)
         if path == 'standard/standard.md':
-            document = cached.standard
+            if cached.standard is '':
+                raise CachedStandard.DoesNotExist
+            else:
+                document = cached.standard
         if path == 'standard/vocabulary.md':
-            document = cached.vocabulary
+            if cached.vocabulary == '':
+                raise CachedStandard.DoesNotExist
+            else:
+                document = cached.vocabulary
     except CachedStandard.DoesNotExist:
         document = get_document_from_github_and_cache(repo, path, release)
     return document
