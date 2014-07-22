@@ -1,12 +1,13 @@
 from datetime import datetime
+from braces.views import JSONResponseMixin
 from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import MultipleObjectsReturned
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django.views.generic import TemplateView, RedirectView
+from django.http import HttpResponseRedirect, HttpResponse
+from django.views.generic import TemplateView, RedirectView, View
 
-from github import Github, UnknownObjectException
+from github import Github, UnknownObjectException, GithubException
 from markdown import markdown
 
 from .models import LatestVersion, CachedStandard
@@ -36,7 +37,8 @@ def get_ordered_tags(repo):
     return reversed_sorted
 
 
-def get_document_from_github(repo, path='README.md', release="master"):
+def get_document_from_github(repo, path='README.md',
+                             release='master', doctype='html'):
     """
     Get the standard markdown file from Github repo and decode it.
     Requires a repo and a valid release string. Does not check whether release
@@ -46,7 +48,10 @@ def get_document_from_github(repo, path='README.md', release="master"):
         contents = repo.get_contents(path, ref=release)
         document = contents.decoded_content
     except UnknownObjectException:
-        document = '<br />'
+        if doctype == 'json':
+            document = '{}'
+        else:
+            document = '<br />'
     return document
 
 
@@ -73,6 +78,11 @@ def get_document_from_cache(repo, path, release):
                 raise CachedStandard.DoesNotExist
             else:
                 document = cached.vocabulary
+        if path == 'standard/schema/release-schema.json':
+            if cached.release_schema == '':
+                raise CachedStandard.DoesNotExist
+            else:
+                document = cached.release_schema
     except CachedStandard.DoesNotExist:
         document = get_document_from_github_and_cache(repo, path, release)
     return document
@@ -85,6 +95,8 @@ def get_document_from_github_and_cache(repo, path, release):
         to_cache.standard = document
     if path == 'standard/vocabulary.md':
         to_cache.vocabulary = document
+    if path == 'standard/schema/release-schema.json':
+        to_cache.release_schema = document
     to_cache.save()
     return document
 
@@ -201,3 +213,16 @@ class CommitView(TemplateView):
         })
 
         return context
+
+
+class SchemaView(JSONResponseMixin, View):
+    def get(self, request, *args, **kwargs):
+        sn = kwargs.get('schema_name')
+        release = kwargs.get('release')
+        if release == 'standard':
+            release = 'master'
+        doc = get_document_from_github(repo=get_repo(),
+                                       path='standard/schema/%s.json' % sn,
+                                       release=release,
+                                       doctype='json')
+        return HttpResponse(doc, content_type="application/json", status=200)

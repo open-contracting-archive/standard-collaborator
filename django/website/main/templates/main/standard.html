@@ -63,11 +63,13 @@
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tabs-1" data-toggle="tab">Main</a></li>
         <li><a href="#tabs-2" data-toggle="tab">Definitions</a></li>
+        <li><a href="#tabs-3" data-toggle="tab">Schema</a></li>
     </ul>
     <div id="annotatable"> 
         <div class="tab-content">
             <div class="tab-pane active" id="tabs-1"> {{ standard|safe }} </div>
             <div class="tab-pane" id="tabs-2"> {{ vocabulary|safe }} </div>
+            <div class="tab-pane" id="tabs-3"><div class="schema-holder"><script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'release-schema' %}></script></div></div>
         </div>
     </div>
     <!-- OVERLAY DIALOGS -->

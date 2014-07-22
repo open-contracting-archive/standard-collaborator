@@ -42,3 +42,9 @@ img {
     height: auto !important;
     -ms-interpolation-mode: bicubic; 
 }
+
+.schema-holder {
+    min-height: 800px;
+    height: 100%;
+    clear: both;
+}
