@@ -25,7 +25,7 @@ if (script.attributes["data-schema"]) {
         docson = script.src.replace("widget.js", "index.html");
     }
     document.write("<iframe id='" + script.attributes["data-schema"].value +
-        "' style='padding: 0; border: 0; width:100%; min-height: 800px; background: transparent' src='" +
+        "' style='padding: 0; border: 0; width:100%; background: transparent' src='" +
         docson + "#" +
         script.attributes["data-schema"].value + "'></iframe>");
     function receiveMessage(event) {

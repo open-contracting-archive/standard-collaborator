@@ -44,7 +44,9 @@ img {
 }
 
 .schema-holder {
-    min-height: 800px;
     height: 100%;
     clear: both;
+    > iframe {
+        min-height: 100px;
+    }
 }
