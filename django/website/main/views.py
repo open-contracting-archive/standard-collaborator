@@ -223,7 +223,6 @@ class SchemaView(JSONResponseMixin, View):
         release = kwargs.get('release')
         if release == 'standard':
             release = 'master'
-        if release == 'master':
             doc = get_document_from_github(
                 repo=get_repo(),
                 path='standard/schema/%s.json' % sn,
