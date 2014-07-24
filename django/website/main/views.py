@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import TemplateView, RedirectView, View
 
-from github import Github, UnknownObjectException, GithubException
+from github import Github, UnknownObjectException
 from markdown import markdown
 
 from .models import LatestVersion, CachedStandard
@@ -65,7 +65,7 @@ def get_from_file(mdfile):
     return document
 
 
-def get_document_from_cache(repo, path, release):
+def get_document_from_cache(repo, path, release, doctype='html'):
     try:
         cached = CachedStandard.objects.get(tag_name=release)
         if path == 'standard/standard.md':
@@ -84,12 +84,14 @@ def get_document_from_cache(repo, path, release):
             else:
                 document = cached.release_schema
     except CachedStandard.DoesNotExist:
-        document = get_document_from_github_and_cache(repo, path, release)
+        document = get_document_from_github_and_cache(
+            repo, path, release, doctype
+        )
     return document
 
 
-def get_document_from_github_and_cache(repo, path, release):
-    document = get_document_from_github(repo, path=path, release=release)
+def get_document_from_github_and_cache(repo, path, release, doctype='html'):
+    document = get_document_from_github(repo, path, release, doctype)
     to_cache, created = CachedStandard.objects.get_or_create(tag_name=release)
     if path == 'standard/standard.md':
         to_cache.standard = document
@@ -221,8 +223,29 @@ class SchemaView(JSONResponseMixin, View):
         release = kwargs.get('release')
         if release == 'standard':
             release = 'master'
-        doc = get_document_from_github(repo=get_repo(),
-                                       path='standard/schema/%s.json' % sn,
-                                       release=release,
-                                       doctype='json')
+        if release == 'master':
+            doc = get_document_from_github(
+                repo=get_repo(),
+                path='standard/schema/%s.json' % sn,
+                release=release,
+                doctype='json'
+            )
+        else:
+            doc = get_document_from_cache(
+                repo=get_repo(),
+                path='standard/schema/%s.json' % sn,
+                release=release,
+                doctype='json'
+            )
+        return HttpResponse(doc, content_type="application/json", status=200)
+
+
+class SchemaCommitView(JSONResponseMixin, View):
+    def get(self, request, *args, **kwargs):
+        sn = kwargs.get('schema_name')
+        commit = kwargs.get('commitid')
+        doc = get_document_from_cache(repo=get_repo(),
+                                      path='standard/schema/%s.json' % sn,
+                                      release=commit,
+                                      doctype='json')
         return HttpResponse(doc, content_type="application/json", status=200)

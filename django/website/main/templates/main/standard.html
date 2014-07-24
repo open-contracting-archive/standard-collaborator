@@ -69,7 +69,15 @@
         <div class="tab-content">
             <div class="tab-pane active" id="tabs-1"> {{ standard|safe }} </div>
             <div class="tab-pane" id="tabs-2"> {{ vocabulary|safe }} </div>
-            <div class="tab-pane" id="tabs-3"><div class="schema-holder"><script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'release-schema' %}></script></div></div>
+            <div class="tab-pane" id="tabs-3">
+                <div class="schema-holder">
+                    {% if commit %}
+                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'release-schema' %}></script>
+                    {% else %}
+                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'release-schema' %}></script>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
     <!-- OVERLAY DIALOGS -->
