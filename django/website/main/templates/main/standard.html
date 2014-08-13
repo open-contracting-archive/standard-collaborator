@@ -63,7 +63,8 @@
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tabs-1" data-toggle="tab">Main</a></li>
         <li><a href="#tabs-2" data-toggle="tab">Definitions</a></li>
-        <li><a href="#tabs-3" data-toggle="tab">Schema</a></li>
+        <li><a href="#tabs-3" data-toggle="tab">Release Schema</a></li>
+        <li><a href="#tabs-4" data-toggle="tab">Record Schema</a></li>
     </ul>
     <div id="annotatable"> 
         <div class="tab-content">
@@ -75,6 +76,15 @@
                         <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'release-schema' %}></script>
                     {% else %}
                         <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'release-schema' %}></script>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="tab-pane" id="tabs-4">
+                <div class="schema-holder">
+                    {% if commit %}
+                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'record-schema' %}></script>
+                    {% else %}
+                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'record-schema' %}></script>
                     {% endif %}
                 </div>
             </div>
