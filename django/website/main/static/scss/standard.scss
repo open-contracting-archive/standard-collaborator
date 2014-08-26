@@ -12,8 +12,9 @@ h4 {
     font-style: italic;
 }
 
-.main.container {
+.main .container {
     background-color: white;
+    width: 90%;
 }
 
 footer {
@@ -49,4 +50,8 @@ img {
     > iframe {
         min-height: 800px;
     }
+}
+
+.docson .box-container, .docson .box {
+    width: 100%;
 }
