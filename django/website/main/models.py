@@ -15,6 +15,7 @@ class CachedStandard(models.Model):
     standard = models.TextField(blank=True)
     vocabulary = models.TextField(blank=True)
     release_schema = models.TextField(blank=True)
+    record_schema = models.TextField(blank=True)
 
     def __unicode__(self):
         return u'%s' % self.tag_name
