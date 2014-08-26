@@ -66,6 +66,7 @@ def get_from_file(mdfile):
 
 
 def get_document_from_cache(repo, path, release, doctype='html'):
+    document = ''
     try:
         cached = CachedStandard.objects.get(tag_name=release)
         if path == 'standard/standard.md':
@@ -236,6 +237,9 @@ class SchemaView(JSONResponseMixin, View):
                 release=release,
                 doctype='json'
             )
+            if doc == '':
+                # Set to blank json if no doc so docson has something to render
+                doc = "{}"
         return HttpResponse(doc, content_type="application/json", status=200)
 
 
