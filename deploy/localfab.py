@@ -95,7 +95,7 @@ def link_webserver_conf(maintenance=False):
     vcs_config_include = vcs_config_stub + '_include.conf'
 
     # create paths in the webserver config
-    webserver_conf = fablib._webserver_conf_path()
+    webserver_conf = _webserver_conf_path()
     webserver_include = _webserver_include_path()
 
     # ensure the includes dir exists
@@ -135,6 +135,22 @@ def _webserver_include_path():
     if key in webserver_conf_dir:
         return path.join(webserver_conf_dir[key],
             '%s_%s.conf' % (env.project_name, env.environment))
+    else:
+        utils.abort('webserver %s is not supported (linux type %s)' %
+                (env.webserver, fablib._linux_type()))
+
+
+def _webserver_conf_path():
+    require('webserver', 'project_name', provided_by=env.valid_envs)
+    webserver_conf_dir = {
+        'apache_redhat': '/etc/httpd/conf.d',
+        'apache_debian': '/etc/apache2/sites-available',
+    }
+    key = env.webserver + '_' + fablib._linux_type()
+
+    if key in webserver_conf_dir:
+        return path.join(webserver_conf_dir[key],
+            '%s.conf' % (env.environment))
     else:
         utils.abort('webserver %s is not supported (linux type %s)' %
                 (env.webserver, fablib._linux_type()))
