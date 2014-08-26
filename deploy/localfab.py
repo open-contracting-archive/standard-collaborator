@@ -99,7 +99,7 @@ def link_webserver_conf(maintenance=False):
     webserver_include = _webserver_include_path()
 
     # ensure the includes dir exists
-    webserver_include_dir = webserver_include
+    webserver_include_dir = '/etc/apache2/sites-available/includes'
     fablib._create_dir_if_not_exists(webserver_include_dir)
 
     # ensure the main file is linked properly
