@@ -64,7 +64,8 @@
         <li class="active"><a href="#tabs-1" data-toggle="tab">Main</a></li>
         <li><a href="#tabs-2" data-toggle="tab">Definitions</a></li>
         <li><a href="#tabs-3" data-toggle="tab">Release Schema</a></li>
-        <li><a href="#tabs-4" data-toggle="tab">Record Schema</a></li>
+        <li><a href="#tabs-4" data-toggle="tab">Release Package Schema</a></li>
+        <li><a href="#tabs-5" data-toggle="tab">Record Package Schema</a></li>
     </ul>
     <div id="annotatable"> 
         <div class="tab-content">
@@ -82,9 +83,18 @@
             <div class="tab-pane" id="tabs-4">
                 <div class="schema-holder">
                     {% if commit %}
-                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'record-schema' %}></script>
+                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'release-package-schema' %}></script>
                     {% else %}
-                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'record-schema' %}></script>
+                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'release-package-schema' %}></script>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="tab-pane" id="tabs-5">
+                <div class="schema-holder">
+                    {% if commit %}
+                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'record-package-schema' %}></script>
+                    {% else %}
+                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'record-package-schema' %}></script>
                     {% endif %}
                 </div>
             </div>
