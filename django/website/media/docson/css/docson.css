@@ -29,7 +29,7 @@
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     padding-bottom: 10px;
-    width: 100%;
+    eidth: 100%;
 }
 
 .docson .expand-button {
@@ -182,8 +182,9 @@
     width: 20%;
 }
 
-.docson .required {
-    font-weight: bold;
+.docson .required:after {
+    content: "*";
+    color: darkred;
 }
 
 .docson .type-keyword {
