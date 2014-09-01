@@ -16,7 +16,9 @@ class CachedStandard(models.Model):
     vocabulary = models.TextField(blank=True)
     merging = models.TextField(blank=True)
     release_schema = models.TextField(blank=True)
+    release_package_schema = models.TextField(blank=True)
     record_schema = models.TextField(blank=True)
+    versioned_release_schema = models.TextField(blank=True)
 
     def __unicode__(self):
         return u'%s' % self.tag_name

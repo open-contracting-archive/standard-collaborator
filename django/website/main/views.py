@@ -89,11 +89,21 @@ def get_document_from_cache(repo, path, release, doctype='html'):
                 raise CachedStandard.DoesNotExist
             else:
                 document = cached.release_schema
+        if path == 'standard/schema/release-package-schema.json':
+            if cached.release_package_schema == '':
+                raise CachedStandard.DoesNotExist
+            else:
+                document = cached.release_package_schema
         if path == 'standard/schema/record-package-schema.json':
             if cached.record_schema == '':
                 raise CachedStandard.DoesNotExist
             else:
                 document = cached.record_schema
+        if path == 'standard/schema/versioned-release-schema.json':
+            if cached.versioned_release_schema == '':
+                raise CachedStandard.DoesNotExist
+            else:
+                document = cached.versioned_release_schema
     except CachedStandard.DoesNotExist:
         document = get_document_from_github_and_cache(
             repo, path, release, doctype
@@ -112,8 +122,12 @@ def get_document_from_github_and_cache(repo, path, release, doctype='html'):
         to_cache.merging = document
     if path == 'standard/schema/release-schema.json':
         to_cache.release_schema = document
+    if path == 'standard/schema/release-package-schema.json':
+        to_cache.release_package_schema = document
     if path == 'standard/schema/record-package-schema.json':
         to_cache.record_schema = document
+    if path == 'standard/schema/versioned-release-schema.json':
+        to_cache.versioned_release_schema = document
     to_cache.save()
     return document
 
