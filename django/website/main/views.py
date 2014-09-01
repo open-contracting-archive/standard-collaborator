@@ -89,7 +89,7 @@ def get_document_from_cache(repo, path, release, doctype='html'):
                 raise CachedStandard.DoesNotExist
             else:
                 document = cached.release_schema
-        if path == 'standard/schema/record-schema.json':
+        if path == 'standard/schema/record-package-schema.json':
             if cached.record_schema == '':
                 raise CachedStandard.DoesNotExist
             else:
@@ -112,7 +112,7 @@ def get_document_from_github_and_cache(repo, path, release, doctype='html'):
         to_cache.merging = document
     if path == 'standard/schema/release-schema.json':
         to_cache.release_schema = document
-    if path == 'standard/schema/record-schema.json':
+    if path == 'standard/schema/record-package-schema.json':
         to_cache.record_schema = document
     to_cache.save()
     return document
