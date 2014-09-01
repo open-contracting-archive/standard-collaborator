@@ -63,41 +63,51 @@
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tabs-1" data-toggle="tab">Main</a></li>
         <li><a href="#tabs-2" data-toggle="tab">Definitions</a></li>
-        <li><a href="#tabs-3" data-toggle="tab">Release Schema</a></li>
-        <li><a href="#tabs-4" data-toggle="tab">Release Package Schema</a></li>
-        <li><a href="#tabs-5" data-toggle="tab">Record Package Schema</a></li>
+        <li><a href="#tabs-3" data-toggle="tab">Schemas</a></li>
+        <li><a href="#tabs-4" data-toggle="tab">Merging</a></li>
     </ul>
     <div id="annotatable"> 
         <div class="tab-content">
             <div class="tab-pane active" id="tabs-1"> {{ standard|safe }} </div>
             <div class="tab-pane" id="tabs-2"> {{ vocabulary|safe }} </div>
             <div class="tab-pane" id="tabs-3">
-                <div class="schema-holder">
-                    {% if commit %}
-                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'release-schema' %}></script>
-                    {% else %}
-                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'release-schema' %}></script>
-                    {% endif %}
+                <ul class="nav nav-tabs">
+                    <li><a href="#tabs-3-1" data-toggle="tab">Release</a></li>
+                    <li><a href="#tabs-3-2" data-toggle="tab">Release Package</a></li>
+                    <li><a href="#tabs-3-3" data-toggle="tab">Record Package</a></li>
+                </ul>
+                <div class="tab-content">
+                    <h6 class="pull-right">Written in <a href="http://json-schema.org/">JSON Schema v4</a>.</h6>
+                    <div class="tab-pane active" id="tabs-3-1">
+                        <div class="schema-holder">
+                            {% if commit %}
+                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'release-schema' %}></script>
+                            {% else %}
+                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'release-schema' %}></script>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tabs-3-2">
+                        <div class="schema-holder">
+                            {% if commit %}
+                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'release-package-schema' %}></script>
+                            {% else %}
+                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'release-package-schema' %}></script>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tabs-3-3">
+                        <div class="schema-holder">
+                            {% if commit %}
+                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'record-package-schema' %}></script>
+                            {% else %}
+                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'record-package-schema' %}></script>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="tab-pane" id="tabs-4">
-                <div class="schema-holder">
-                    {% if commit %}
-                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'release-package-schema' %}></script>
-                    {% else %}
-                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'release-package-schema' %}></script>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="tab-pane" id="tabs-5">
-                <div class="schema-holder">
-                    {% if commit %}
-                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'record-package-schema' %}></script>
-                    {% else %}
-                        <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'record-package-schema' %}></script>
-                    {% endif %}
-                </div>
-            </div>
+            <div class="tab-pane" id="tabs-4"> {{ merging|safe }} </div>
         </div>
     </div>
     <!-- OVERLAY DIALOGS -->
