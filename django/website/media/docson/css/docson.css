@@ -29,9 +29,7 @@
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     padding-bottom: 10px;
-    -moz-box-shadow:    1px 1px 1px darkgray;
-    -webkit-box-shadow: 1px 1px 1px darkgray;
-    box-shadow:         1px 1px 1px darkgray;
+    width: 100%;
 }
 
 .docson .expand-button {
@@ -46,8 +44,7 @@
     font-weight: bold;
     font-family: "Lucida Console", Monaco, monospace;
     font-size: 15px;
-    color: darkgray;
-    display: none;
+    color: darkred;
 }
 
 .docson .source-button {
@@ -61,8 +58,7 @@
     font-weight: bold;
     font-family: "Lucida Console", Monaco, monospace;
     font-size: 10px;
-    color: darkgray;
-    display: none;
+    color: darkred;
 }
 
 .docson .box-header {
@@ -77,9 +73,10 @@
 
 .docson .box-name {
     color: darkblue;
-    padding: 5px 40px 2px 3px;
+    padding: 10px 10px 0px 5px;
     float: left;
 }
+
 
 .docson .title {
     margin-top: -3px;
@@ -93,7 +90,11 @@
 .docson .box-description {
     color: dimgray;
     float: left;
-    max-width: 600px;
+    padding: 10px;
+}
+
+.docson .box-description > p {
+    display: inline;
 }
 
 .docson .end {
@@ -111,7 +112,7 @@
 }
 
 .docson .box-1 {
-    background: whitesmoke;/*
+    /*background: whitesmoke;
     background: -webkit-linear-gradient(ghostwhite, whitesmoke, whitesmoke, gainsboro);
     background: -moz-linear-gradient(ghostwhite, whitesmoke, whitesmoke, gainsboro);*/
 }
@@ -161,6 +162,11 @@
 .docson .signature {
     padding-top: 5px;
     clear: left;
+    border-top: 1px dotted lightgray;
+}
+
+.signature:nth-child(2) {
+    border-top: none;
 }
 
 .docson .signature-header {
@@ -173,6 +179,7 @@
     float: left;
     font-family: "Lucida Console", Monaco, monospace;
     min-width: 130px;
+    width: 20%;
 }
 
 .docson .required {
@@ -206,6 +213,7 @@
     float: left;
     min-width: 160px;
     max-width: 320px;
+    width: 25%;
 }
 
 .docson .signature-type-any {
@@ -259,14 +267,12 @@
 
 .docson .signature-button {
     cursor: pointer;
-    padding: 4px;
     border-radius: 4px;
-    border: 1px solid lightgrey;
-    -moz-border-radius: 4px;
 }
 
 .docson .signature-type-ref {
-    color: darkblue;
+    color: blue;
+    text-decoration: underline;
 }
 
 .docson .signature-type-expanded {
@@ -284,6 +290,7 @@
     color: dimgray;
     float: left;
     max-width: 600px;
+    width: 50%;
 }
 
 .docson .signature-box-container {
@@ -293,7 +300,8 @@
 .docson .box-container {
     float: left;
     padding-top: 4px;
-    padding-left: 8px;
+    padding-left: 0px;
+    width: 100%;
     display: none;
 }
 
