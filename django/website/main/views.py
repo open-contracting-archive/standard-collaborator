@@ -79,6 +79,11 @@ def get_document_from_cache(repo, path, release, doctype='html'):
                 raise CachedStandard.DoesNotExist
             else:
                 document = cached.vocabulary
+        if path == 'standard/merging.md':
+            if cached.merging == '':
+                raise CachedStandard.DoesNotExist
+            else:
+                document = cached.merging
         if path == 'standard/schema/release-schema.json':
             if cached.release_schema == '':
                 raise CachedStandard.DoesNotExist
@@ -103,6 +108,8 @@ def get_document_from_github_and_cache(repo, path, release, doctype='html'):
         to_cache.standard = document
     if path == 'standard/vocabulary.md':
         to_cache.vocabulary = document
+    if path == 'standard/merging.md':
+        to_cache.merging = document
     if path == 'standard/schema/release-schema.json':
         to_cache.release_schema = document
     if path == 'standard/schema/record-schema.json':
@@ -168,6 +175,11 @@ class StandardView(TemplateView):
                                          path='standard/vocabulary.md',
                                          release=self.release)
             )
+            rendered_merging = render_markdown(
+                get_document_from_github(repo=self.repo,
+                                         path='standard/merging.md',
+                                         release=self.release)
+            )
         else:
             # Try and get from cache
             # (goes to github and caches if not available)
@@ -181,10 +193,16 @@ class StandardView(TemplateView):
                                         path='standard/vocabulary.md',
                                         release=self.release)
             )
+            rendered_merging = render_markdown(
+                get_document_from_cache(repo=self.repo,
+                                        path='standard/merging.md',
+                                        release=self.release)
+            )
 
         context.update({
             'standard': rendered_standard,
             'vocabulary': rendered_vocabulary,
+            'merging': rendered_merging,
             'current_release': self.current_release,
             'other_releases': self.other_releases,
             'site_unique_id': settings.SITE_UNIQUE_ID,
@@ -214,10 +232,16 @@ class CommitView(TemplateView):
                                     path='standard/vocabulary.md',
                                     release=self.commit)
         )
+        rendered_merging = render_markdown(
+            get_document_from_cache(repo=self.repo,
+                                    path='standard/merging.md',
+                                    release=self.commit)
+        )
         context.update({
             'commit': self.commit,
             'standard': rendered_standard,
             'vocabulary': rendered_vocabulary,
+            'merging': rendered_merging,
             'site_unique_id': settings.SITE_UNIQUE_ID,
             'form': AuthenticationForm()
         })
