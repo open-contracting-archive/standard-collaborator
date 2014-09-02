@@ -78,6 +78,7 @@
                     <li><a href="#tabs-3-1" data-toggle="tab">Release</a></li>
                     <li><a href="#tabs-3-2" data-toggle="tab">Release Package</a></li>
                     <li><a href="#tabs-3-3" data-toggle="tab">Record Package</a></li>
+                    <li><a href="#tabs-3-4" data-toggle="tab">Versioned Release</a></li>
                 </ul>
                 <div class="tab-content">
                     <h5 class="pull-right text-right">Written in <a href="http://json-schema.org/">JSON Schema v4</a><br /><span style="color: darkred">*</span> required field</h5>
@@ -105,6 +106,18 @@
                                 <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'record-package-schema' %}></script>
                             {% else %}
                                 <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'record-package-schema' %}></script>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tabs-3-4">
+                        <br />
+                        <br />
+                        <h5>This contains the merge strategies to build a versionedRelease for the record. Click the {} button to see the schema detail.</h5>
+                        <div class="schema-holder">
+                            {% if commit %}
+                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'versioned-release-schema' %}></script>
+                            {% else %}
+                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'versioned-release-schema' %}></script>
                             {% endif %}
                         </div>
                     </div>
