@@ -23,3 +23,9 @@ class CachedStandard(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.tag_name
+
+    def save(self, *args, **kwargs):
+        if self.tag_name == 'master':
+            return
+        else:
+            super(CachedStandard, self).save(*args, **kwargs)
