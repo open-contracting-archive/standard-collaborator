@@ -14,6 +14,7 @@ class CachedStandard(models.Model):
     tag_name = models.CharField(max_length=100)
     standard = models.TextField(blank=True)
     vocabulary = models.TextField(blank=True)
+    worked_example = models.TextField(blank=True)
     merging = models.TextField(blank=True)
     release_schema = models.TextField(blank=True)
     release_package_schema = models.TextField(blank=True)
