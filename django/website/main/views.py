@@ -235,6 +235,7 @@ class StandardView(TemplateView):
             'vocabulary': rendered_vocabulary,
             'merging': rendered_merging,
             'worked_example': rendered_worked_example,
+            'latest_release': LatestVersion.objects.get(),
             'current_release': self.current_release,
             'other_releases': self.other_releases,
             'site_unique_id': settings.SITE_UNIQUE_ID,
