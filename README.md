@@ -43,6 +43,16 @@ To deploy (note it will ask you for your MySQL root password twice):
 
     $ ./tasks.py deploy:dev
 
+This will probably fail the first time.  You will need to add the following to
+the bottom of the (newly generated) `django/website/private_settings.py`
+
+    ANNOTATEIT_KEY = ''
+    ANNOTATEIT_SECRET = ''
+
+Fill in the correct values if you actually know them.  And then run 
+`./tasks.py deploy:dev` again.
+
+
 Run locally
 ===========
 Go into the django directory and use manage.py to run django:
@@ -51,6 +61,18 @@ Go into the django directory and use manage.py to run django:
 
 ./manage.py automatically runs inside the virtualenv that was setup
 by bootstrap.py
+
+To get going you will need to create a user:
+
+    $ ./manage.py createsuperuser
+
+And then login to http://localhost:8000/admin/ and add a "latest version".
+The value `0__3__3` will work fine.  Finally you can then go to:
+
+    http://localhost:8000/
+
+and see it working.
+
 
 Run tests
 =========
