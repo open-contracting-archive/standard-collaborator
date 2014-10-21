@@ -11,6 +11,7 @@ django/website/*.sqlite
 django/website/search_index
 django/website/static
 django/website/uploads
+django/website/working
 reports/*
 .DS_Store
 .pydevproject
