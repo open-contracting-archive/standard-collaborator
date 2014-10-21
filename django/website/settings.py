@@ -382,7 +382,12 @@ CACHES = {
 
 
 ########## Your stuff: Below this line define 3rd party libary settings
-STANDARD_GITHUB_REPO = 'open-contracting/standard'
+if hasattr(local_settings, 'STANDARD_GITHUB_REPO'):
+    STANDARD_GITHUB_REPO = local_settings.STANDARD_GITHUB_REPO
+else:
+    STANDARD_GITHUB_REPO = 'open-contracting/standard'
+# path to docs from root of repository
+STANDARD_DOCS_PATH = 'standard/docs'
 
 if hasattr(private_settings, 'GITHUB_API_CLIENT_ID'):
     GITHUB_API_CLIENT_ID = private_settings.GITHUB_API_CLIENT_ID
