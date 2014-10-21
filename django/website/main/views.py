@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from datetime import datetime
 from braces.views import JSONResponseMixin
 from django.conf import settings

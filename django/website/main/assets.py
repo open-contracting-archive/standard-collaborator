@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django_assets import Bundle, register
 
 # JAVASCRIPT

@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import pytest
 from os import path, pardir
 from django.conf import settings
@@ -35,10 +37,10 @@ def test_redirect_url_handles_exception():
     assert response == '/r/master/'
 
 
-		
 
 
-		
+
+
 
 
 #def test_template_name_is_standard():

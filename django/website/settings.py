@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 # Django settings for  project.
 
 # Build paths inside the project like this: path.join(BASE_DIR, ...)
