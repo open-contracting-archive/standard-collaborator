@@ -30,9 +30,14 @@ def ensure_working_directory_and_repo_exist():
     else:
         owner = None
     working_dir = path.join(env['django_dir'], 'working')
-    _create_dir_if_not_exists(working_dir, owner=owner)
-    # TODO: check if repo exists - if not do git clone
+    exports_dir = path.join(working_dir, 'exports')
+    html_dir = path.join(working_dir, 'html')
     repo_dir = path.join(working_dir, 'repo')
+    _create_dir_if_not_exists(working_dir, owner=owner)
+    _create_dir_if_not_exists(exports_dir, owner=owner)
+    _create_dir_if_not_exists(html_dir, owner=owner)
+
+    # check if repo exists - if not do git clone
     if not path.exists(repo_dir):
         sys.path.append(env['django_settings_dir'])
         from settings import STANDARD_GITHUB_REPO

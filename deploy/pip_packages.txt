@@ -28,6 +28,7 @@ PyGithub
 markdown
 -e hg+https://bitbucket.org/birdsarah/django-registration/@django1.6#egg=registration
 django-bootstrap-form
+GitPython==0.3.2.RC1
 
 
 # CSS and assets
