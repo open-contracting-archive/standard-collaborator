@@ -150,7 +150,7 @@ class LatestView(RedirectView):
         except MultipleObjectsReturned:
             latest_release = 'master'
         kwargs.update({'release': latest_release})
-	return reverse('standard', kwargs=kwargs)
+        return reverse('standard', kwargs=kwargs)
 
 
 class StandardView(TemplateView):
