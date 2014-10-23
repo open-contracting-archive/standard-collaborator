@@ -16,32 +16,6 @@ look like:
 """
 import factory
 
-class LatestVersionFactory(factory.django.DjangoModelFactory):
-	class Meta:
-		model = LatestVersion
-
-@pytest.mark.django_db
-def test_redirect_url_returns_latest_review():
-    LatestVersionFactory(tag_name='test')
-    view = LatestView()
-    response = view.get_redirect_url()
-    assert response == '/r/test/'
-
-
-@pytest.mark.django_db
-def test_redirect_url_handles_exception():
-    LatestVersionFactory(tag_name='test')
-    LatestVersionFactory(tag_name='test')
-    view = LatestView()
-    response = view.get_redirect_url()
-    assert response == '/r/master/'
-
-
-
-
-
-
-
 
 #def test_template_name_is_standard():
 #    view = StandardView()

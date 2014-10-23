@@ -12,8 +12,6 @@ from django.conf import settings
 from git import Repo
 from markdown import markdown
 
-from .models import LatestVersion
-
 WORKING_DIR = path.abspath(path.join(path.dirname(__file__), '..', 'working'))
 REPO_DIR = path.join(WORKING_DIR, 'repo')
 EXPORT_ROOT = path.join(WORKING_DIR, 'exports')
@@ -43,6 +41,13 @@ def tag_to_tag_dict(tag):
     }
 
 
+def get_path_for_release(release, lang):
+    """get the path from the database for the release and language specified
+    """
+    # TODO: implement properly
+    return 'standard/intro'
+
+
 class StandardsRepo(object):
 
     def __init__(self):
@@ -50,16 +55,6 @@ class StandardsRepo(object):
 
     def git_pull(self):
         subprocess.check_call(['git', 'pull'], cwd=REPO_DIR)
-        # and update the latest tag
-        latest_tag_name = self.get_ordered_tags()[0].name
-        version_count = LatestVersion.objects.all().count()
-        if version_count == 0:
-            LatestVersion.objects.create(tag_name=latest_tag_name)
-        else:
-            latest_version = LatestVersion.objects.get()
-            if latest_version.tag_name != latest_tag_name:
-                latest_version.tag_name = latest_tag_name
-                latest_version.save()
 
     def master_commit_id(self):
         """Return the hash of the last commit on master"""
@@ -71,6 +66,13 @@ class StandardsRepo(object):
         sorted_tags = sorted(
             tags, key=lambda t: t.commit.committed_date, reverse=True)
         return sorted_tags
+
+    def get_latest_tag_name(self):
+        ordered_tags = self.get_ordered_tags()
+        if len(ordered_tags) == 0:
+            return 'master'
+        else:
+            return ordered_tags[0].name
 
     def get_ordered_tag_dicts(self):
         return [tag_to_tag_dict(tag) for tag in self.get_ordered_tags()]

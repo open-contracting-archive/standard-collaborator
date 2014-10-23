@@ -1,58 +1,52 @@
 from __future__ import unicode_literals
 
-from datetime import datetime
 from os import path
 import re
 
 from braces.views import JSONResponseMixin
 from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm
-from django.core.exceptions import MultipleObjectsReturned
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.views.generic import TemplateView, RedirectView, View
 
-from .models import LatestVersion, CachedStandard
-from .standardscache import StandardsRepo, HTMLProducer
-
-
-class LatestView(RedirectView):
-    permanent = False
-
-    def get_redirect_url(self, *args, **kwargs):
-        # TODO: change to get tag directly from the git repo
-        # TODO: redirect directly to first page of this export
-        try:
-            latest_release = LatestVersion.objects.get().tag_name
-        except MultipleObjectsReturned:
-            latest_release = 'master'
-        kwargs.update({'release': latest_release})
-        return reverse('standard-root', kwargs=kwargs)
+from .models import CachedStandard
+from .standardscache import StandardsRepo, HTMLProducer, get_path_for_release
 
 
 class StandardRedirectView(RedirectView):
+    permanent = False
 
     # TODO: what about legacy tags where this URL is valid?
     def get_redirect_url(self, *args, **kwargs):
-        # TODO: find the initial path
-        dummy_path = 'standard/intro'
-        kwargs.update({'lang': self.lang, 'path': dummy_path})
+        kwargs.update({
+            'release': self.release,
+            'lang': self.lang,
+            'path': get_path_for_release(self.release, self.lang)
+        })
         return reverse('standard', kwargs=kwargs)
 
 
-class StandardRootView(StandardRedirectView):
-    permanent = False
-    DEFAULT_LANG = 'en'
+class LatestView(StandardRedirectView):
 
     def get(self, request, *args, **kwargs):
-        self.lang = self.DEFAULT_LANG
+        self.release = StandardsRepo().get_latest_tag_name()
+        self.lang = self.STANDARD_DEFAULT_LANG
+        return super(LatestView, self).get(request, *args, **kwargs)
+
+
+class StandardRootView(StandardRedirectView):
+
+    def get(self, request, *args, **kwargs):
+        self.release = kwargs.get('release')
+        self.lang = self.STANDARD_DEFAULT_LANG
         return super(StandardRootView, self).get(request, *args, **kwargs)
 
 
 class StandardLangView(StandardRedirectView):
-    permanent = False
 
     def get(self, request, *args, **kwargs):
+        self.release = kwargs.get('release')
         self.lang = kwargs.get('lang')
         return super(StandardLangView, self).get(request, *args, **kwargs)
 
@@ -99,16 +93,14 @@ class StandardView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super(StandardView, self).get_context_data(*args, **kwargs)
         # get file path corresponding to self.path and put in context
+        # it will be included using SSI (Server Side Include)
         ssi_path = path.join(self.html_dir, self.lang, self.path) + '.html'
         if not path.exists(ssi_path):
             raise Http404
-        # TODO: edit template to ignore some details and do {% ssi filepath %}
-        # instead, but save the current template as some will be broken out to
-        # support creating menus later on.
 
         context_dict = {
             'ssi_path': ssi_path,
-            'latest_release': LatestVersion.objects.get(),
+            'latest_release_name': StandardsRepo().get_latest_tag_name(),
             'other_releases': self.other_releases,
             'site_unique_id': settings.SITE_UNIQUE_ID,
             'lang': self.lang,

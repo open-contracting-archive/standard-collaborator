@@ -60,7 +60,7 @@
         </div>
     </div>
     {% endif %}
-    {% if latest_release.tag_name != current_release.name and not current_release.is_master %}
+    {% if latest_release_name != current_release.name and not current_release.is_master %}
     <div class="panel panel-danger">
         <div class="panel-heading">
             <h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span> Not the latest release.</h4>

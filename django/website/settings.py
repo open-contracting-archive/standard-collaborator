@@ -394,6 +394,7 @@ else:
 # path to docs from root of repository
 STANDARD_DOCS_PATH = 'standard/docs'
 STANDARD_SCHEMA_PATH = 'standard/schema'
+STANDARD_DEFAULT_LANG = 'en'
 
 if hasattr(private_settings, 'GITHUB_API_CLIENT_ID'):
     GITHUB_API_CLIENT_ID = private_settings.GITHUB_API_CLIENT_ID
