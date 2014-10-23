@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.views.generic import TemplateView, RedirectView, View
 
 from .models import CachedStandard
-from .standardscache import StandardsRepo, HTMLProducer, get_path_for_release
+from .standardscache import HTML_ROOT, StandardsRepo, HTMLProducer, get_path_for_release
 
 
 class StandardRedirectView(RedirectView):
@@ -94,12 +94,13 @@ class StandardView(TemplateView):
         context = super(StandardView, self).get_context_data(*args, **kwargs)
         # get file path corresponding to self.path and put in context
         # it will be included using SSI (Server Side Include)
-        ssi_path = path.join(self.html_dir, self.lang, self.path) + '.html'
-        if not path.exists(ssi_path):
+        content_path = path.join(self.real_release, self.lang, self.path) + '.html'
+        if not path.exists(path.join(HTML_ROOT, content_path)):
             raise Http404
 
         context_dict = {
-            'ssi_path': ssi_path,
+            'content_path': content_path,
+            'release_name': self.release,
             'latest_release_name': StandardsRepo().get_latest_tag_name(),
             'other_releases': self.other_releases,
             'site_unique_id': settings.SITE_UNIQUE_ID,

@@ -356,6 +356,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
 TEMPLATE_DIRS = (
     path.join(BASE_DIR, 'templates'),
+    path.join(BASE_DIR, 'working', 'html'),
 )
 
 if DEBUG:
@@ -371,10 +372,6 @@ else:
         )),
     )
 
-# We use SSI to include the generated HTML
-ALLOWED_INCLUDE_ROOTS = (
-    path.join(path.abspath(path.dirname(__file__)), 'working', 'html'),
-)
 ########## END TEMPLATE CONFIGURATION
 
 CACHES = {
