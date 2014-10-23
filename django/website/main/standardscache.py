@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from datetime import datetime
 import os
 from os import path
 import re
@@ -31,6 +32,17 @@ def get_commit_html_dir(commit):
     return path.join(HTML_ROOT, commit)
 
 
+def tag_to_tag_dict(tag):
+    """takes a GitPython tag object and converts to dict with fields we need"""
+    return {
+        'name': tag.name,
+        'display_name': tag.name.replace('__', '.').replace('_', ' '),
+        'is_master': False,
+        'commit': tag.commit.hexsha,
+        'last_modified': datetime.fromtimestamp(tag.commit.committed_date)
+    }
+
+
 class StandardsRepo(object):
 
     def __init__(self):
@@ -60,6 +72,15 @@ class StandardsRepo(object):
             tags, key=lambda t: t.commit.committed_date, reverse=True)
         return sorted_tags
 
+    def get_ordered_tag_dicts(self):
+        return [tag_to_tag_dict(tag) for tag in self.get_ordered_tags()]
+
+    def get_master_tag_dict(self):
+        tag_dict = tag_to_tag_dict(self.repo.head)
+        tag_dict['name'] = tag_dict['display_name'] = 'master'
+        tag_dict['is_master'] = True
+        return tag_dict
+
     def standardise_commit_name(self, commit):
         """ make sure we have a "standard" commit id to use elsewhere.
 
@@ -74,12 +95,12 @@ class StandardsRepo(object):
             return commit
 
     def get_commit(self, commit):
+        # TODO: implement this
+        # see template for fields required
         """Return a commit object with commit name, last modified date ..."""
         commit = self.standardise_commit_name(commit)
         # TODO: investigate when commit does not exist, decide how to handle it
         gitcommit = self.repo.commit(commit)
-        # TODO: implement this
-        # see template for fields required
         return gitcommit
         # return {}
 
@@ -106,7 +127,7 @@ class StandardsRepo(object):
 
 class HTMLProducer(object):
 
-    CONTENT_DIR_RE = re.compile(r'^\d\d_')
+    NUMERIC_PREFIX_RE = re.compile(r'^\d\d_')
 
     def __init__(self, commit):
         self.commit = commit
@@ -140,9 +161,13 @@ class HTMLProducer(object):
         if path.exists(self.html_dir):
             shutil.rmtree(self.html_dir)
 
+    def remove_numeric_prefix(self, name):
+        return name[3:]
+
     def get_exported_languages(self, export_docs_root):
         """ find all 2 letter language codes in directory """
         # TODO: should we support en_gb etc? -> drop len == 2 check
+        # but we might want the exported languages elsewhere ...
         return [d for d in os.listdir(export_docs_root)
                 if len(d) == 2 and path.isdir(path.join(export_docs_root, d))]
 
@@ -158,24 +183,26 @@ class HTMLProducer(object):
             self.create_html_lang(lang, export_lang_dir, html_lang_dir)
 
     def create_html_lang(self, lang, export_dir, html_dir):
-        for content_dir in os.listdir(export_dir):
-            # TODO: check isdir
-            if self.CONTENT_DIR_RE.match(content_dir):
-                self.dir_structure[lang][content_dir] = {}
-                export_content_dir = path.join(export_dir, content_dir)
-                # TODO: strip 01_
-                html_content_dir = path.join(html_dir, content_dir)
-                os.mkdir(html_content_dir)
-                self.create_html_content(lang, content_dir, export_content_dir, html_content_dir)
+        for section_dir in os.listdir(export_dir):
+            if (self.NUMERIC_PREFIX_RE.match(section_dir) and
+                path.isdir(path.join(export_dir, section_dir))):
+                self.dir_structure[lang][section_dir] = {}
+                export_section_dir = path.join(export_dir, section_dir)
+                html_section_dir = path.join(html_dir,
+                                             self.remove_numeric_prefix(section_dir))
+                os.mkdir(html_section_dir)
+                self.create_html_content(lang, section_dir, export_section_dir, html_section_dir)
 
-    def create_html_content(self, lang, content_dir, export_dir, html_dir):
+    def create_html_content(self, lang, section_dir, export_dir, html_dir):
         for content_file in os.listdir(export_dir):
             # check for 01_ prefix and that it is a markdown file
-            if self.CONTENT_DIR_RE.match(content_file) and content_file.endswith('.md'):
-                self.dir_structure[lang][content_dir][content_file] = True
+            if self.NUMERIC_PREFIX_RE.match(content_file) and content_file.endswith('.md'):
+                self.dir_structure[lang][section_dir][content_file] = True
                 export_content_file = path.join(export_dir, content_file)
-                # TODO: strip 01_
-                html_content_file = path.join(html_dir, content_file)[:-3] + '.html'
+                # replace .md with .html
+                html_content_file = path.join(
+                    html_dir, self.remove_numeric_prefix(content_file)
+                )[:-3] + '.html'
                 self.convert_md_to_html(export_content_file, html_content_file)
 
     def convert_md_to_html(self, mdfile, htmlfile):
@@ -191,7 +218,7 @@ class HTMLProducer(object):
         # TODO: do something with self.dir_structure
         return ""
 
-    def second_level_menu(self, lang, content_dir):
+    def second_level_menu(self, lang, section_dir):
         """ returns a string containing the HTML for the 2nd level menu/tabs
         for the docs in a language and section """
         # TODO: do something with self.dir_structure

@@ -1,12 +1,14 @@
 from __future__ import unicode_literals
 
 from datetime import datetime
+from os import path
+
 from braces.views import JSONResponseMixin
 from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import MultipleObjectsReturned
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.views.generic import TemplateView, RedirectView, View
 
 from github import Github, UnknownObjectException
@@ -147,6 +149,7 @@ class LatestView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         # TODO: change to get tag directly from the git repo
+        # TODO: redirect directly to first page of this export
         try:
             latest_release = LatestVersion.objects.get().tag_name
         except MultipleObjectsReturned:
@@ -162,16 +165,18 @@ class StandardRootView(RedirectView):
     # TODO: what about legacy tags where this URL is valid?
     def get_redirect_url(self, *args, **kwargs):
         # TODO: redirect directly to end point
-        kwargs.update({'lang': self.DEFAULT_LANG})
-        return reverse('standard-lang', kwargs=kwargs)
+        dummy_path = 'intro/index'
+        kwargs.update({'lang': self.DEFAULT_LANG, 'path': dummy_path})
+        return reverse('standard', kwargs=kwargs)
 
 
 class StandardLangView(RedirectView):
+    # TODO: last test suggested this was broken - check it works
     permanent = False
 
     def get(self, request, *args, **kwargs):
         self.lang = kwargs.get('lang')
-        super(StandardRootView, self).get(request, *args, **kwargs)
+        super(StandardLangView, self).get(request, *args, **kwargs)
 
     def get_redirect_url(self, *args, **kwargs):
         # TODO: find the initial path
@@ -198,21 +203,16 @@ class StandardView(TemplateView):
 
         cleaned_release = "master"
 
-        ordered_tags = self.repo.get_ordered_tags()
+        ordered_tags = self.repo.get_ordered_tag_dicts()
         for tag in ordered_tags:
-            tag.display_name = tag.name.replace('__', '.').replace('_', ' ')
-            tag.is_master = False
-            if tag.name == self.release:
-                cleaned_release = tag.name
+            if tag['name'] == self.release:
+                cleaned_release = tag['name']
                 self.current_release = tag
             else:
                 self.other_releases.append(tag)
 
         if self.release == 'master':
-            self.current_release = self.repo.head
-            self.current_release.is_master = True
-            self.current_release.commit = self.repo.master_commit_id()
-            self.current_release.display_name = 'master'
+            self.current_release = self.repo.get_master_tag_dict()
 
         if cleaned_release != self.release:
             # We didn't get a correct release request, so redirect
@@ -222,62 +222,16 @@ class StandardView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(StandardView, self).get_context_data(*args, **kwargs)
-        # TODO: get file path corresponding to self.path and put in context
+        # get file path corresponding to self.path and put in context
+        ssi_path = path.join(self.html_dir, self.lang, self.path) + '.html'
+        if not path.exists(ssi_path):
+            raise Http404
         # TODO: edit template to ignore some details and do {% ssi filepath %}
         # instead, but save the current template as some will be broken out to
         # support creating menus later on.
 
-        if self.current_release.is_master:
-            # Always go to github
-            rendered_standard = render_markdown(
-                get_document_from_github(repo=self.repo,
-                                         path='standard/standard.md',
-                                         release=self.release)
-            )
-            rendered_vocabulary = render_markdown(
-                get_document_from_github(repo=self.repo,
-                                         path='standard/vocabulary.md',
-                                         release=self.release)
-            )
-            rendered_merging = render_markdown(
-                get_document_from_github(repo=self.repo,
-                                         path='standard/merging.md',
-                                         release=self.release)
-            )
-            rendered_worked_example = render_markdown(
-                get_document_from_github(repo=self.repo,
-                                         path='standard/worked_example.md',
-                                         release=self.release)
-            )
-        else:
-            # Try and get from cache
-            # (goes to github and caches if not available)
-            rendered_standard = render_markdown(
-                get_document_from_cache(repo=self.repo,
-                                        path='standard/standard.md',
-                                        release=self.release)
-            )
-            rendered_vocabulary = render_markdown(
-                get_document_from_cache(repo=self.repo,
-                                        path='standard/vocabulary.md',
-                                        release=self.release)
-            )
-            rendered_merging = render_markdown(
-                get_document_from_cache(repo=self.repo,
-                                        path='standard/merging.md',
-                                        release=self.release)
-            )
-            rendered_worked_example = render_markdown(
-                get_document_from_cache(repo=self.repo,
-                                        path='standard/worked_example.md',
-                                        release=self.release)
-            )
-
         context.update({
-            'standard': rendered_standard,
-            'vocabulary': rendered_vocabulary,
-            'merging': rendered_merging,
-            'worked_example': rendered_worked_example,
+            'ssi_path': ssi_path,
             'latest_release': LatestVersion.objects.get(),
             'current_release': self.current_release,
             'other_releases': self.other_releases,

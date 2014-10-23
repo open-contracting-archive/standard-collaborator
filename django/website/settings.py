@@ -370,6 +370,11 @@ else:
             'django.template.loaders.app_directories.Loader',
         )),
     )
+
+# We use SSI to include the generated HTML
+ALLOWED_INCLUDE_ROOTS = (
+    path.join(path.abspath(path.dirname(__file__)), 'working', 'html'),
+)
 ########## END TEMPLATE CONFIGURATION
 
 CACHES = {

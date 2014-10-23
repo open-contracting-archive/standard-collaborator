@@ -18,7 +18,7 @@
     {% if current_release.is_master %}
         <p>Last modified: {{ current_release.last_modified }}</p>
     {% else %}
-        <p>Released on: {{ current_release.commit.stats.last_modified }}</p>
+        <p>Released on: {{ current_release.last_modified }}</p>
     {% endif %}
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -40,7 +40,7 @@
             <h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span> You are viewing master, comments may not appear if they were on previous versions of master.</h4>
         </div>
         <div class="panel-body">
-            <p>You are reading the very latest version of the standard. Not an official release. The latest release is <a href="{% url 'standard' 'latest' %}">{{ other_releases.0.display_name }}</a></p>
+            <p>You are reading the very latest version of the standard. Not an official release. The latest release is <a href="{% url 'latest' %}">{{ other_releases.0.display_name }}</a></p>
             <p>The master document is a living document that is changing as we update it. </p>
             <p>This version of master is identified by its unique id: {{ current_release.commit }}</p>
             <p>Any comments you make will not show up if master is updated, but will always be available <a href="{% url 'commit' current_release.commit %}">here</a></p>
@@ -70,75 +70,7 @@
         </div>
     </div>
     {% endif %}
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#tabs-1" data-toggle="tab">Main</a></li>
-        <li><a href="#tabs-2" data-toggle="tab">Definitions</a></li>
-        <li><a href="#tabs-3" data-toggle="tab">Schemas</a></li>
-        <li><a href="#tabs-4" data-toggle="tab">Merging</a></li>
-        {% comment %}
-        <li><a href="#tabs-5" data-toggle="tab">Worked Example</a></li>
-        {% endcomment %}
-    </ul>
-    <div id="annotatable"> 
-        <div class="tab-content">
-            <div class="tab-pane active" id="tabs-1"> {{ standard|safe }} </div>
-            <div class="tab-pane" id="tabs-2"> {{ vocabulary|safe }} </div>
-            <div class="tab-pane" id="tabs-3">
-                <ul class="nav nav-tabs">
-                    <li><a href="#tabs-3-1" data-toggle="tab">Release</a></li>
-                    <li><a href="#tabs-3-2" data-toggle="tab">Release Package</a></li>
-                    <li><a href="#tabs-3-3" data-toggle="tab">Record Package</a></li>
-                    <li><a href="#tabs-3-4" data-toggle="tab">Versioned Release</a></li>
-                </ul>
-                <div class="tab-content">
-                    <h5 class="pull-right text-right">Written in <a href="http://json-schema.org/">JSON Schema v4</a><br /><span style="color: darkred">*</span> required field</h5>
-                    <div class="tab-pane active" id="tabs-3-1">
-                        <div class="schema-holder">
-                            {% if commit %}
-                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'release-schema' %}></script>
-                            {% else %}
-                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'release-schema' %}></script>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="tabs-3-2">
-                        <div class="schema-holder">
-                            {% if commit %}
-                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'release-package-schema' %}></script>
-                            {% else %}
-                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'release-package-schema' %}></script>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="tabs-3-3">
-                        <div class="schema-holder">
-                            {% if commit %}
-                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'record-package-schema' %}></script>
-                            {% else %}
-                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'record-package-schema' %}></script>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="tabs-3-4">
-                        <br />
-                        <br />
-                        <h5>This contains the merge strategies to build a versionedRelease for the record. Click the {} button to see the schema detail.</h5>
-                        <div class="schema-holder">
-                            {% if commit %}
-                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema-commit' commit 'versioned-release-schema' %}></script>
-                            {% else %}
-                                <script src="{{ STATIC_URL }}docson/widget.js" data-schema={% url 'schema' current_release.name 'versioned-release-schema' %}></script>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane" id="tabs-4"> {{ merging|safe }} </div>
-            {% comment %}
-            <div class="tab-pane" id="tabs-5"> {{ worked_example|safe }} </div>
-            {% endcomment %}
-        </div>
-    </div>
+		{% ssi ssi_path %}
     <!-- OVERLAY DIALOGS -->
     <div class="modal fade" id="changeVersion" tabindex="-1" role="dialog" aria-labelledby="ChangeVersion" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -151,12 +83,12 @@
                     <p>
                         <ul>
                             {% for release in other_releases %}
-                            <li><a href="{% url 'standard' release.name %}">{{ release.display_name|title }}</a> (Last modified: {{ release.commit.stats.last_modified }})</li>
+                            <li><a href="{% url 'standard-root' release.name %}">{{ release.display_name|title }}</a> (Last modified: {{ release.last_modified }})</li>
                             {% endfor %}
                         </ul>
                         <ul>
                             {% if not current_release.is_master %}
-                            <li><a href="{% url 'standard' 'master' %}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits.</li>
+                            <li><a href="{% url 'standard-root' 'master' %}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits.</li>
                             {% endif %}
                         </ul>
                     </p>
