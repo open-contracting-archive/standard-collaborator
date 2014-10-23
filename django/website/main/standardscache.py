@@ -16,6 +16,7 @@ WORKING_DIR = path.abspath(path.join(path.dirname(__file__), '..', 'working'))
 REPO_DIR = path.join(WORKING_DIR, 'repo')
 EXPORT_ROOT = path.join(WORKING_DIR, 'exports')
 HTML_ROOT = path.join(WORKING_DIR, 'html')
+NUMERIC_PREFIX_RE = re.compile(r'^\d\d_')
 
 
 def get_commit_export_dir(commit):
@@ -41,11 +42,32 @@ def tag_to_tag_dict(tag):
     }
 
 
+def remove_numeric_prefix(name):
+    return name[3:]
+
+
+def is_section_dir(export_dir, section_dir):
+    return (NUMERIC_PREFIX_RE.match(section_dir) and
+            path.isdir(path.join(export_dir, section_dir)))
+
+
+def is_content_file(content_file):
+    return NUMERIC_PREFIX_RE.match(content_file) and content_file.endswith('.md')
+
+
 def get_path_for_release(release, lang):
-    """get the path from the database for the release and language specified
+    """get the path (eg 'xxx/yyy' for 01_xxx/01_yyy) for the release and
+    language specified
     """
-    # TODO: implement properly
-    return 'standard/intro'
+    commit = StandardsRepo().standardise_commit_name(release)
+    export_docs_dir = get_commit_export_docs_dir(commit)
+    lang_dir = path.join(export_docs_dir, lang)
+    first_section_dir = [d for d in sorted(os.listdir(lang_dir))
+                         if is_section_dir(lang_dir, d)][0]
+    first_content_file = [f for f in sorted(os.listdir(path.join(lang_dir, first_section_dir)))
+                          if is_content_file(f)][0]
+    return '%s/%s' % (remove_numeric_prefix(first_section_dir),
+                      remove_numeric_prefix(first_content_file)[:-3])
 
 
 class StandardsRepo(object):
@@ -140,8 +162,6 @@ class StandardsRepo(object):
 
 class HTMLProducer(object):
 
-    NUMERIC_PREFIX_RE = re.compile(r'^\d\d_')
-
     def __init__(self, commit):
         self.commit = commit
         self.export_docs_dir = get_commit_export_docs_dir(commit)
@@ -174,9 +194,6 @@ class HTMLProducer(object):
         if path.exists(self.html_dir):
             shutil.rmtree(self.html_dir)
 
-    def remove_numeric_prefix(self, name):
-        return name[3:]
-
     def get_exported_languages(self, export_docs_root):
         """ find all 2 letter language codes in directory """
         # TODO: should we support en_gb etc? -> drop len == 2 check
@@ -197,24 +214,23 @@ class HTMLProducer(object):
 
     def create_html_lang(self, lang, export_dir, html_dir):
         for section_dir in os.listdir(export_dir):
-            if (self.NUMERIC_PREFIX_RE.match(section_dir) and
-                path.isdir(path.join(export_dir, section_dir))):
+            if is_section_dir(export_dir, section_dir):
                 self.dir_structure[lang][section_dir] = {}
                 export_section_dir = path.join(export_dir, section_dir)
                 html_section_dir = path.join(html_dir,
-                                             self.remove_numeric_prefix(section_dir))
+                                             remove_numeric_prefix(section_dir))
                 os.mkdir(html_section_dir)
                 self.create_html_content(lang, section_dir, export_section_dir, html_section_dir)
 
     def create_html_content(self, lang, section_dir, export_dir, html_dir):
         for content_file in os.listdir(export_dir):
             # check for 01_ prefix and that it is a markdown file
-            if self.NUMERIC_PREFIX_RE.match(content_file) and content_file.endswith('.md'):
+            if is_content_file(content_file):
                 self.dir_structure[lang][section_dir][content_file] = True
                 export_content_file = path.join(export_dir, content_file)
                 # replace .md with .html
                 html_content_file = path.join(
-                    html_dir, self.remove_numeric_prefix(content_file)
+                    html_dir, remove_numeric_prefix(content_file)
                 )[:-3] + '.html'
                 self.convert_md_to_html(export_content_file, html_content_file)
 
