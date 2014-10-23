@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from datetime import datetime
 from os import path
+import re
 
 from braces.views import JSONResponseMixin
 from django.conf import settings
@@ -187,9 +188,13 @@ class StandardLangView(StandardRedirectView):
 
 class StandardView(TemplateView):
     template_name = 'main/standard.html'
+    git_sha_re = re.compile(r'^[0-9a-fA-F]{40}$')
 
     def get(self, request, *args, **kwargs):
         self.release = kwargs.get('release')
+        # allow for child class to set this
+        if not hasattr(self, 'is_commit_id'):
+            self.is_commit_id = (self.git_sha_re.match(self.release) is not None)
         self.lang = kwargs.get('lang')
         self.path = kwargs.get('path')
         self.other_releases = []
@@ -214,7 +219,7 @@ class StandardView(TemplateView):
         if self.release == 'master':
             self.current_release = self.repo.get_master_tag_dict()
 
-        if cleaned_release != self.release:
+        if not self.is_commit_id and cleaned_release != self.release:
             # We didn't get a correct release request, so redirect
             return HttpResponseRedirect(reverse('latest'))
         else:
@@ -230,59 +235,28 @@ class StandardView(TemplateView):
         # instead, but save the current template as some will be broken out to
         # support creating menus later on.
 
-        context.update({
+        context_dict = {
             'ssi_path': ssi_path,
             'latest_release': LatestVersion.objects.get(),
-            'current_release': self.current_release,
             'other_releases': self.other_releases,
             'site_unique_id': settings.SITE_UNIQUE_ID,
             'form': AuthenticationForm()
-        })
+        }
+        if self.is_commit_id:
+            context_dict['commit'] = self.release
+        else:
+            context_dict['current_release'] = self.current_release
 
+        context.update(context_dict)
         return context
 
 
-class CommitView(TemplateView):
+class CommitView(StandardView):
     template_name = 'main/standard.html'
 
     def get(self, request, *args, **kwargs):
-        self.commit = kwargs.get('commitid')
-        self.repo = get_repo()
+        self.is_commit_id = True
         return super(CommitView, self).get(request, *args, **kwargs)
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(CommitView, self).get_context_data(*args, **kwargs)
-        rendered_standard = render_markdown(
-            get_document_from_cache(repo=self.repo,
-                                    path='standard/standard.md',
-                                    release=self.commit)
-        )
-        rendered_vocabulary = render_markdown(
-            get_document_from_cache(repo=self.repo,
-                                    path='standard/vocabulary.md',
-                                    release=self.commit)
-        )
-        rendered_merging = render_markdown(
-            get_document_from_cache(repo=self.repo,
-                                    path='standard/merging.md',
-                                    release=self.commit)
-        )
-        rendered_worked_example = render_markdown(
-            get_document_from_cache(repo=self.repo,
-                                    path='standard/worked_example.md',
-                                    release=self.commit)
-        )
-        context.update({
-            'commit': self.commit,
-            'standard': rendered_standard,
-            'vocabulary': rendered_vocabulary,
-            'merging': rendered_merging,
-            'worked_example': rendered_worked_example,
-            'site_unique_id': settings.SITE_UNIQUE_ID,
-            'form': AuthenticationForm()
-        })
-
-        return context
 
 
 class SchemaView(JSONResponseMixin, View):
