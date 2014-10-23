@@ -13,6 +13,7 @@ from github import Github, UnknownObjectException
 from markdown import markdown
 
 from .models import LatestVersion, CachedStandard
+from .standardscache import StandardsRepo, HTMLProducer
 
 
 def get_repo():
@@ -145,11 +146,37 @@ class LatestView(RedirectView):
     permanent = False
 
     def get_redirect_url(self, *args, **kwargs):
+        # TODO: change to get tag directly from the git repo
         try:
             latest_release = LatestVersion.objects.get().tag_name
         except MultipleObjectsReturned:
             latest_release = 'master'
         kwargs.update({'release': latest_release})
+        return reverse('standard-root', kwargs=kwargs)
+
+
+class StandardRootView(RedirectView):
+    permanent = False
+    DEFAULT_LANG = 'en'
+
+    # TODO: what about legacy tags where this URL is valid?
+    def get_redirect_url(self, *args, **kwargs):
+        # TODO: redirect directly to end point
+        kwargs.update({'lang': self.DEFAULT_LANG})
+        return reverse('standard-lang', kwargs=kwargs)
+
+
+class StandardLangView(RedirectView):
+    permanent = False
+
+    def get(self, request, *args, **kwargs):
+        self.lang = kwargs.get('lang')
+        super(StandardRootView, self).get(request, *args, **kwargs)
+
+    def get_redirect_url(self, *args, **kwargs):
+        # TODO: find the initial path
+        dummy_path = 'intro/index'
+        kwargs.update({'lang': self.lang, 'path': dummy_path})
         return reverse('standard', kwargs=kwargs)
 
 
@@ -158,11 +185,20 @@ class StandardView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         self.release = kwargs.get('release')
-        cleaned_release = "master"
+        self.lang = kwargs.get('lang')
+        self.path = kwargs.get('path')
         self.other_releases = []
 
-        self.repo = get_repo()
-        ordered_tags = get_ordered_tags(self.repo)
+        self.repo = StandardsRepo()
+        self.repo.export_commit(self.release)
+        self.real_release = self.repo.standardise_commit_name(self.release)
+
+        self.html_prod = HTMLProducer(self.real_release)
+        self.html_dir = self.html_prod.get_html_dir()
+
+        cleaned_release = "master"
+
+        ordered_tags = self.repo.get_ordered_tags()
         for tag in ordered_tags:
             tag.display_name = tag.name.replace('__', '.').replace('_', ' ')
             tag.is_master = False
@@ -173,9 +209,9 @@ class StandardView(TemplateView):
                 self.other_releases.append(tag)
 
         if self.release == 'master':
-            self.current_release = self.repo
+            self.current_release = self.repo.head
             self.current_release.is_master = True
-            self.current_release.commit = self.repo.get_commits()[0].sha
+            self.current_release.commit = self.repo.master_commit_id()
             self.current_release.display_name = 'master'
 
         if cleaned_release != self.release:
@@ -186,6 +222,11 @@ class StandardView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(StandardView, self).get_context_data(*args, **kwargs)
+        # TODO: get file path corresponding to self.path and put in context
+        # TODO: edit template to ignore some details and do {% ssi filepath %}
+        # instead, but save the current template as some will be broken out to
+        # support creating menus later on.
+
         if self.current_release.is_master:
             # Always go to github
             rendered_standard = render_markdown(
