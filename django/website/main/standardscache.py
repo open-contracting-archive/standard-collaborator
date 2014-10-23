@@ -104,11 +104,11 @@ class StandardsRepo(object):
         return gitcommit
         # return {}
 
-    def export_commit(self, commit, force=False):
+    def export_commit(self, commit, force_regenerate=False):
         commit = self.standardise_commit_name(commit)
         export_dir = get_commit_export_dir(commit)
         export_exists = path.exists(export_dir)
-        if force and export_exists:
+        if force_regenerate and export_exists:
             shutil.rmtree(export_dir)
             export_exists = False
         if not export_exists:
@@ -118,6 +118,17 @@ class StandardsRepo(object):
                 (commit, commit, EXPORT_ROOT),
                 cwd=REPO_DIR, shell=True)
         return export_dir
+
+    def get_json_contents(self, commit, json_name):
+        export_dir = self.export_commit(commit)
+        json_path = path.join(
+            export_dir, settings.STANDARD_SCHEMA_PATH, '%s.json' % json_name)
+        try:
+            with open(json_path, 'r') as json_file:
+                json_contents = json_file.read()
+            return json_contents
+        except IOError:
+            return None
 
     def delete_export(self, commit):
         export_dir = get_commit_export_dir(commit)
