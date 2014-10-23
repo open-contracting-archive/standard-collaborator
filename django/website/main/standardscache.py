@@ -92,7 +92,11 @@ class StandardsRepo(object):
         self.repo = Repo(REPO_DIR)
 
     def git_pull(self):
-        subprocess.check_call(['git', 'pull'], cwd=REPO_DIR)
+        """ ensure we always actually get the latest and don't have to worry
+        about merge conflicts """
+        subprocess.check_call(['git', 'fetch'], cwd=REPO_DIR)
+        subprocess.check_call(['git', 'fetch', '--tags'], cwd=REPO_DIR)
+        subprocess.check_call(['git', 'reset', '--hard', 'origin/master'], cwd=REPO_DIR)
 
     def master_commit_id(self):
         """Return the hash of the last commit on master"""
@@ -130,6 +134,7 @@ class StandardsRepo(object):
         if commit == 'master':
             self.git_pull()
             return self.master_commit_id()
+        # TODO: if not SHA, convert to SHA - tags etc ...
         else:
             # TODO: should we check commit exists?  Raise 404 if not?
             return commit
