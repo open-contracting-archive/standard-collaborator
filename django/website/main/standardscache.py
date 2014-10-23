@@ -8,6 +8,7 @@ import shutil
 import subprocess
 
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from git import Repo
 from markdown import markdown
@@ -46,6 +47,17 @@ def remove_numeric_prefix(name):
     return name[3:]
 
 
+def export_md_file_to_name(filename):
+    """We take in "01_intro.md" and return "intro"
+    """
+    return filename[3:-3]
+
+
+def humanise(name):
+    """ Take "further_info" and return "Further info" """
+    return name.replace('_', ' ').capitalize()
+
+
 def is_section_dir(export_dir, section_dir):
     return (NUMERIC_PREFIX_RE.match(section_dir) and
             path.isdir(path.join(export_dir, section_dir)))
@@ -53,6 +65,11 @@ def is_section_dir(export_dir, section_dir):
 
 def is_content_file(content_file):
     return NUMERIC_PREFIX_RE.match(content_file) and content_file.endswith('.md')
+
+
+def export_path_to_url_path(section_dir, content_file):
+    return '%s/%s' % (remove_numeric_prefix(section_dir),
+                      export_md_file_to_name(content_file))
 
 
 def get_path_for_release(release, lang):
@@ -66,8 +83,7 @@ def get_path_for_release(release, lang):
                          if is_section_dir(lang_dir, d)][0]
     first_content_file = [f for f in sorted(os.listdir(path.join(lang_dir, first_section_dir)))
                           if is_content_file(f)][0]
-    return '%s/%s' % (remove_numeric_prefix(first_section_dir),
-                      remove_numeric_prefix(first_content_file)[:-3])
+    return export_path_to_url_path(first_section_dir, first_content_file)
 
 
 class StandardsRepo(object):
@@ -162,10 +178,11 @@ class StandardsRepo(object):
 
 class HTMLProducer(object):
 
-    def __init__(self, commit):
-        self.commit = commit
-        self.export_docs_dir = get_commit_export_docs_dir(commit)
-        self.html_dir = get_commit_html_dir(commit)
+    def __init__(self, release, std_commit):
+        self.release = release
+        self.std_commit = std_commit
+        self.export_docs_dir = get_commit_export_docs_dir(std_commit)
+        self.html_dir = get_commit_html_dir(std_commit)
         self.dir_structure = {}
         # cache for directory structure, will end up like:
         # self.dir_structure = {
@@ -230,8 +247,8 @@ class HTMLProducer(object):
                 export_content_file = path.join(export_dir, content_file)
                 # replace .md with .html
                 html_content_file = path.join(
-                    html_dir, remove_numeric_prefix(content_file)
-                )[:-3] + '.html'
+                    html_dir, export_md_file_to_name(content_file)
+                ) + '.html'
                 self.convert_md_to_html(export_content_file, html_content_file)
 
     def convert_md_to_html(self, mdfile, htmlfile):
@@ -241,14 +258,58 @@ class HTMLProducer(object):
         with open(htmlfile, 'w') as html:
             html.write(htmlcontent)
 
-    def top_level_menu(self, lang):
-        """ returns a string containing the HTML for the top level menu/tabs
-        for the docs in a language """
-        # TODO: do something with self.dir_structure
-        return ""
+    def top_level_menu_data(self, lang):
+        """ return something like
+        {
+            "01_standard": {"link": "/r/.../standard/main", "title": "Main"},
+            "02_definitions": {"link": "/r/.../definitions/part1", "title": "Definitions"},
+            "03_schemas": {"link": "/r/.../schemas/part1", "title": "Schemas"},
+            "04_merging": {"link": "/r/.../merging/part1", "title": "Merging"},
+        } """
+        menu_data = {}
+        for section_dir in sorted(self.dir_structure[lang].keys()):
+            first_content_file = sorted(self.dir_structure[lang][section_dir])[0]
+            url_path = export_path_to_url_path(section_dir, first_content_file)
+            menu_data[section_dir] = {
+                "link": reverse('standard', args=(self.release, lang, url_path)),
+                "title": humanise(remove_numeric_prefix(section_dir)),
+            }
+        return menu_data
 
-    def second_level_menu(self, lang, section_dir):
+    def top_level_menu_for_section(self, lang, section):
+        """ returns a string containing the HTML for the top level menu/tabs
+        for the docs in a language.  Maybe use template render?
+
+        Something like:
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="/r/.../standard/main" data-toggle="tab">Main</a></li>
+            <li><a href="/r/.../section2/part1" data-toggle="tab">Definitions</a></li>
+            <li><a href="/r/.../section3/part1" data-toggle="tab">Schemas</a></li>
+            <li><a href="/r/.../section4/part1" data-toggle="tab">Merging</a></li>
+        </ul>
+        """
+        menu = ['<ul class="nav nav-tabs">']
+        menu.append('</ul>')
+        return ''.join(menu)
+
+    def second_level_menu_data(self, lang, section_dir):
+        """ return something like
+        {
+            "01_intro.md": {"link": "/r/.../standard/intro", "title": "Intro"},
+            "02_data.md": {"link": "/r/.../standard/data", "title": "Data"},
+            "03_further_info.md": {"link": "/r/.../standard/further_info", "title": "Further Info"},
+        } """
+        menu_data = {}
+        for content_file in sorted(self.dir_structure[lang][section_dir].keys()):
+            url_path = export_path_to_url_path(section_dir, content_file)
+            menu_data[content_file] = {
+                "link": reverse('standard', args=(self.release, lang, url_path)),
+                "title": humanise(export_md_file_to_name(content_file)),
+            }
+        return menu_data
+
+    def second_level_menu_for_section(self, lang, section):
         """ returns a string containing the HTML for the 2nd level menu/tabs
         for the docs in a language and section """
-        # TODO: do something with self.dir_structure
         return ""

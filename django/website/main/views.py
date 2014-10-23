@@ -66,9 +66,9 @@ class StandardView(TemplateView):
 
         self.repo = StandardsRepo()
         self.repo.export_commit(self.release)
-        self.real_release = self.repo.standardise_commit_name(self.release)
+        self.std_commit = self.repo.standardise_commit_name(self.release)
 
-        self.html_prod = HTMLProducer(self.real_release)
+        self.html_prod = HTMLProducer(self.release, self.std_commit)
         self.html_dir = self.html_prod.get_html_dir()
 
         cleaned_release = "master"
@@ -94,7 +94,7 @@ class StandardView(TemplateView):
         context = super(StandardView, self).get_context_data(*args, **kwargs)
         # get file path corresponding to self.path and put in context
         # it will be included using SSI (Server Side Include)
-        content_path = path.join(self.real_release, self.lang, self.path) + '.html'
+        content_path = path.join(self.std_commit, self.lang, self.path) + '.html'
         if not path.exists(path.join(HTML_ROOT, content_path)):
             raise Http404
 
