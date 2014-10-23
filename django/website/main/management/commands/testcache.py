@@ -16,9 +16,9 @@ class Command(BaseCommand):
         tag = args[0]
 
         repo = StandardsRepo()
-        repo.git_pull()
         repo.export_commit(tag, force=True)
-        tag = repo.convert_commit(tag)
+        tag = repo.standardise_commit_name(tag)
 
         html_prod = HTMLProducer(tag)
-        html_prod.create_html()
+        html_prod.delete_html_dir()
+        html_prod.get_html_dir()

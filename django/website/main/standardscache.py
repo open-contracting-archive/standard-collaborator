@@ -60,17 +60,23 @@ class StandardsRepo(object):
             tags, key=lambda t: t.commit.committed_date, reverse=True)
         return sorted_tags
 
-    def convert_commit(self, commit):
+    def standardise_commit_name(self, commit):
+        """ make sure we have a "standard" commit id to use elsewhere.
+
+        For now - if the commit is "master" then we do a git pull to ensure
+        we have the latest from git, and then convert it to the commit hash.
+        """
         if commit == 'master':
             self.git_pull()
             return self.master_commit_id()
         else:
-            # check commit exists
+            # TODO: should we check commit exists?  Raise 404 if not?
             return commit
 
     def get_commit(self, commit):
         """Return a commit object with commit name, last modified date ..."""
-        commit = self.convert_commit(commit)
+        commit = self.standardise_commit_name(commit)
+        # TODO: investigate when commit does not exist, decide how to handle it
         gitcommit = self.repo.commit(commit)
         # TODO: implement this
         # see template for fields required
@@ -78,7 +84,7 @@ class StandardsRepo(object):
         # return {}
 
     def export_commit(self, commit, force=False):
-        commit = self.convert_commit(commit)
+        commit = self.standardise_commit_name(commit)
         export_dir = get_commit_export_dir(commit)
         export_exists = path.exists(export_dir)
         if force and export_exists:
@@ -107,6 +113,21 @@ class HTMLProducer(object):
         self.export_docs_dir = get_commit_export_docs_dir(commit)
         self.html_dir = get_commit_html_dir(commit)
         self.dir_structure = {}
+        # cache for directory structure, will end up like:
+        # self.dir_structure = {
+        #     "en": {
+        #         "01_intro": {
+        #             "01_index": True,
+        #         },
+        #         "02_main": {
+        #             "01_why": True,
+        #             "02_how": True,
+        #         }
+        #     },
+        #     "es": {
+        #         ...
+        #     }
+        # }
 
     def get_html_dir(self, ensure_exists=True):
         """ get the html directory """
@@ -121,12 +142,14 @@ class HTMLProducer(object):
 
     def get_exported_languages(self, export_docs_root):
         """ find all 2 letter language codes in directory """
+        # TODO: should we support en_gb etc? -> drop len == 2 check
         return [d for d in os.listdir(export_docs_root)
                 if len(d) == 2 and path.isdir(path.join(export_docs_root, d))]
 
     def create_html(self):
         self.dir_structure = {}
         os.mkdir(self.html_dir)
+        # TODO: do for: if: like other methods?
         for lang in self.get_exported_languages(self.export_docs_dir):
             self.dir_structure[lang] = {}
             export_lang_dir = path.join(self.export_docs_dir, lang)
@@ -136,18 +159,22 @@ class HTMLProducer(object):
 
     def create_html_lang(self, lang, export_dir, html_dir):
         for content_dir in os.listdir(export_dir):
+            # TODO: check isdir
             if self.CONTENT_DIR_RE.match(content_dir):
                 self.dir_structure[lang][content_dir] = {}
                 export_content_dir = path.join(export_dir, content_dir)
+                # TODO: strip 01_
                 html_content_dir = path.join(html_dir, content_dir)
                 os.mkdir(html_content_dir)
                 self.create_html_content(lang, content_dir, export_content_dir, html_content_dir)
 
     def create_html_content(self, lang, content_dir, export_dir, html_dir):
         for content_file in os.listdir(export_dir):
-            if content_file.endswith('.md'):
+            # check for 01_ prefix and that it is a markdown file
+            if self.CONTENT_DIR_RE.match(content_file) and content_file.endswith('.md'):
                 self.dir_structure[lang][content_dir][content_file] = True
                 export_content_file = path.join(export_dir, content_file)
+                # TODO: strip 01_
                 html_content_file = path.join(html_dir, content_file)[:-3] + '.html'
                 self.convert_md_to_html(export_content_file, html_content_file)
 
@@ -158,10 +185,14 @@ class HTMLProducer(object):
         with open(htmlfile, 'w') as html:
             html.write(htmlcontent)
 
-    def create_top_level_menu(self, lang):
+    def top_level_menu(self, lang):
+        """ returns a string containing the HTML for the top level menu/tabs
+        for the docs in a language """
         # TODO: do something with self.dir_structure
-        pass
+        return ""
 
-    def create_2nd_level_menu(self, lang, content_dir):
+    def second_level_menu(self, lang, content_dir):
+        """ returns a string containing the HTML for the 2nd level menu/tabs
+        for the docs in a language and section """
         # TODO: do something with self.dir_structure
-        pass
+        return ""
