@@ -68,6 +68,9 @@ From `/r/<tag>/en/` you will redirected to the equivalent of `01_xxx/01_yyy`
 in the scheme above.  The path will be stored in the database for that tag when
 the HTML is generated.
 
+Actually we'll have to generate and store that path for each language ...  I
+guess we can use a foreign key for that.
+
 QUESTION: do we actually want to have some sort of index.html at `/r/<tag>/en/` ?
 Should the `01_xxx/01_yyy.md` be converted into index.html at the root?  Or
 should we respond to the URL `/r/<tag>/en/` by serving up `01_xxx/01_yyy.md` ?
