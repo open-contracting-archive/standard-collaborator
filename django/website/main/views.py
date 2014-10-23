@@ -158,31 +158,31 @@ class LatestView(RedirectView):
         return reverse('standard-root', kwargs=kwargs)
 
 
-class StandardRootView(RedirectView):
-    permanent = False
-    DEFAULT_LANG = 'en'
+class StandardRedirectView(RedirectView):
 
     # TODO: what about legacy tags where this URL is valid?
     def get_redirect_url(self, *args, **kwargs):
-        # TODO: redirect directly to end point
-        dummy_path = 'intro/index'
-        kwargs.update({'lang': self.DEFAULT_LANG, 'path': dummy_path})
+        # TODO: find the initial path
+        dummy_path = 'standard/intro'
+        kwargs.update({'lang': self.lang, 'path': dummy_path})
         return reverse('standard', kwargs=kwargs)
 
 
-class StandardLangView(RedirectView):
-    # TODO: last test suggested this was broken - check it works
+class StandardRootView(StandardRedirectView):
+    permanent = False
+    DEFAULT_LANG = 'en'
+
+    def get(self, request, *args, **kwargs):
+        self.lang = self.DEFAULT_LANG
+        return super(StandardRootView, self).get(request, *args, **kwargs)
+
+
+class StandardLangView(StandardRedirectView):
     permanent = False
 
     def get(self, request, *args, **kwargs):
         self.lang = kwargs.get('lang')
-        super(StandardLangView, self).get(request, *args, **kwargs)
-
-    def get_redirect_url(self, *args, **kwargs):
-        # TODO: find the initial path
-        dummy_path = 'intro/index'
-        kwargs.update({'lang': self.lang, 'path': dummy_path})
-        return reverse('standard', kwargs=kwargs)
+        return super(StandardLangView, self).get(request, *args, **kwargs)
 
 
 class StandardView(TemplateView):
