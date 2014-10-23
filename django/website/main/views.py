@@ -31,7 +31,7 @@ class LatestView(StandardRedirectView):
 
     def get(self, request, *args, **kwargs):
         self.release = StandardsRepo().get_latest_tag_name()
-        self.lang = self.STANDARD_DEFAULT_LANG
+        self.lang = settings.STANDARD_DEFAULT_LANG
         return super(LatestView, self).get(request, *args, **kwargs)
 
 
@@ -39,7 +39,7 @@ class StandardRootView(StandardRedirectView):
 
     def get(self, request, *args, **kwargs):
         self.release = kwargs.get('release')
-        self.lang = self.STANDARD_DEFAULT_LANG
+        self.lang = settings.STANDARD_DEFAULT_LANG
         return super(StandardRootView, self).get(request, *args, **kwargs)
 
 
