@@ -240,6 +240,8 @@ class StandardView(TemplateView):
             'latest_release': LatestVersion.objects.get(),
             'other_releases': self.other_releases,
             'site_unique_id': settings.SITE_UNIQUE_ID,
+            'lang': self.lang,
+            'file_path': self.path,
             'form': AuthenticationForm()
         }
         if self.is_commit_id:
