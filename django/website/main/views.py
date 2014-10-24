@@ -10,8 +10,8 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.views.generic import TemplateView, RedirectView, View
 
-from .models import CachedStandard
-from .standardscache import HTML_ROOT, StandardsRepo, HTMLProducer, get_path_for_release
+from .standardscache import (HTML_ROOT, StandardsRepo, HTMLProducer,
+                             get_path_for_release)
 
 
 class StandardRedirectView(RedirectView):
@@ -51,6 +51,18 @@ class StandardLangView(StandardRedirectView):
         return super(StandardLangView, self).get(request, *args, **kwargs)
 
 
+class CommitRedirectView(RedirectView):
+
+    def get(self, request, *args, **kwargs):
+        self.release = kwargs.get('release')
+        self.old_url_path = kwargs.get('old_url_path')
+        return super(CommitRedirectView, self).get(request, *args, **kwargs)
+
+    def get_redirect_url(self, *args, **kwargs):
+        kwargs = {'release': self.release}
+        return reverse('standard-root', kwargs=kwargs) + self.old_url_path
+
+
 class StandardView(TemplateView):
     template_name = 'main/standard.html'
     git_sha_re = re.compile(r'^[0-9a-fA-F]{40}$')
@@ -58,8 +70,7 @@ class StandardView(TemplateView):
     def get(self, request, *args, **kwargs):
         self.release = kwargs.get('release')
         # allow for child class to set this
-        if not hasattr(self, 'is_commit_id'):
-            self.is_commit_id = (self.git_sha_re.match(self.release) is not None)
+        self.is_commit_id = (self.git_sha_re.match(self.release) is not None)
         self.lang = kwargs.get('lang')
         self.path = kwargs.get('path')
         self.other_releases = []
@@ -115,14 +126,6 @@ class StandardView(TemplateView):
 
         context.update(context_dict)
         return context
-
-
-class CommitView(StandardView):
-    template_name = 'main/standard.html'
-
-    def get(self, request, *args, **kwargs):
-        self.is_commit_id = True
-        return super(CommitView, self).get(request, *args, **kwargs)
 
 
 class SchemaView(JSONResponseMixin, View):

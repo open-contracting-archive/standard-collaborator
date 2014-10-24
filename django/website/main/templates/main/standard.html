@@ -43,7 +43,7 @@
             <p>You are reading the very latest version of the standard. Not an official release. The latest release is <a href="{% url 'standard-root' other_releases.0.name %}">{{ other_releases.0.display_name }}</a></p>
             <p>The master document is a living document that is changing as we update it. </p>
             <p>This version of master is identified by its unique id: {{ current_release.commit }}</p>
-            <p>Any comments you make will not show up if master is updated, but will always be available <a href="{% url 'commit' current_release.commit lang file_path %}">here</a></p>
+            <p>Any comments you make will not show up if master is updated, but will always be available <a href="{% url 'standard' current_release.commit lang file_path %}">here</a></p>
         </div>
     </div>
     {% endif %}
