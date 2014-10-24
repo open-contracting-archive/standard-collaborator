@@ -223,38 +223,54 @@ class HTMLProducer(object):
         return [d for d in os.listdir(export_docs_root)
                 if len(d) == 2 and path.isdir(path.join(export_docs_root, d))]
 
-    def create_html(self):
+    def make_dir_structure(self):
         self.dir_structure = {}
-        os.mkdir(self.html_dir)
         # TODO: do for: if: like other methods?
         for lang in self.get_exported_languages(self.export_docs_dir):
             self.dir_structure[lang] = {}
+            export_lang_dir = path.join(self.export_docs_dir, lang)
+            self.make_dir_structure_lang(lang, export_lang_dir)
+
+    def make_dir_structure_lang(self, lang, export_dir):
+        for section_dir in os.listdir(export_dir):
+            if is_section_dir(export_dir, section_dir):
+                self.dir_structure[lang][section_dir] = {}
+                export_section_dir = path.join(export_dir, section_dir)
+                self.make_dir_structure_content(lang, section_dir, export_section_dir)
+
+    def make_dir_structure_content(self, lang, section_dir, export_dir):
+        for content_file in os.listdir(export_dir):
+            # check for 01_ prefix and that it is a markdown file
+            if is_content_file(content_file):
+                self.dir_structure[lang][section_dir][content_file] = True
+
+    def create_html(self):
+        if len(self.dir_structure.keys()) == 0:
+            self.make_dir_structure()
+
+        os.mkdir(self.html_dir)
+        for lang in self.dir_structure:
             export_lang_dir = path.join(self.export_docs_dir, lang)
             html_lang_dir = path.join(self.html_dir, lang)
             os.mkdir(html_lang_dir)
             self.create_html_lang(lang, export_lang_dir, html_lang_dir)
 
     def create_html_lang(self, lang, export_dir, html_dir):
-        for section_dir in os.listdir(export_dir):
-            if is_section_dir(export_dir, section_dir):
-                self.dir_structure[lang][section_dir] = {}
-                export_section_dir = path.join(export_dir, section_dir)
-                html_section_dir = path.join(html_dir,
-                                             remove_numeric_prefix(section_dir))
-                os.mkdir(html_section_dir)
-                self.create_html_content(lang, section_dir, export_section_dir, html_section_dir)
+        for section_dir in self.dir_structure[lang]:
+            export_section_dir = path.join(export_dir, section_dir)
+            html_section_dir = path.join(html_dir,
+                                         remove_numeric_prefix(section_dir))
+            os.mkdir(html_section_dir)
+            self.create_html_content(lang, section_dir, export_section_dir, html_section_dir)
 
     def create_html_content(self, lang, section_dir, export_dir, html_dir):
-        for content_file in os.listdir(export_dir):
-            # check for 01_ prefix and that it is a markdown file
-            if is_content_file(content_file):
-                self.dir_structure[lang][section_dir][content_file] = True
-                export_content_file = path.join(export_dir, content_file)
-                # replace .md with .html
-                html_content_file = path.join(
-                    html_dir, export_md_file_to_name(content_file)
-                ) + '.html'
-                self.convert_md_to_html(export_content_file, html_content_file)
+        for content_file in self.dir_structure[lang][section_dir]:
+            export_content_file = path.join(export_dir, content_file)
+            # replace .md with .html
+            html_content_file = path.join(
+                html_dir, export_md_file_to_name(content_file)
+            ) + '.html'
+            self.convert_md_to_html(export_content_file, html_content_file)
 
     def convert_md_to_html(self, mdfile, htmlfile):
         with open(mdfile, 'r') as md:
