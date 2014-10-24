@@ -297,20 +297,27 @@ class HTMLProducer(object):
             }
         return menu_data
 
-    def top_level_menu_for_section(self, lang, section):
+    def top_level_menu_for_section(self, lang, active_section):
         """ returns a string containing the HTML for the top level menu/tabs
         for the docs in a language.  Maybe use template render?
 
         Something like:
 
         <ul class="nav nav-tabs">
-            <li class="active"><a href="/r/.../standard/main" data-toggle="tab">Main</a></li>
-            <li><a href="/r/.../section2/part1" data-toggle="tab">Definitions</a></li>
-            <li><a href="/r/.../section3/part1" data-toggle="tab">Schemas</a></li>
-            <li><a href="/r/.../section4/part1" data-toggle="tab">Merging</a></li>
+            <li class="active"><a href="/r/.../standard/main">Main</a></li>
+            <li><a href="/r/.../section2/part1">Definitions</a></li>
+            <li><a href="/r/.../section3/part1">Schemas</a></li>
+            <li><a href="/r/.../section4/part1">Merging</a></li>
         </ul>
         """
         menu = ['<ul class="nav nav-tabs">']
+        for section in sorted(self.dir_structure[lang].keys()):
+            link_info = self.dir_structure[lang][section]
+            if section == active_section:
+                menu.append('<li class="active">')
+            else:
+                menu.append('<li>')
+            menu.append('<a href="%(link)s">%(title)s</a></li>' % link_info)
         menu.append('</ul>')
         return ''.join(menu)
 
