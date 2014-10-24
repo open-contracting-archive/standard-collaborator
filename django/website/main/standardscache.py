@@ -256,30 +256,36 @@ class HTMLProducer(object):
             self.create_html_lang(lang, export_lang_dir, html_lang_dir)
 
     def create_html_lang(self, lang, export_dir, html_dir):
+        outer_menu_data = self.outer_menu_data(lang)
         for section_dir in self.dir_structure[lang]:
             export_section_dir = path.join(export_dir, section_dir)
             html_section_dir = path.join(html_dir,
                                          remove_numeric_prefix(section_dir))
             os.mkdir(html_section_dir)
-            self.create_html_content(lang, section_dir, export_section_dir, html_section_dir)
+            self.create_html_content(lang, section_dir, export_section_dir, html_section_dir, outer_menu_data)
 
-    def create_html_content(self, lang, section_dir, export_dir, html_dir):
+    def create_html_content(self, lang, section_dir, export_dir, html_dir, outer_menu_data):
+        inner_menu_data = self.inner_menu_data(lang, section_dir)
+        outer_menu_html = self.outer_menu_for_section(lang, section_dir, outer_menu_data)
         for content_file in self.dir_structure[lang][section_dir]:
+            inner_menu_html = self.inner_menu_for_content(lang, content_file, inner_menu_data)
             export_content_file = path.join(export_dir, content_file)
             # replace .md with .html
             html_content_file = path.join(
                 html_dir, export_md_file_to_name(content_file)
             ) + '.html'
-            self.convert_md_to_html(export_content_file, html_content_file)
+            self.convert_md_to_html(export_content_file, html_content_file, outer_menu_html, inner_menu_html)
 
-    def convert_md_to_html(self, mdfile, htmlfile):
+    def convert_md_to_html(self, mdfile, htmlfile, outer_menu_html, inner_menu_html):
         with open(mdfile, 'r') as md:
             mdcontent = md.read()
         htmlcontent = markdown(mdcontent, extensions=['footnotes', 'sane_lists', 'toc'])
         with open(htmlfile, 'w') as html:
+            html.write(outer_menu_html)
+            html.write(inner_menu_html)
             html.write(htmlcontent)
 
-    def top_level_menu_data(self, lang):
+    def outer_menu_data(self, lang):
         """ return something like
         {
             "01_standard": {"link": "/r/.../standard/main", "title": "Main"},
@@ -297,7 +303,7 @@ class HTMLProducer(object):
             }
         return menu_data
 
-    def top_level_menu_for_section(self, lang, active_section):
+    def outer_menu_for_section(self, lang, active_section, menu_data):
         """ returns a string containing the HTML for the top level menu/tabs
         for the docs in a language.  Maybe use template render?
 
@@ -312,16 +318,16 @@ class HTMLProducer(object):
         """
         menu = ['<ul class="nav nav-tabs">']
         for section in sorted(self.dir_structure[lang].keys()):
-            link_info = self.dir_structure[lang][section]
+            link_info = menu_data[section]
             if section == active_section:
                 menu.append('<li class="active">')
             else:
                 menu.append('<li>')
             menu.append('<a href="%(link)s">%(title)s</a></li>' % link_info)
         menu.append('</ul>')
-        return ''.join(menu)
+        return '\n'.join(menu)
 
-    def second_level_menu_data(self, lang, section_dir):
+    def inner_menu_data(self, lang, section_dir):
         """ return something like
         {
             "01_intro.md": {"link": "/r/.../standard/intro", "title": "Intro"},
@@ -337,7 +343,16 @@ class HTMLProducer(object):
             }
         return menu_data
 
-    def second_level_menu_for_section(self, lang, section):
+    def inner_menu_for_content(self, lang, active_content_file, menu_data):
         """ returns a string containing the HTML for the 2nd level menu/tabs
         for the docs in a language and section """
-        return ""
+        menu = ['<ul class="nav nav-tabs">']
+        for content_file in sorted(menu_data.keys()):
+            link_info = menu_data[content_file]
+            if content_file == active_content_file:
+                menu.append('<li class="active">')
+            else:
+                menu.append('<li>')
+            menu.append('<a href="%(link)s">%(title)s</a></li>' % link_info)
+        menu.append('</ul>')
+        return '\n'.join(menu)

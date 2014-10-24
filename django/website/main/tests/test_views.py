@@ -4,7 +4,6 @@ import pytest
 from os import path, pardir
 from django.conf import settings
 from main.views import StandardView, LatestView
-from main.models import LatestVersion
 
 sample_markdown = """
 Paragraph. *Italic*, **bold**, `monospace`. Itemized lists
