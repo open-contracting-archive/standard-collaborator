@@ -1,0 +1,98 @@
+.site-title a {
+	 background: url(/standard/static/images/ocstd_logo.png) no-repeat;
+}
+
+.site-header:after {
+	clear:both;
+	content: " ";
+	display: table;
+}
+
+.site-header:before {
+	content: " ";
+	display: table;
+}
+
+.site-header {
+	letter-spacing: 1px;
+	position: fixed;
+	width: 100%;
+	z-index: 999;
+	padding-top: 20px;
+	height: 95px;
+	top: 0;
+	background-color: white;
+}
+
+.wrap {
+	margin: 0px auto;
+	max-width: 1140px;
+}
+
+.title-area {
+	float: left;
+	width: 400px;
+}
+
+h1.site-title {
+	margin-top: 0;
+}
+
+.site-title {
+	line-height: 1;
+}
+
+.site-header .site-title a {
+	height: 75px;
+	display: block;
+	text-indent: -9999px;
+	max-width: 400px;
+}
+
+.site-header .widget-area {
+	float: right;
+	text-align: right;
+	width: 720px;
+}
+
+.genesis-nav-menu {
+	clear: both;
+	color: #fff;
+	font-size: 16px;
+	font-family: 'Arvo', sans-serif;
+	font-weight: 800;
+	line-height: 1.5;
+	width: 100%;
+	padding-top: 15px;
+}
+
+.genesis-nav-menu .menu-item {
+	display: inline-block;
+	margin: 0;
+	text-align: left;
+}
+
+.genesis-nav-menu a {
+	border: medium none;
+	color: #95B125;
+	display: block;
+	font-size: 16px;
+	padding: 10px;
+	position: relative;
+	font-weight: 400;
+	text-decoration: none;
+}
+
+.genesis-nav-menu a:hover,
+.genesis-nav-menu .current-menu-item > a,
+.genesis-nav-menu .sub-menu .current-menu-item > a:hover {
+	color: #505256;
+}
+
+.vertical-space {
+	margin-top: 96px;
+}
+
+.under-standard-header {
+	margin-top: 96px;
+}
