@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 # Django settings for  project.
@@ -392,6 +393,11 @@ else:
 STANDARD_DOCS_PATH = 'standard/docs'
 STANDARD_SCHEMA_PATH = 'standard/schema'
 STANDARD_DEFAULT_LANG = 'en'
+
+LANG_CODE_NAME = {
+    'en': "English",
+    'es': "Español",
+}
 
 if hasattr(private_settings, 'GITHUB_API_CLIENT_ID'):
     GITHUB_API_CLIENT_ID = private_settings.GITHUB_API_CLIENT_ID

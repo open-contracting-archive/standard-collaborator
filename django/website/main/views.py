@@ -108,6 +108,10 @@ class StandardView(TemplateView):
         content_path = path.join(self.std_commit, self.lang, self.path) + '.html'
         if not path.exists(path.join(HTML_ROOT, content_path)):
             raise Http404
+        lang_codes = get_exported_languages(self.release)
+        lang_list = [{'code': lang, 'name': settings.LANG_CODE_NAME[lang]}
+                     for lang in lang_codes]
+        lang_list.sort(key=lambda l: l['name'])
 
         context_dict = {
             'content_path': content_path,
@@ -116,7 +120,7 @@ class StandardView(TemplateView):
             'other_releases': self.other_releases,
             'site_unique_id': settings.SITE_UNIQUE_ID,
             'lang': self.lang,
-            'lang_list': get_exported_languages(self.release),
+            'lang_list': lang_list,
             'file_path': self.path,
             'form': AuthenticationForm()
         }
