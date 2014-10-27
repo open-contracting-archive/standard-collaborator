@@ -1,12 +1,12 @@
 from __future__ import unicode_literals
 
+import codecs
 from datetime import datetime
 import os
 from os import path
 import re
 import shutil
 import subprocess
-
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import Http404
@@ -20,6 +20,8 @@ REPO_DIR = path.join(WORKING_DIR, 'repo')
 EXPORT_ROOT = path.join(WORKING_DIR, 'exports')
 HTML_ROOT = path.join(WORKING_DIR, 'html')
 NUMERIC_PREFIX_RE = re.compile(r'^\d\d_')
+# it could be "en" or "en-gb" or "en_gb"
+LANG_CODE_RE = re.compile(r'^[a-z]{2}([-_][a-z]{2,5})?$')
 
 
 def get_commit_export_dir(commit):
@@ -91,6 +93,18 @@ def get_path_for_release(release, lang):
         return export_path_to_url_path(first_section_dir, first_content_file)
     except OSError:
         raise Http404
+
+
+def get_exported_languages(release):
+    """ find all 2 letter language codes in directory """
+    # TODO: should we support en_gb etc? -> drop len == 2 check
+    # but we might want the exported languages elsewhere ...
+    repo = StandardsRepo()
+    commit = repo.standardise_commit_name(release)
+    repo.export_commit(commit)
+    export_docs_root = get_commit_export_docs_dir(commit)
+    return [d for d in os.listdir(export_docs_root)
+            if LANG_CODE_RE.match(d) and path.isdir(path.join(export_docs_root, d))]
 
 
 class StandardsRepo(object):
@@ -223,17 +237,9 @@ class HTMLProducer(object):
         if path.exists(self.html_dir):
             shutil.rmtree(self.html_dir)
 
-    def get_exported_languages(self, export_docs_root):
-        """ find all 2 letter language codes in directory """
-        # TODO: should we support en_gb etc? -> drop len == 2 check
-        # but we might want the exported languages elsewhere ...
-        return [d for d in os.listdir(export_docs_root)
-                if len(d) == 2 and path.isdir(path.join(export_docs_root, d))]
-
     def make_dir_structure(self):
         self.dir_structure = {}
-        # TODO: do for: if: like other methods?
-        for lang in self.get_exported_languages(self.export_docs_dir):
+        for lang in get_exported_languages(self.std_commit):
             self.dir_structure[lang] = {}
             export_lang_dir = path.join(self.export_docs_dir, lang)
             self.make_dir_structure_lang(lang, export_lang_dir)
@@ -284,7 +290,7 @@ class HTMLProducer(object):
             self.convert_md_to_html(export_content_file, html_content_file, outer_menu_html, inner_menu_html)
 
     def convert_md_to_html(self, mdfile, htmlfile, outer_menu_html, inner_menu_html):
-        with open(mdfile, 'r') as md:
+        with codecs.open(mdfile, encoding="utf8", mode='r') as md:
             mdcontent = md.read()
         htmlcontent = markdown(mdcontent, extensions=['footnotes', 'sane_lists', 'toc'])
         rendered = render_to_string('main/menu_content.html', {
@@ -292,8 +298,9 @@ class HTMLProducer(object):
             'inner_menu': inner_menu_html,
             'html_content': htmlcontent,
         })
-        with open(htmlfile, 'w') as html:
-            html.write(rendered)
+        #with codecs.open(htmlfile, encoding="utf8", mode='w') as html:
+        with open(htmlfile, mode='w') as html:
+            html.write(rendered.encode('utf8'))
 
     def outer_menu_data(self, lang):
         """ return something like

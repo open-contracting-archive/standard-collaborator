@@ -5,6 +5,7 @@
 {% endblock extrahead %}
 
 {% block extranav %}
+<li><a href="#" title="Change language" data-toggle="modal" data-target="#changeLanguage"><span class="oi oi-flag navicon" aria-hidden="true"></span></a></li>
 {% if request.user.is_authenticated %}
 <li><a title="Logout" href="{% url 'auth_logout' %}?next={{ request.path }}"><span class="oi oi-account-logout navicon" aria-hidden="true"></span></a></li>
 {% else %}
@@ -90,6 +91,26 @@
                             {% if not current_release.is_master %}
                             <li><a href="{% url 'standard-root' 'master' %}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits.</li>
                             {% endif %}
+                        </ul>
+                    </p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="changeLanguage" tabindex="-1" role="dialog" aria-labelledby="ChangeLanguage" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Change Language</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <ul>
+                            {% for alt_lang in lang_list %}
+                            <li><a href="{% url 'standard-lang' release alt_lang %}">{{ alt_lang|title }}</a></li>
+                            {% endfor %}
                         </ul>
                     </p>
                 </div>

@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.views.generic import TemplateView, RedirectView, View
 
 from .standardscache import (HTML_ROOT, StandardsRepo, HTMLProducer,
-                             get_path_for_release)
+                             get_path_for_release, get_exported_languages)
 
 
 class StandardRedirectView(RedirectView):
@@ -116,6 +116,7 @@ class StandardView(TemplateView):
             'other_releases': self.other_releases,
             'site_unique_id': settings.SITE_UNIQUE_ID,
             'lang': self.lang,
+            'lang_list': get_exported_languages(self.release),
             'file_path': self.path,
             'form': AuthenticationForm()
         }

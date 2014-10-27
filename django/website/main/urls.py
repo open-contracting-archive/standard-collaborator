@@ -16,8 +16,9 @@ urlpatterns = patterns('',
 
     url(r'^r/(?P<release>[a-zA-Z0-9_.-]+)/$', StandardRootView.as_view(), name='standard-root'),
     # TODO: should lang be more than 2 characters?
-    url(r'^r/(?P<release>[a-zA-Z0-9_.-]+)/(?P<lang>[a-z][a-z])/$', StandardLangView.as_view(), name='standard-lang'),
-    url(r'^r/(?P<release>[a-zA-Z0-9_.-]+)/(?P<lang>[a-z][a-z])/(?P<path>[-.\w/]+)/$', StandardView.as_view(), name='standard'),
+    # lang code could be "en" or "en-gb" or "en_gb"
+    url(r'^r/(?P<release>[a-zA-Z0-9_.-]+)/(?P<lang>[a-z]{2}([-_][a-z]{2,5})?)/$', StandardLangView.as_view(), name='standard-lang'),
+    url(r'^r/(?P<release>[a-zA-Z0-9_.-]+)/(?P<lang>[a-z]{2}([-_][a-z]{2,5})?)/(?P<path>[-.\w/]+)/$', StandardView.as_view(), name='standard'),
     url(r'^r/(?P<release>[a-zA-Z0-9_.-]+)/(?P<schema_name>[a-zA-Z0-9_.-]+).json$', SchemaView.as_view(), name='schema'),
     url(r'^$', LatestView.as_view(), name='latest'),
 )
