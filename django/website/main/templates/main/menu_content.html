@@ -1,0 +1,11 @@
+<div id="annotatable">
+	<div class="tab-content">
+		<ul class="nav nav-tabs">
+			{{ outer_menu|safe }}
+		</ul>
+		<ul class="nav nav-tabs">
+			{{ inner_menu|safe }}
+		</ul>
+		{{ html_content|safe }}
+	</div>
+</div>
