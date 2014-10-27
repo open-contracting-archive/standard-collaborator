@@ -41,12 +41,8 @@ def test_outer_menu_for_section():
     hp = create_htmlproducer_with_test_dir_structure()
     menu_data = hp.outer_menu_data("en")
     menu = hp.outer_menu_for_section("en", "02_main", menu_data)
-    assert menu == """<ul class="nav nav-tabs">
-<li>
-<a href="/r/fakerelease/en/intro/index/">Intro</a></li>
-<li class="active">
-<a href="/r/fakerelease/en/main/why/">Main</a></li>
-</ul>"""
+    assert menu == """<li><a href="/r/fakerelease/en/intro/index/">Intro</a></li>
+<li class="active"><a href="/r/fakerelease/en/main/why/">Main</a></li>"""
 
 
 def test_inner_menu_data():
@@ -68,9 +64,5 @@ def test_inner_menu_for_content():
     hp = create_htmlproducer_with_test_dir_structure()
     menu_data = hp.inner_menu_data("en", "02_main")
     menu = hp.inner_menu_for_content("en", "02_how.md", menu_data)
-    assert menu == """<ul class="nav nav-tabs">
-<li>
-<a href="/r/fakerelease/en/main/why/">Why</a></li>
-<li class="active">
-<a href="/r/fakerelease/en/main/how/">How</a></li>
-</ul>"""
+    assert menu == """<li><a href="/r/fakerelease/en/main/why/">Why</a></li>
+<li class="active"><a href="/r/fakerelease/en/main/how/">How</a></li>"""

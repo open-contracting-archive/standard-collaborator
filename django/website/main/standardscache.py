@@ -285,10 +285,13 @@ class HTMLProducer(object):
         with open(mdfile, 'r') as md:
             mdcontent = md.read()
         htmlcontent = markdown(mdcontent, extensions=['footnotes', 'sane_lists', 'toc'])
+        rendered = render_to_string('main/menu_content.html', {
+            'outer_menu': outer_menu_html,
+            'inner_menu': inner_menu_html,
+            'html_content': htmlcontent,
+        })
         with open(htmlfile, 'w') as html:
-            html.write(outer_menu_html)
-            html.write(inner_menu_html)
-            html.write(htmlcontent)
+            html.write(rendered)
 
     def outer_menu_data(self, lang):
         """ return something like
@@ -314,22 +317,19 @@ class HTMLProducer(object):
 
         Something like:
 
-        <ul class="nav nav-tabs">
             <li class="active"><a href="/r/.../standard/main">Main</a></li>
             <li><a href="/r/.../section2/part1">Definitions</a></li>
             <li><a href="/r/.../section3/part1">Schemas</a></li>
             <li><a href="/r/.../section4/part1">Merging</a></li>
-        </ul>
         """
-        menu = ['<ul class="nav nav-tabs">']
+        menu = []
         for section in sorted(self.dir_structure[lang].keys()):
             link_info = menu_data[section]
             if section == active_section:
-                menu.append('<li class="active">')
+                li = '<li class="active">'
             else:
-                menu.append('<li>')
-            menu.append('<a href="%(link)s">%(title)s</a></li>' % link_info)
-        menu.append('</ul>')
+                li = '<li>'
+            menu.append(li + '<a href="%(link)s">%(title)s</a></li>' % link_info)
         return '\n'.join(menu)
 
     def inner_menu_data(self, lang, section_dir):
@@ -351,13 +351,12 @@ class HTMLProducer(object):
     def inner_menu_for_content(self, lang, active_content_file, menu_data):
         """ returns a string containing the HTML for the 2nd level menu/tabs
         for the docs in a language and section """
-        menu = ['<ul class="nav nav-tabs">']
+        menu = []
         for content_file in sorted(menu_data.keys()):
             link_info = menu_data[content_file]
             if content_file == active_content_file:
-                menu.append('<li class="active">')
+                li = '<li class="active">'
             else:
-                menu.append('<li>')
-            menu.append('<a href="%(link)s">%(title)s</a></li>' % link_info)
-        menu.append('</ul>')
+                li = '<li>'
+            menu.append(li + '<a href="%(link)s">%(title)s</a></li>' % link_info)
         return '\n'.join(menu)
