@@ -59,6 +59,8 @@ USE_L10N = True
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
+
+LOCALE_PATHS = (path.join(BASE_DIR, 'locale'),)
 ########## END GENERAL CONFIGURATION
 
 

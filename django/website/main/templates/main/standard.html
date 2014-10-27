@@ -1,73 +1,74 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block extrahead %}
     <link rel="stylesheet" href="http://assets.annotateit.org/annotator/v1.2.9/annotator.min.css">
 {% endblock extrahead %}
 
 {% block extranav %}
-<li><a href="#" title="Change language" data-toggle="modal" data-target="#changeLanguage"><span class="oi oi-flag navicon" aria-hidden="true"></span></a></li>
+<li><a href="#" title="{% trans "Change language" %}" data-toggle="modal" data-target="#changeLanguage"><span class="oi oi-flag navicon" aria-hidden="true"></span></a></li>
 {% if request.user.is_authenticated %}
-<li><a title="Logout" href="{% url 'auth_logout' %}?next={{ request.path }}"><span class="oi oi-account-logout navicon" aria-hidden="true"></span></a></li>
+<li><a title="{% trans "Logout" %}" href="{% url 'auth_logout' %}?next={{ request.path }}"><span class="oi oi-account-logout navicon" aria-hidden="true"></span></a></li>
 {% else %}
-<li><a title="Login" href="{% url 'auth_login' %}?next={{ request.path }}" title="About"><span class="oi oi-account-login navicon" aria-hidden="true"></span></a></li>
+<li><a title="{% trans "Login" %}" href="{% url 'auth_login' %}?next={{ request.path }}"><span class="oi oi-account-login navicon" aria-hidden="true"></span></a></li>
 {% endif %}
-<li><a href="#" title="Change versions" data-toggle="modal" data-target="#changeVersion"><span class="oi oi-fork navicon" aria-hidden="true"></span></a></li>
+<li><a href="#" title="{% trans "Change versions" %}" data-toggle="modal" data-target="#changeVersion"><span class="oi oi-fork navicon" aria-hidden="true"></span></a></li>
 {% endblock extranav %}
 
 {% block content %}
-    <h1>Open Contracting Data Standard - {{ current_release.display_name|title }}</h1>
+	<h1>{% trans "Open Contracting Data Standard" %} - {{ current_release.display_name|title }}</h1>
     {% if current_release.is_master %}
-        <p>Last modified: {{ current_release.last_modified }}</p>
+		<p>{% trans "Last modified:" %} {{ current_release.last_modified }}</p>
     {% else %}
-        <p>Released on: {{ current_release.last_modified }}</p>
+		<p>{% trans "Released on:" %} {{ current_release.last_modified }}</p>
     {% endif %}
     <div class="panel panel-primary">
         <div class="panel-heading">
-        <h4 class="panel-title"> <span class="glyphicon glyphicon-question-sign"></span> Share your comments</h4>
+					<h4 class="panel-title"> <span class="glyphicon glyphicon-question-sign"></span>{% trans "Share your comments" %}</h4>
         </div>
         <div class="panel-body">
-            <p>The online version of this document is open for comment. You can share your comments in two ways:
+					<p>{% blocktrans %}The online version of this document is open for comment. You can share your comments in two ways:{% endblocktrans %}
             <ul>
-                <li>Inline comments on the document - Login, by clicking on <span class="oi oi-account-login" style="font-size: .8em"></span>, and then highlight portions of text to add comment. To "reply" to an existing comment, highlight the same portion of text, and then add your comment. See <span class="oi oi-question-mark" style="font-size: .8em"></span> for more help on commenting.</li>
-                <li>Mailing list - If you have more general comments that don't fit well as inline comments, then please do join our <a href="https://groups.google.com/a/webfoundation.org/forum/#!forum/public-ocds">mailing list</a> and start a discussion with your thoughts.</li>
+                <li>{% blocktrans %}Inline comments on the document - Login, by clicking on <span class="oi oi-account-login" style="font-size: .8em"></span>, and then highlight portions of text to add comment. To "reply" to an existing comment, highlight the same portion of text, and then add your comment. See <span class="oi oi-question-mark" style="font-size: .8em"></span> for more help on commenting.{% endblocktrans %}</li>
+                <li>{% blocktrans %}Mailing list - If you have more general comments that don't fit well as inline comments, then please do join our <a href="https://groups.google.com/a/webfoundation.org/forum/#!forum/public-ocds">mailing list</a> and start a discussion with your thoughts.{% endblocktrans %}</li>
             </ul>
-            Throughout this document there are specific questions for consultation included, but you are not limited to responding to these questions, we welcome all input you can offer.</p>
+            {% blocktrans %}Throughout this document there are specific questions for consultation included, but you are not limited to responding to these questions, we welcome all input you can offer.{% endblocktrans %}</p>
 
         </div>
     </div>
     {% if current_release.is_master %}
     <div class="panel panel-danger">
         <div class="panel-heading">
-            <h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span> You are viewing master, comments may not appear if they were on previous versions of master.</h4>
+					<h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span>{% trans "You are viewing master, comments may not appear if they were on previous versions of master." %}</h4>
         </div>
         <div class="panel-body">
-            <p>You are reading the very latest version of the standard. Not an official release. The latest release is <a href="{% url 'standard-root' other_releases.0.name %}">{{ other_releases.0.display_name }}</a></p>
-            <p>The master document is a living document that is changing as we update it. </p>
-            <p>This version of master is identified by its unique id: {{ current_release.commit }}</p>
-            <p>Any comments you make will not show up if master is updated, but will always be available <a href="{% url 'standard' current_release.commit lang file_path %}">here</a></p>
+					<p>{% trans "You are reading the very latest version of the standard. Not an official release. The latest release is " %}<a href="{% url 'standard-root' other_releases.0.name %}">{{ other_releases.0.display_name }}</a></p>
+					<p>{% trans "The master document is a living document that is changing as we update it. " %}</p>
+					<p>{% trans "This version of master is identified by its unique id:" %} {{ current_release.commit }}</p>
+					<p>{% url 'standard' current_release.commit lang file_path as commit_url %}{% blocktrans %}Any comments you make will not show up if master is updated, but will always be available <a href="{{ commit_url }}">here</a>{% endblocktrans %}</p>
         </div>
     </div>
     {% endif %}
     {% if commit %}
     <div class="panel panel-danger">
         <div class="panel-heading">
-            <h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span> You are the version of the standard at commit {{ commit }}.</h4>
+            <h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span>{% blocktrans %} You are the version of the standard at commit {{ commit }}.{% endblocktrans %}</h4>
         </div>
         <div class="panel-body">
-            <p>The lastest version of the standard is always changing.</p>
-            <p>The <a href="{% url 'standard-root' 'master' %}">master document</a> is a living document that is changing as we update it.</p>
-            <p>This is a specific version of the standard for viewing comments on this specific version ({{ commit }}).</p>
-            <p>You may have ended up here by mistake and want to view the <a href="{% url 'latest' %}">latest released version of the standard</a>.</p>
+					<p>{% trans "The lastest version of the standard is always changing." %}</p>
+					<p>{% url 'standard-root' 'master' as master_url %}{% blocktrans %}The <a href="{{ master_url }}">master document</a> is a living document that is changing as we update it.{% endblocktrans %}</p>
+            <p>{% blocktrans %}This is a specific version of the standard for viewing comments on this specific version ({{ commit }}).{% endblocktrans %}</p>
+						<p>{% url 'latest' as latest_url %}{% blocktrans %}You may have ended up here by mistake and want to view the <a href="{{ latest_url }}">latest released version of the standard</a>.{% endblocktrans %}</p>
         </div>
     </div>
     {% endif %}
     {% if latest_release_name != current_release.name and not current_release.is_master %}
     <div class="panel panel-danger">
         <div class="panel-heading">
-            <h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span> Not the latest release.</h4>
+					<h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span>{% trans "Not the latest release." %}</h4>
         </div>
         <div class="panel-body">
-            <p>You are viewing v{{ current_release.display_name }}. The latest release is <a href="{% url 'standard-root' other_releases.0.name %}">v{{ other_releases.0.display_name }}</a></p>
+					<p>{% url 'standard-root' other_releases.0.name as latest_url2 %}{% blocktrans %}You are viewing v{{ current_release.display_name }}. The latest release is <a href="{{ latest_url2 }}">v{{ other_releases.0.display_name }}</a>{% endblocktrans %}</p>
         </div>
     </div>
     {% endif %}
@@ -78,18 +79,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Change release</h4>
+										<h4 class="modal-title">{% trans "Change release" %}</h4>
                 </div>
                 <div class="modal-body">
                     <p>
                         <ul>
                             {% for release in other_releases %}
-                            <li><a href="{% url 'standard-root' release.name %}">{{ release.display_name|title }}</a> (Last modified: {{ release.last_modified }})</li>
+														<li><a href="{% url 'standard-root' release.name %}">{{ release.display_name|title }}</a> ({% trans "Last modified:" %} {{ release.last_modified }})</li>
                             {% endfor %}
                         </ul>
                         <ul>
                             {% if not current_release.is_master %}
-                            <li><a href="{% url 'standard-root' 'master' %}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits.</li>
+														<li>{% blocktrans %}<a href="{{ master_url }}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits.{% endblocktrans %}</li>
                             {% endif %}
                         </ul>
                     </p>
@@ -103,7 +104,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Change Language</h4>
+										<h4 class="modal-title">{% trans "Change Language" %}</h4>
                 </div>
                 <div class="modal-body">
                     <p>
@@ -124,7 +125,7 @@
     <script>
     jQuery(function ($) {
       if ($('html').is('.ie6, .ie7, .ie8, .ie9')) {
-        alert("This site does not work with Internet Explorer 9 or earlier. Please use a more recent version of Internet Explorer, or an open-source browser such as Firefox"); 
+			alert("{% trans "This site does not work with Internet Explorer 9 or earlier. Please use a more recent version of Internet Explorer, or an open-source browser such as Firefox" %}"); 
       } else {
         var PROJECTNAME = 'ocdsstandard',
             VERSION = '{% if current_release.is_master %}{{ current_release.commit }}{% else %}{{ current_release.display_name }}{% endif %}',

@@ -1,3 +1,4 @@
+{% load i18n %}
 <!doctype html>
 
 <html>
@@ -8,8 +9,8 @@
   <!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
   <!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
   <!--[if (gt IE 9)|!(IE)]><!--> <html class="modern"> <!--<![endif]-->
-  <title>OCDS Draft Standard</title>
-  <meta name="description" content="OCDS Draft Standard">
+	<title>{% trans "OCDS Draft Standard" %}</title>
+	<meta name="description" content="{% trans "OCDS Draft Standard" %}">
   <meta name="author" content="Sarah Bird">
   {% load assets %}
   {% assets "css_all" %}
@@ -25,7 +26,7 @@
 		<div class="title-area">
 			<h1 class="site-title" itemprop="headline">
 				<a href="http://standard.open-contracting.org/">
-					Open Contracting Data Standard (OCDS) Project Site</a>
+					{% trans "Open Contracting Data Standard (OCDS) Project Site" %}</a>
 			</h1>
 		</div>
 		<aside class="widget-area header-widget-area">
@@ -33,15 +34,12 @@
 				<div class="widget-wrap">
 					<nav class="nav-header" role="navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 						<ul id="menu-main-menu" class="menu genesis-nav-menu">
-							<li id="menu-item-568" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-568">
-							<a href="http://standard.open-contracting.org/project/">
-								Project</a>
-							</li>
-							<li class="menu-item"><a href="http://standard.open-contracting.org/standard/">Standard</a></li>
-							<li class="menu-item"><a href="http://standard.open-contracting.org/progress/">Progress</a></li>
-							<li class="menu-item"><a href="http://standard.open-contracting.org/blog/">Blog</a></li>
-							<li class="menu-item"><a href="http://standard.open-contracting.org/resources/">Resources</a></li>
-							<li class="menu-item"><a href="http://standard.open-contracting.org/getinvolved/">Get Involved</a></li>
+							<li class="menu-item"><a href="http://standard.open-contracting.org/project/">{% trans "Project" %}</a></li>
+							<li class="menu-item"><a href="http://standard.open-contracting.org/standard/">{% trans "Standard" %}</a></li>
+							<li class="menu-item"><a href="http://standard.open-contracting.org/progress/">{% trans "Progress" %}</a></li>
+							<li class="menu-item"><a href="http://standard.open-contracting.org/blog/">{% trans "Blog" %}</a></li>
+							<li class="menu-item"><a href="http://standard.open-contracting.org/resources/">{% trans "Resources" %}</a></li>
+							<li class="menu-item"><a href="http://standard.open-contracting.org/getinvolved/">{% trans "Get Involved" %}</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -55,11 +53,11 @@
     <div class="navbar navbar-inverse under-standard-header" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <a href="{% url 'latest' %}" title="Go to latest release" class="navbar-brand">Open Contracting Data Standard</a>
+							<a href="{% url 'latest' %}" title="{% trans "Go to latest release" %}" class="navbar-brand">{% trans "Open Contracting Data Standard" %}</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'latest' %}" title="Home"><span class="oi oi-home navicon" aria-hidden="true"></span></a></li>
-                <li><a href="#" title="Help" data-toggle="modal" data-target="#help"><span class="oi oi-question-mark navicon" aria-hidden="true"></span></a></li>
+							<li><a href="{% url 'latest' %}" title="{% trans "Home" %}"><span class="oi oi-home navicon" aria-hidden="true"></span></a></li>
+							<li><a href="#" title="{% trans "Help" %}" data-toggle="modal" data-target="#help"><span class="oi oi-question-mark navicon" aria-hidden="true"></span></a></li>
                 {% block extranav %}
                 {% endblock extranav %}
             </ul>
@@ -71,24 +69,24 @@
     </div>
     
     <!-- OVERLAY DIALOGS -->
-    <div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="Help" aria-hidden="true">
+		<div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="{% trans "Help" %}" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Help</h4>
+										<h4 class="modal-title">{% trans "Help" %}</h4>
                 </div>
                 <div class="modal-body">
                     <p>
-                        In order to comment, you must be logged in. To log in, click the <span class="oi oi-account-login" aria-hidden="true"></span>
+										{% blocktrans %}In order to comment, you must be logged in. To log in, click the <span class="oi oi-account-login" aria-hidden="true"></span>
                         button in the top bar. After logging in you can select senctences or paragraphs in the document and an icon will appear, as shown in the
-                        image below. Click the icon and enter text to view it.
+                        image below. Click the icon and enter text to view it.{% endblocktrans %}
                     </p>
                     <p>
                         <img src="{{ STATIC_URL }}images/annotation_demo.png" width="150px"/>
                     </p>
                     <p>
-                        If you are having any problems, please don't hesitate to email us on our <a href="https://groups.google.com/a/webfoundation.org/forum/#!forum/public-ocds">mailing list</a>.
+                        {% blocktrans %}If you are having any problems, please don't hesitate to email us on our <a href="https://groups.google.com/a/webfoundation.org/forum/#!forum/public-ocds">mailing list</a>.{% endblocktrans %}
                     </p>
                 </div>
             </div><!-- /.modal-content -->
@@ -97,12 +95,12 @@
 
     <footer>
         <div class="container">
-        <p>A site of the <a href="http://open-contracting.github.io/">Open Contracting Data Standard</a>.
+        <p>{% blocktrans %}A site of the <a href="http://open-contracting.github.io/">Open Contracting Data Standard</a>.
         Site built with <a href="http://getbootstrap.com">bootstrap</a>, 
         <a href="http://subtlepatterns.com">subtle patterns</a>, 
         and <a href="https://useiconic.com/open">open iconic</a>. 
         Any problems with the site, please contact us through <a href="https://github.com/open-contracting/open-contracting.github.io/issues">github</a>.
-        </p>
+        {% endblocktrans %}</p>
         </div>
     </footer>
     

@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.utils import translation
 from django.views.generic import TemplateView, RedirectView, View
 
 from .standardscache import (HTML_ROOT, StandardsRepo, HTMLProducer,
@@ -72,6 +73,7 @@ class StandardView(TemplateView):
         # allow for child class to set this
         self.is_commit_id = (self.git_sha_re.match(self.release) is not None)
         self.lang = kwargs.get('lang')
+        translation.activate(self.lang)
         self.path = kwargs.get('path')
         self.other_releases = []
 

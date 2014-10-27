@@ -1,0 +1,340 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-27 17:56+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: custom_registration/templates/registration/activate.html:6
+msgid "Account activation failed"
+msgstr ""
+
+#: custom_registration/templates/registration/activation_complete.html:5
+msgid "Your account is now activated."
+msgstr ""
+
+#: custom_registration/templates/registration/activation_email.txt:2
+msgid "Activate account at"
+msgstr ""
+
+#: custom_registration/templates/registration/activation_email.txt:6
+#, python-format
+msgid "Link is valid for %(expiration_days)s days."
+msgstr ""
+
+#: custom_registration/templates/registration/activation_email_subject.txt:1
+msgid "Account activation on"
+msgstr ""
+
+#: custom_registration/templates/registration/login.html:10
+msgid "Log in"
+msgstr ""
+
+#: custom_registration/templates/registration/logout.html:5
+msgid "Logged out"
+msgstr ""
+
+#: custom_registration/templates/registration/password_change_done.html:5
+msgid "Password changed"
+msgstr ""
+
+#: custom_registration/templates/registration/password_change_form.html:10
+#: custom_registration/templates/registration/password_reset_confirm.html:12
+#: custom_registration/templates/registration/password_reset_form.html:11
+#: custom_registration/templates/registration/registration_form.html:13
+msgid "Submit"
+msgstr ""
+
+#: custom_registration/templates/registration/password_reset_complete.html:6
+msgid "Password reset successfully"
+msgstr ""
+
+#: custom_registration/templates/registration/password_reset_complete.html:8
+msgid "Go to standard."
+msgstr ""
+
+#: custom_registration/templates/registration/password_reset_confirm.html:17
+msgid "Password reset failed"
+msgstr ""
+
+#: custom_registration/templates/registration/password_reset_done.html:5
+msgid "Email with password reset instructions has been sent."
+msgstr ""
+
+#: custom_registration/templates/registration/password_reset_email.html:2
+#, python-format
+msgid "Reset password at %(site_name)s"
+msgstr ""
+
+#: custom_registration/templates/registration/registration_closed.html:5
+msgid "Registration is currently closed."
+msgstr ""
+
+#: custom_registration/templates/registration/registration_complete.html:5
+msgid "You are now registered. Activation email sent."
+msgstr ""
+
+#: main/templates/main/standard.html:9
+msgid "Change language"
+msgstr ""
+
+#: main/templates/main/standard.html:11
+msgid "Logout"
+msgstr ""
+
+#: main/templates/main/standard.html:13
+msgid "Login"
+msgstr ""
+
+#: main/templates/main/standard.html:15
+msgid "Change versions"
+msgstr ""
+
+#: main/templates/main/standard.html:19 templates/base.html:56
+msgid "Open Contracting Data Standard"
+msgstr ""
+
+#: main/templates/main/standard.html:21 main/templates/main/standard.html:88
+msgid "Last modified:"
+msgstr "Última modificación"
+
+#: main/templates/main/standard.html:23
+msgid "Released on:"
+msgstr ""
+
+#: main/templates/main/standard.html:27
+msgid "Share your comments"
+msgstr ""
+
+#: main/templates/main/standard.html:30
+msgid ""
+"The online version of this document is open for comment. You can share your "
+"comments in two ways:"
+msgstr ""
+
+#: main/templates/main/standard.html:32
+msgid ""
+"Inline comments on the document - Login, by clicking on <span class=\"oi oi-"
+"account-login\" style=\"font-size: .8em\"></span>, and then highlight "
+"portions of text to add comment. To \"reply\" to an existing comment, "
+"highlight the same portion of text, and then add your comment. See <span "
+"class=\"oi oi-question-mark\" style=\"font-size: .8em\"></span> for more "
+"help on commenting."
+msgstr ""
+
+#: main/templates/main/standard.html:33
+msgid ""
+"Mailing list - If you have more general comments that don't fit well as "
+"inline comments, then please do join our <a href=\"https://groups.google.com/"
+"a/webfoundation.org/forum/#!forum/public-ocds\">mailing list</a> and start a "
+"discussion with your thoughts."
+msgstr ""
+
+#: main/templates/main/standard.html:35
+msgid ""
+"Throughout this document there are specific questions for consultation "
+"included, but you are not limited to responding to these questions, we "
+"welcome all input you can offer."
+msgstr ""
+
+#: main/templates/main/standard.html:42
+msgid ""
+"You are viewing master, comments may not appear if they were on previous "
+"versions of master."
+msgstr ""
+
+#: main/templates/main/standard.html:45
+msgid ""
+"You are reading the very latest version of the standard. Not an official "
+"release. The latest release is "
+msgstr ""
+
+#: main/templates/main/standard.html:46
+msgid ""
+"The master document is a living document that is changing as we update it. "
+msgstr ""
+
+#: main/templates/main/standard.html:47
+msgid "This version of master is identified by its unique id:"
+msgstr ""
+
+#: main/templates/main/standard.html:48
+#, python-format
+msgid ""
+"Any comments you make will not show up if master is updated, but will always "
+"be available <a href=\"%(commit_url)s\">here</a>"
+msgstr ""
+
+#: main/templates/main/standard.html:55
+#, python-format
+msgid " You are the version of the standard at commit %(commit)s."
+msgstr ""
+
+#: main/templates/main/standard.html:58
+msgid "The lastest version of the standard is always changing."
+msgstr ""
+
+#: main/templates/main/standard.html:59
+#, python-format
+msgid ""
+"The <a href=\"%(master_url)s\">master document</a> is a living document that "
+"is changing as we update it."
+msgstr ""
+
+#: main/templates/main/standard.html:60
+#, python-format
+msgid ""
+"This is a specific version of the standard for viewing comments on this "
+"specific version (%(commit)s)."
+msgstr ""
+
+#: main/templates/main/standard.html:61
+#, python-format
+msgid ""
+"You may have ended up here by mistake and want to view the <a href="
+"\"%(latest_url)s\">latest released version of the standard</a>."
+msgstr ""
+
+#: main/templates/main/standard.html:68
+msgid "Not the latest release."
+msgstr ""
+
+#: main/templates/main/standard.html:71
+#, python-format
+msgid ""
+"You are viewing v%(current_release.display_name)s. The latest release is <a "
+"href=\"%(latest_url2)s\">v%(other_releases.0.display_name)s</a>"
+msgstr ""
+
+#: main/templates/main/standard.html:82
+msgid "Change release"
+msgstr ""
+
+#: main/templates/main/standard.html:93
+#, python-format
+msgid ""
+"<a href=\"%(master_url)s\">Master</a> - the current working draft of the "
+"standard. This is not a release, it is our working copy currently undergoing "
+"edits."
+msgstr ""
+
+#: main/templates/main/standard.html:107
+msgid "Change Language"
+msgstr ""
+
+#: main/templates/main/standard.html:128
+msgid ""
+"This site does not work with Internet Explorer 9 or earlier. Please use a "
+"more recent version of Internet Explorer, or an open-source browser such as "
+"Firefox"
+msgstr ""
+
+#: templates/404.html:3
+msgid "Page not found"
+msgstr ""
+
+#: templates/404.html:6
+msgid "The page you are looking for does not appear to exist on this site."
+msgstr ""
+
+#: templates/500.html:4
+msgid "Server Error (500)"
+msgstr ""
+
+#: templates/500.html:7
+msgid "Server Error <em>(500)</em>"
+msgstr ""
+
+#: templates/500.html:8
+msgid ""
+"There's been an error. It's been reported to the site administrators via e-"
+"mail and should be fixed shortly. Thanks for your patience."
+msgstr ""
+
+#: templates/base.html:12 templates/base.html.py:13
+msgid "OCDS Draft Standard"
+msgstr ""
+
+#: templates/base.html:29
+msgid "Open Contracting Data Standard (OCDS) Project Site"
+msgstr ""
+
+#: templates/base.html:37
+msgid "Project"
+msgstr ""
+
+#: templates/base.html:38
+msgid "Standard"
+msgstr ""
+
+#: templates/base.html:39
+msgid "Progress"
+msgstr ""
+
+#: templates/base.html:40
+msgid "Blog"
+msgstr ""
+
+#: templates/base.html:41
+msgid "Resources"
+msgstr ""
+
+#: templates/base.html:42
+msgid "Get Involved"
+msgstr ""
+
+#: templates/base.html:56
+msgid "Go to latest release"
+msgstr ""
+
+#: templates/base.html:59
+msgid "Home"
+msgstr ""
+
+#: templates/base.html:60 templates/base.html.py:72 templates/base.html:77
+msgid "Help"
+msgstr ""
+
+#: templates/base.html:81
+msgid ""
+"In order to comment, you must be logged in. To log in, click the <span class="
+"\"oi oi-account-login\" aria-hidden=\"true\"></span>\n"
+"                        button in the top bar. After logging in you can "
+"select senctences or paragraphs in the document and an icon will appear, as "
+"shown in the\n"
+"                        image below. Click the icon and enter text to view "
+"it."
+msgstr ""
+
+#: templates/base.html:89
+msgid ""
+"If you are having any problems, please don't hesitate to email us on our <a "
+"href=\"https://groups.google.com/a/webfoundation.org/forum/#!forum/public-"
+"ocds\">mailing list</a>."
+msgstr ""
+
+#: templates/base.html:98
+msgid ""
+"A site of the <a href=\"http://open-contracting.github.io/\">Open "
+"Contracting Data Standard</a>.\n"
+"        Site built with <a href=\"http://getbootstrap.com\">bootstrap</a>, \n"
+"        <a href=\"http://subtlepatterns.com\">subtle patterns</a>, \n"
+"        and <a href=\"https://useiconic.com/open\">open iconic</a>. \n"
+"        Any problems with the site, please contact us through <a href="
+"\"https://github.com/open-contracting/open-contracting.github.io/issues"
+"\">github</a>.\n"
+"        "
+msgstr ""
