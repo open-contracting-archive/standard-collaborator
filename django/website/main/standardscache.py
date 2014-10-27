@@ -9,6 +9,8 @@ import subprocess
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.http import Http404
+from django.template.loader import render_to_string
 
 from git import Repo
 from markdown import markdown
@@ -79,11 +81,14 @@ def get_path_for_release(release, lang):
     commit = StandardsRepo().standardise_commit_name(release)
     export_docs_dir = get_commit_export_docs_dir(commit)
     lang_dir = path.join(export_docs_dir, lang)
-    first_section_dir = [d for d in sorted(os.listdir(lang_dir))
-                         if is_section_dir(lang_dir, d)][0]
-    first_content_file = [f for f in sorted(os.listdir(path.join(lang_dir, first_section_dir)))
-                          if is_content_file(f)][0]
-    return export_path_to_url_path(first_section_dir, first_content_file)
+    try:
+        first_section_dir = [d for d in sorted(os.listdir(lang_dir))
+                            if is_section_dir(lang_dir, d)][0]
+        first_content_file = [f for f in sorted(os.listdir(path.join(lang_dir, first_section_dir)))
+                            if is_content_file(f)][0]
+        return export_path_to_url_path(first_section_dir, first_content_file)
+    except OSError:
+        raise Http404
 
 
 class StandardsRepo(object):
