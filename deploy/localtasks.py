@@ -13,12 +13,22 @@ def post_deploy(environment):
     directories, setting permissions etc."""
     build_webassets()
     ensure_working_directory_and_repo_exist()
+    # building webassets as root can change directory ownership, so we need to
+    # correct it
+    ensure_static_is_writable()
     copy_legacy_files_into_place()
 
 
 def build_webassets():
     _manage_py(['assets', 'clean'])
     _manage_py(['assets', 'build'])
+
+
+def ensure_static_is_writable():
+    if env['environment'] in ('staging', 'production'):
+        owner = 'apache'
+        static_path = path.join(env['django_dir'], 'static')
+        _check_call_wrapper(['chown', '-R', owner, static_path])
 
 
 def ensure_working_directory_and_repo_exist():
