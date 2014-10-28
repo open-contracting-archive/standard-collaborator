@@ -40,6 +40,11 @@ def get_commit_html_dir(commit):
     return path.join(HTML_ROOT, commit)
 
 
+def unicode_listdir(dir_path):
+    return [unicode(d) for d in os.listdir(dir_path)]
+    # return [unicode(d.decode('utf-8')) for d in os.listdir(dir_path)]
+
+
 def tag_to_tag_dict(tag):
     """takes a GitPython tag object and converts to dict with fields we need"""
     return {
@@ -90,9 +95,9 @@ def get_path_for_release(release, lang):
     export_docs_dir = get_commit_export_docs_dir(commit)
     lang_dir = path.join(export_docs_dir, lang)
     try:
-        first_section_dir = [d for d in sorted(os.listdir(lang_dir))
+        first_section_dir = [d for d in sorted(unicode_listdir(lang_dir))
                              if is_section_dir(lang_dir, d)][0]
-        first_content_file = [f for f in sorted(os.listdir(path.join(lang_dir, first_section_dir)))
+        first_content_file = [f for f in sorted(unicode_listdir(path.join(lang_dir, first_section_dir)))
                               if is_content_file(f)][0]
         return export_path_to_url_path(first_section_dir, first_content_file)
     except OSError:
@@ -107,7 +112,7 @@ def get_exported_languages(release):
     commit = repo.standardise_commit_name(release)
     repo.export_commit(commit)
     export_docs_root = get_commit_export_docs_dir(commit)
-    return [d for d in os.listdir(export_docs_root)
+    return [d for d in unicode_listdir(export_docs_root)
             if LANG_CODE_RE.match(d) and path.isdir(path.join(export_docs_root, d))]
 
 
@@ -250,16 +255,14 @@ class HTMLProducer(object):
             self.make_dir_structure_lang(lang, export_lang_dir)
 
     def make_dir_structure_lang(self, lang, export_dir):
-        for section_dir in os.listdir(export_dir):
-            section_dir = unicode(section_dir.decode('utf-8'))
+        for section_dir in unicode_listdir(export_dir):
             if is_section_dir(export_dir, section_dir):
                 self.dir_structure[lang][section_dir] = {}
                 export_section_dir = path.join(export_dir, section_dir)
                 self.make_dir_structure_content(lang, section_dir, export_section_dir)
 
     def make_dir_structure_content(self, lang, section_dir, export_dir):
-        for content_file in os.listdir(export_dir):
-            content_file = unicode(content_file.decode('utf-8'))
+        for content_file in unicode_listdir(export_dir):
             # check for 01_ prefix and that it is a markdown file
             if is_content_file(content_file):
                 self.dir_structure[lang][section_dir][content_file] = True
