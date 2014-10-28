@@ -251,6 +251,7 @@ class HTMLProducer(object):
 
     def make_dir_structure_lang(self, lang, export_dir):
         for section_dir in os.listdir(export_dir):
+            section_dir = unicode(section_dir.decode('utf-8'))
             if is_section_dir(export_dir, section_dir):
                 self.dir_structure[lang][section_dir] = {}
                 export_section_dir = path.join(export_dir, section_dir)
@@ -258,6 +259,7 @@ class HTMLProducer(object):
 
     def make_dir_structure_content(self, lang, section_dir, export_dir):
         for content_file in os.listdir(export_dir):
+            content_file = unicode(content_file.decode('utf-8'))
             # check for 01_ prefix and that it is a markdown file
             if is_content_file(content_file):
                 self.dir_structure[lang][section_dir][content_file] = True
