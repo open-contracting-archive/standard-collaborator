@@ -13,12 +13,12 @@ class Command(BaseCommand):
         if len(args) != 1:
             raise CommandError('args must be %s' % self.args)
 
-        tag = args[0]
+        release = args[0]
 
         repo = StandardsRepo()
-        repo.export_commit(tag, force=True)
-        tag = repo.standardise_commit_name(tag)
+        repo.export_commit(release, force=True)
+        std_commit = repo.standardise_commit_name(release)
 
-        html_prod = HTMLProducer(tag)
+        html_prod = HTMLProducer(release, std_commit)
         html_prod.delete_html_dir()
         html_prod.get_html_dir()
