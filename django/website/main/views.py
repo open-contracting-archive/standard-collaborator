@@ -111,7 +111,7 @@ class StandardView(TemplateView):
         if not path.exists(path.join(HTML_ROOT, content_path)):
             raise Http404
         lang_codes = get_exported_languages(self.release)
-        lang_list = [{'code': lang, 'name': settings.LANG_CODE_NAME[lang]}
+        lang_list = [{'code': lang, 'name': settings.LANG_CODE_NAME.get(lang, lang)}
                      for lang in lang_codes]
         lang_list.sort(key=lambda l: l['name'])
 
