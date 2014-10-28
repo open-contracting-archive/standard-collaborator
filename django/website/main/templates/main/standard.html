@@ -76,7 +76,7 @@
                         </ul>
                         <ul>
                             {% if not current_release.is_master %}
-														<li>{% blocktrans %}<a href="{{ master_url }}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits.{% endblocktrans %}</li>
+														<li>{% url 'standard-root' 'master' as master_url %}{% blocktrans %}<a href="{{ master_url }}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits.{% endblocktrans %}</li>
                             {% endif %}
                         </ul>
                     </p>
