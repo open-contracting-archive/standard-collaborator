@@ -12,16 +12,20 @@ from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.template.loader import render_to_string
 
-from git import Repo
+from git import Repo, BadObject
 from markdown import markdown
 
 WORKING_DIR = path.abspath(path.join(path.dirname(__file__), '..', 'working'))
 REPO_DIR = path.join(WORKING_DIR, 'repo')
 EXPORT_ROOT = path.join(WORKING_DIR, 'exports')
 HTML_ROOT = path.join(WORKING_DIR, 'html')
+
+# 2 digit and underscore prefix
 NUMERIC_PREFIX_RE = re.compile(r'^\d\d_')
 # it could be "en" or "en-gb" or "en_gb"
 LANG_CODE_RE = re.compile(r'^[a-z]{2}([-_][a-z]{2,5})?$')
+# check for full length SHA
+GIT_SHA_RE = re.compile(r'^[0-9a-fA-F]{40}$')
 
 
 def get_commit_export_dir(commit):
@@ -154,11 +158,12 @@ class StandardsRepo(object):
         """
         if commit == 'master':
             self.git_pull()
-            return self.master_commit_id()
-        # TODO: if not SHA, convert to SHA - tags etc ...
-        else:
-            # TODO: should we check commit exists?  Raise 404 if not?
-            return commit
+
+        # now convert to a commit ID
+        try:
+            return self.repo.commit(commit).hexsha
+        except BadObject:
+            raise Http404
 
     def get_commit(self, commit):
         # TODO: implement this

@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.utils import translation
 from django.views.generic import TemplateView, RedirectView, View
 
-from .standardscache import (HTML_ROOT, StandardsRepo, HTMLProducer,
+from .standardscache import (HTML_ROOT, GIT_SHA_RE, StandardsRepo, HTMLProducer,
                              get_path_for_release, get_exported_languages)
 
 
@@ -66,12 +66,11 @@ class CommitRedirectView(RedirectView):
 
 class StandardView(TemplateView):
     template_name = 'main/standard.html'
-    git_sha_re = re.compile(r'^[0-9a-fA-F]{40}$')
 
     def get(self, request, *args, **kwargs):
         self.release = kwargs.get('release')
         # allow for child class to set this
-        self.is_commit_id = (self.git_sha_re.match(self.release) is not None)
+        self.is_commit_id = (GIT_SHA_RE.match(self.release) is not None)
         self.lang = kwargs.get('lang')
         translation.activate(self.lang)
         self.path = kwargs.get('path')
