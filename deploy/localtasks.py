@@ -47,6 +47,10 @@ def ensure_working_directory_and_repo_exist():
     _create_dir_if_not_exists(exports_dir, owner=owner)
     _create_dir_if_not_exists(html_dir, owner=owner)
 
+    # and now delete the old exports and html directory contents in case we
+    # need to redo the html
+    _check_call_wrapper('rm -rf ' + exports_dir + '/* ' + html_dir + '/*', shell=True)
+
     # check if repo exists - if not do git clone
     if not path.exists(repo_dir):
         sys.path.append(env['django_settings_dir'])
