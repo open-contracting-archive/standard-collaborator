@@ -29,7 +29,8 @@ markdown
 -e hg+https://bitbucket.org/birdsarah/django-registration/@django1.6#egg=registration
 django-bootstrap-form
 GitPython==0.3.2.RC1
-
+pyquery==1.2.9
+lxml==3.4.0
 
 # CSS and assets
 django-assets==0.8
