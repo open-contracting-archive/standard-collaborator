@@ -1,12 +1,15 @@
 $background-color: #EEE;
 $accent-color: #222;
-$topnav-color: #95B125;
+$link-color: #95B125;
+$text-color: #505256;
 
 /* MAIN */
 
 body {
-    background: url("/standard/static/images/absurdidad.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
-    font-size: 18px;
+	background: url("/standard/static/images/absurdidad.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+	font-size: 18px;
+	font-family: 'Arvo', sans-serif;
+	color: $text-color;
 }
 
 h4 {
@@ -130,9 +133,12 @@ h1.site-title {
 	text-align: left;
 }
 
+a {
+	color: $link-color;
+}
+
 .genesis-nav-menu a {
 	border: medium none;
-	color: $topnav-color;
 	display: block;
 	font-size: 16px;
 	padding: 10px;
@@ -144,7 +150,7 @@ h1.site-title {
 .genesis-nav-menu a:hover,
 .genesis-nav-menu .current-menu-item > a,
 .genesis-nav-menu .sub-menu .current-menu-item > a:hover {
-	color: #505256;
+	color: $text-color;
 }
 
 .vertical-space {
