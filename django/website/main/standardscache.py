@@ -344,7 +344,11 @@ class HTMLProducer(object):
             first_content_file = sorted(self.dir_structure[lang][section_dir])[0]
             url_path = export_path_to_url_path(section_dir, first_content_file)
             menu_data[section_dir] = {
-                "link": reverse('standard', args=(self.release, lang, url_path)),
+                # we do the template bit here, so the release name will change
+                # when eg master and <commit_id> refer to the same commit, and
+                # we only have one exported html file on disk.  This way the
+                # release_name from the view context data will be used.
+                "link": """{{% url "standard" release_name "{0}" "{1}" %}}""".format(lang, url_path),
                 "title": humanise(remove_numeric_prefix(section_dir)),
             }
         return menu_data
@@ -381,7 +385,8 @@ class HTMLProducer(object):
         for content_file in sorted(self.dir_structure[lang][section_dir].keys()):
             url_path = export_path_to_url_path(section_dir, content_file)
             menu_data[content_file] = {
-                "link": reverse('standard', args=(self.release, lang, url_path)),
+                # see comment in outer_menu_data as to why
+                "link": """{{% url "standard" release_name "{0}" "{1}" %}}""".format(lang, url_path),
                 "title": humanise(export_md_file_to_name(content_file)),
             }
         return menu_data
