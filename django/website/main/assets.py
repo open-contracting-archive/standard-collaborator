@@ -8,6 +8,7 @@ js = Bundle('bower_components/jquery/dist/jquery.js',
             'bower_components/bootstrap/js/modal.js',
             'bower_components/bootstrap/js/tab.js',
             'bower_components/bootstrap/js/scrollspy.js',
+            'bower_components/bootstrap/js/affix.js',
             filters='rjsmin',
             output='js/site.js')
 register('js_all', js)

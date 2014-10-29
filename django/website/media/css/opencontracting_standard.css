@@ -96,3 +96,7 @@ h1.site-title {
 .under-standard-header {
 	margin-top: 96px;
 }
+
+.side-nav.affix {
+	max-width: 255px;
+}

@@ -300,14 +300,16 @@ class HTMLProducer(object):
             mdcontent = md.read()
         htmlcontent = markdown(mdcontent, extensions=['footnotes', 'sane_lists', 'toc'])
         pq_dom = PyQuery(htmlcontent)
-        toc = pq_dom(".toc").outerHtml()
+        toc = pq_dom(".toc")
+        toc.children('ul').addClass('nav')
+        toc_html = toc.outerHtml()
         pq_dom.remove(".toc")
         htmlcontent = pq_dom.html(method='html')
         rendered = render_to_string('main/menu_content.html', {
             'outer_menu': outer_menu_html,
             'inner_menu': inner_menu_html,
             'html_content': htmlcontent,
-            'toc': toc
+            'toc': toc_html
         })
         #with codecs.open(htmlfile, encoding="utf8", mode='w') as html:
         with open(htmlfile, mode='w') as html:
