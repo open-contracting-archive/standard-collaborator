@@ -14,6 +14,7 @@ from django.template.loader import render_to_string
 
 from git import Repo, BadObject
 from markdown import markdown
+from pyquery import PyQuery
 
 WORKING_DIR = path.abspath(path.join(path.dirname(__file__), '..', 'working'))
 REPO_DIR = path.join(WORKING_DIR, 'repo')
@@ -298,10 +299,15 @@ class HTMLProducer(object):
         with codecs.open(mdfile, encoding="utf8", mode='r') as md:
             mdcontent = md.read()
         htmlcontent = markdown(mdcontent, extensions=['footnotes', 'sane_lists', 'toc'])
+        pq_dom = PyQuery(htmlcontent)
+        toc = pq_dom(".toc").outerHtml()
+        pq_dom.remove(".toc")
+        htmlcontent = pq_dom.html(method='html')
         rendered = render_to_string('main/menu_content.html', {
             'outer_menu': outer_menu_html,
             'inner_menu': inner_menu_html,
             'html_content': htmlcontent,
+            'toc': toc
         })
         #with codecs.open(htmlfile, encoding="utf8", mode='w') as html:
         with open(htmlfile, mode='w') as html:
