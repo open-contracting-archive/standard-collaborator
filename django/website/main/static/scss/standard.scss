@@ -165,8 +165,28 @@ a {
 	max-width: 255px;
 }
 
-.toc > .nav li.active {
+.toc .nav > li > a {
+	display: block;
+	font-size: 16px;
+	padding: 4px 20px;
+	font-weight: 400;
+}
+
+.toc .nav .nav > li > a {
+	display: block;
+	font-size: 14px;
+	padding-left: 30px;
+}
+
+.toc .nav .nav .nav > li > a {
+	display: block;
+	font-size: 12px;
+	padding-left: 40px;
+}
+
+.toc .nav li.active > a {
 	border-left-style: solid;
 	border-left-width: 2px;
-	border-left-color: blue;
+	border-left-color: $link-color;
+	font-weight: 500;
 }

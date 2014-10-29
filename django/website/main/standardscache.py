@@ -303,7 +303,7 @@ class HTMLProducer(object):
         htmlcontent = markdown(mdcontent, extensions=['footnotes', 'sane_lists', 'toc'])
         pq_dom = PyQuery(htmlcontent)
         toc = pq_dom(".toc")
-        toc.children('ul').addClass('nav')
+        toc.find('ul').addClass('nav')
         toc_html = toc.outerHtml()
         pq_dom.remove(".toc")
         htmlcontent = pq_dom.html(method='html')
