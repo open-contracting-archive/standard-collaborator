@@ -1,5 +1,5 @@
 $background-color: #EEE;
-$accent-color: #EAEF45;
+$accent-color: #222;
 
 /* MAIN */
 
@@ -33,6 +33,10 @@ footer {
 
 .navicon {
     color: $accent-color;
+}
+
+.nav-tabs > li.topnav-right {
+	float:right;
 }
 
 /* CONTENT */

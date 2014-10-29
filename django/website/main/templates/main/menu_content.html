@@ -1,3 +1,7 @@
+{% verbatim %}
+{% load i18n %}
+{% endverbatim %}
+
 <div class="col-md-3">
 	<div class="side-nav" data-spy="affix" data-offset-top="5" data-offset-bottom="50">
 		{{ toc|safe }}
@@ -7,7 +11,20 @@
 	<div id="annotatable">
 		<div class="tab-content">
 			<ul class="nav nav-tabs">
+				{% verbatim %}
+				<li><a href="{% url 'latest' %}" title="{% trans "Home" %}"><span class="oi oi-home navicon" aria-hidden="true"></span></a></li>
+				{% endverbatim %}
 				{{ outer_menu|safe }}
+				{% verbatim %}
+				<li class="topnav-right"><a href="#" title="{% trans "Change versions" %}" data-toggle="modal" data-target="#changeVersion"><span class="oi oi-fork navicon" aria-hidden="true"></span></a></li>
+				{% if request.user.is_authenticated %}
+				<li class="topnav-right"><a title="{% trans "Logout" %}" href="{% url 'auth_logout' %}?next={{ request.path }}"><span class="oi oi-account-logout navicon" aria-hidden="true"></span></a></li>
+				{% else %}
+				<li class="topnav-right"><a title="{% trans "Login" %}" href="{% url 'auth_login' %}?next={{ request.path }}"><span class="oi oi-account-login navicon" aria-hidden="true"></span></a></li>
+				{% endif %}
+				<li class="topnav-right"><a href="#" title="{% trans "Change language" %}" data-toggle="modal" data-target="#changeLanguage"><span class="oi oi-flag navicon" aria-hidden="true"></span></a></li>
+				<li class="topnav-right"><a href="#" title="{% trans "Help" %}" data-toggle="modal" data-target="#help"><span class="oi oi-question-mark navicon" aria-hidden="true"></span></a></li>
+				{% endverbatim %}
 			</ul>
 			<ul class="nav nav-tabs">
 				{{ inner_menu|safe }}

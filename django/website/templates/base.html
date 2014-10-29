@@ -50,19 +50,7 @@
 
 
 <div class="vertical-space"></div>
-    <div class="navbar navbar-inverse under-standard-header" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-							<a href="{% url 'latest' %}" title="{% trans "Go to latest release" %}" class="navbar-brand">{% trans "Open Contracting Data Standard" %}</a>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-							<li><a href="{% url 'latest' %}" title="{% trans "Home" %}"><span class="oi oi-home navicon" aria-hidden="true"></span></a></li>
-							<li><a href="#" title="{% trans "Help" %}" data-toggle="modal" data-target="#help"><span class="oi oi-question-mark navicon" aria-hidden="true"></span></a></li>
-                {% block extranav %}
-                {% endblock extranav %}
-            </ul>
-        </div>
-    </div>
+    <!-- div class="navbar navbar-inverse under-standard-header" role="navigation"-->
     <div class="main container">
         {% block content %}
         {% endblock content %}
