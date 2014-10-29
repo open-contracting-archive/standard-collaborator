@@ -100,3 +100,9 @@ h1.site-title {
 .side-nav.affix {
 	max-width: 255px;
 }
+
+.toc > .nav > li.active {
+	border-left-style: solid;
+	border-left-width: 2px;
+	border-left-color: blue;
+}
