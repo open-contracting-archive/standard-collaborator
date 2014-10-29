@@ -394,6 +394,7 @@ else:
 # path to docs from root of repository
 STANDARD_DOCS_PATH = 'standard/docs'
 STANDARD_SCHEMA_PATH = 'standard/schema'
+STANDARD_EXAMPLE_PATH = 'standard/examples'
 STANDARD_DEFAULT_LANG = 'en'
 
 LANG_CODE_NAME = {

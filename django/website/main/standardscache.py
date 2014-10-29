@@ -195,12 +195,21 @@ class StandardsRepo(object):
         export_dir = self.export_commit(commit)
         json_path = path.join(
             export_dir, settings.STANDARD_SCHEMA_PATH, '%s.json' % json_name)
+        return self.get_contents(json_path)
+
+    def get_file_contents(self, commit, file_name):
+        export_dir = self.export_commit(commit)
+        file_path = path.join(
+            export_dir, settings.STANDARD_EXAMPLE_PATH, file_name)
+        return self.get_contents(file_path)
+
+    def get_contents(self, file_path):
         try:
-            with open(json_path, 'r') as json_file:
-                json_contents = json_file.read()
-            return json_contents
+            with open(file_path, 'r') as f:
+                file_contents = f.read()
+            return file_contents
         except IOError:
-            return None
+            return ""
 
     def delete_export(self, commit):
         export_dir = get_commit_export_dir(commit)

@@ -1,9 +1,7 @@
 from __future__ import unicode_literals
 
 from os import path
-import re
 
-from braces.views import JSONResponseMixin
 from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.urlresolvers import reverse
@@ -11,8 +9,14 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.utils import translation
 from django.views.generic import TemplateView, RedirectView, View
 
-from .standardscache import (HTML_ROOT, GIT_SHA_RE, StandardsRepo, HTMLProducer,
-                             get_path_for_release, get_exported_languages)
+from .standardscache import (
+    HTML_ROOT,
+    GIT_SHA_RE,
+    StandardsRepo,
+    HTMLProducer,
+    get_path_for_release,
+    get_exported_languages
+)
 
 
 class StandardRedirectView(RedirectView):
@@ -138,7 +142,7 @@ class StandardView(TemplateView):
         return context
 
 
-class SchemaView(JSONResponseMixin, View):
+class SchemaView(View):
     def get(self, request, *args, **kwargs):
         repo = StandardsRepo()
         schema_name = kwargs.get('schema_name')
@@ -152,3 +156,26 @@ class SchemaView(JSONResponseMixin, View):
             # Set to blank json if no doc so docson has something to render
             doc = "{}"
         return HttpResponse(doc, content_type="application/json", status=200)
+
+
+class ExampleView(View):
+    def get(self, request, *args, **kwargs):
+        repo = StandardsRepo()
+        file_name = kwargs.get('file_name')
+
+        release = kwargs.get('release')
+        if release == 'standard':
+            release = 'master'
+
+        doc = repo.get_file_contents(release, file_name)
+        if file_name.endswith('.json'):
+            if doc == "":
+                # Set to blank json if no doc so docson has something to render
+                doc = "{}"
+            response = HttpResponse(doc, content_type="application/json", status=200)
+        elif file_name.endswith('.csv'):
+            response = HttpResponse(doc, content_type="text/csv", status=200)
+            response['Content-Disposition'] = 'attachment; filename="%s"' % file_name
+        else:
+            response = HttpResponse(doc, status=200)
+        return response
