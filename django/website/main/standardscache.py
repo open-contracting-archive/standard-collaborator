@@ -290,12 +290,14 @@ class HTMLProducer(object):
             inner_menu_html = self.inner_menu_for_content(lang, content_file, inner_menu_data)
             export_content_file = path.join(export_dir, content_file)
             # replace .md with .html
-            html_content_file = path.join(
+            html_content_stub = path.join(
                 html_dir, export_md_file_to_name(content_file)
-            ) + '.html'
-            self.convert_md_to_html(export_content_file, html_content_file, outer_menu_html, inner_menu_html)
+            )
+            self.convert_md_to_html(export_content_file, html_content_stub, outer_menu_html, inner_menu_html)
 
-    def convert_md_to_html(self, mdfile, htmlfile, outer_menu_html, inner_menu_html):
+    def convert_md_to_html(self, mdfile, htmlfile_stub, outer_menu_html, inner_menu_html):
+        htmlfile = htmlfile_stub + '.html'
+        menufile = htmlfile_stub + '_menu.html'
         with codecs.open(mdfile, encoding="utf8", mode='r') as md:
             mdcontent = md.read()
         htmlcontent = markdown(mdcontent, extensions=['footnotes', 'sane_lists', 'toc'])
@@ -305,15 +307,20 @@ class HTMLProducer(object):
         toc_html = toc.outerHtml()
         pq_dom.remove(".toc")
         htmlcontent = pq_dom.html(method='html')
-        rendered = render_to_string('main/menu_content.html', {
+
+        rendered_html = render_to_string('main/menu_content.html', {
             'outer_menu': outer_menu_html,
             'inner_menu': inner_menu_html,
             'html_content': htmlcontent,
+        })
+        with open(htmlfile, mode='w') as html:
+            html.write(rendered_html.encode('utf8'))
+
+        rendered_menu = render_to_string('main/sidemenu.html', {
             'toc': toc_html
         })
-        #with codecs.open(htmlfile, encoding="utf8", mode='w') as html:
-        with open(htmlfile, mode='w') as html:
-            html.write(rendered.encode('utf8'))
+        with open(menufile, mode='w') as menu:
+            menu.write(rendered_menu.encode('utf8'))
 
     def outer_menu_data(self, lang):
         """ return something like

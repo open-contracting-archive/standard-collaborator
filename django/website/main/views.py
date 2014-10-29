@@ -109,6 +109,9 @@ class StandardView(TemplateView):
         content_path = path.join(self.std_commit, self.lang, self.path) + '.html'
         if not path.exists(path.join(HTML_ROOT, content_path)):
             raise Http404
+        menu_path = path.join(self.std_commit, self.lang, self.path) + '_menu.html'
+        if not path.exists(path.join(HTML_ROOT, menu_path)):
+            raise Http404
         lang_codes = get_exported_languages(self.release)
         lang_list = [{'code': lang, 'name': settings.LANG_CODE_NAME.get(lang, lang)}
                      for lang in lang_codes]
@@ -116,6 +119,7 @@ class StandardView(TemplateView):
 
         context_dict = {
             'content_path': content_path,
+            'menu_path': menu_path,
             'release_name': self.release,
             'latest_release_name': StandardsRepo().get_latest_tag_name(),
             'other_releases': self.other_releases,
