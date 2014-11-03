@@ -22,7 +22,7 @@ DATABASES = {
     }
 }
 
-########## HAYSTACK SEARCH CONFIGURATION
+# ######### HAYSTACK SEARCH CONFIGURATION
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
@@ -42,6 +42,8 @@ try:
     EMAIL_USE_TLS = True
     DEBUG = False
 except Exception as e:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+STANDARD_GITHUB_REPO = 'practicalparticipation/standard'
 
 # vi: ft=python
