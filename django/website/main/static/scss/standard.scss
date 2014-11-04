@@ -161,8 +161,17 @@ a {
 	margin-top: 96px;
 }
 
+/* Side navigation */
+
 .side-nav.affix {
 	max-width: 255px;
+}
+
+.nav > li.active > a {
+	border-left-style: solid;
+	border-left-width: 2px;
+	border-left-color: $link-color;
+	font-weight: 500;
 }
 
 .toc > .nav > li > a {
@@ -172,24 +181,39 @@ a {
 	font-weight: 400;
 }
 
-.toc > .nav .nav > li > a {
+.toc > .nav > li > .nav > li > a {
 	display: block;
 	font-size: 14px;
 	padding-left: 30px;
 }
 
-.toc > .nav .nav .nav > li > a {
+.toc > .nav > li > .nav > li > .nav {
+  padding-left:15px;
+}
+
+.toc > .nav > li > .nav > li > .nav {
+  display:none;
+}
+
+.toc > .nav > li > .nav > li.active > .nav {
+  display:block;
+}
+
+.toc > .nav > li > .nav > li > .nav > li > a {
 	display: block;
 	font-size: 12px;
 	padding-left: 40px;
 }
 
-.toc > .nav li.active > a {
-	border-left-style: solid;
-	border-left-width: 2px;
-	border-left-color: $link-color;
-	font-weight: 500;
+.toc > .nav > li > .nav > li > .nav > li > .nav {
+  display:none;
 }
+
+.toc > .nav > li > .nav > li > .nav > li.active > .nav {
+  display:block;
+}
+
+/* main content */
 
 .tab-content > h2:before, .tab-content > h3:before {
     display: block;
