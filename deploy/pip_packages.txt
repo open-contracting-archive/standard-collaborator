@@ -31,6 +31,7 @@ django-bootstrap-form
 GitPython==0.3.2.RC1
 pyquery==1.2.9
 lxml==3.4.0
+unicodecsv==0.9.4
 
 # CSS and assets
 django-assets==0.8

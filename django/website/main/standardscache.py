@@ -14,6 +14,7 @@ from django.template.loader import render_to_string
 from git import Repo, BadObject
 from markdown import markdown
 from pyquery import PyQuery
+import unicodecsv as csv
 
 WORKING_DIR = path.abspath(path.join(path.dirname(__file__), '..', 'working'))
 REPO_DIR = path.join(WORKING_DIR, 'repo')
@@ -329,6 +330,39 @@ class HTMLProducer(object):
                 json_contents = f.read()
             node.html('<pre><code class="language-javascript">' + json_contents + '</code></pre>')
 
+    def csv_to_html_table(self, csvreader, table_class):
+        html = []
+        if table_class:
+            html.append('<table class="%s">' % table_class)
+        else:
+            html.append('<table>')
+        for rownum, row in enumerate(csvreader):
+            if rownum == 0:
+                html.append('<thead><tr>')
+                html.extend(['<th>' + column + '</th>' for column in row])
+                html.append('</tr></thead><tbody>')
+            else:
+                html.append('<tr>')
+                html.extend(['<td>' + column + '</td>' for column in row])
+                html.append('</tr>')
+        html.append('</tbody></table>')
+        return ''.join(html)
+
+    def insert_included_csv(self, pq_dom):
+        include_nodes = pq_dom.find(".include-csv")
+        for node in include_nodes.items():
+            csv_file = node.attr['data-src']
+            table_class = node.attr['data-table-class']
+            if not csv_file:
+                continue
+            csv_path = path.join(self.export_dir, csv_file)
+            if not path.isfile(csv_path):
+                continue
+            with open(csv_path, 'r') as f:
+                csvreader = csv.reader(f)
+                csv_contents = self.csv_to_html_table(csvreader, table_class)
+            node.html(csv_contents)
+
     def convert_md_to_html(self, mdfile, htmlfile_stub, outer_menu_html, inner_menu_html):
         htmlfile = htmlfile_stub + '.html'
         with codecs.open(mdfile, encoding="utf8", mode='r') as md:
@@ -337,6 +371,7 @@ class HTMLProducer(object):
         pq_dom = PyQuery(htmlcontent)
         self.extract_toc_to_html(pq_dom, htmlfile_stub)
         self.insert_included_json(pq_dom)
+        self.insert_included_csv(pq_dom)
         htmlcontent = pq_dom.html(method='html')
 
         rendered_html = render_to_string('main/menu_content.html', {
