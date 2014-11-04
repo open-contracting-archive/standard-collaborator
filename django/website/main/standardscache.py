@@ -8,7 +8,6 @@ import re
 import shutil
 import subprocess
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.template.loader import render_to_string
 
@@ -304,17 +303,25 @@ class HTMLProducer(object):
             )
             self.convert_md_to_html(export_content_file, html_content_stub, outer_menu_html, inner_menu_html)
 
-    def convert_md_to_html(self, mdfile, htmlfile_stub, outer_menu_html, inner_menu_html):
-        htmlfile = htmlfile_stub + '.html'
-        menufile = htmlfile_stub + '_menu.html'
-        with codecs.open(mdfile, encoding="utf8", mode='r') as md:
-            mdcontent = md.read()
-        htmlcontent = markdown(mdcontent, extensions=['footnotes', 'sane_lists', 'toc'])
-        pq_dom = PyQuery(htmlcontent)
+    def extract_toc_to_html(self, pq_dom, htmlfile_stub):
         toc = pq_dom(".toc")
         toc.find('ul').addClass('nav')
         toc_html = toc.outerHtml()
         pq_dom.remove(".toc")
+        rendered_menu = render_to_string('main/sidemenu.html', {
+            'toc': toc_html
+        })
+        menufile = htmlfile_stub + '_menu.html'
+        with open(menufile, mode='w') as menu:
+            menu.write(rendered_menu.encode('utf8'))
+
+    def convert_md_to_html(self, mdfile, htmlfile_stub, outer_menu_html, inner_menu_html):
+        htmlfile = htmlfile_stub + '.html'
+        with codecs.open(mdfile, encoding="utf8", mode='r') as md:
+            mdcontent = md.read()
+        htmlcontent = markdown(mdcontent, extensions=['footnotes', 'sane_lists', 'toc'])
+        pq_dom = PyQuery(htmlcontent)
+        self.extract_toc_to_html(pq_dom, htmlfile_stub)
         htmlcontent = pq_dom.html(method='html')
 
         rendered_html = render_to_string('main/menu_content.html', {
@@ -324,12 +331,6 @@ class HTMLProducer(object):
         })
         with open(htmlfile, mode='w') as html:
             html.write(rendered_html.encode('utf8'))
-
-        rendered_menu = render_to_string('main/sidemenu.html', {
-            'toc': toc_html
-        })
-        with open(menufile, mode='w') as menu:
-            menu.write(rendered_menu.encode('utf8'))
 
     def outer_menu_data(self, lang):
         """ return something like
