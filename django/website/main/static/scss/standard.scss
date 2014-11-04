@@ -110,7 +110,7 @@ h1.site-title {
 	max-width: 400px;
 }
 
-.site-header .widget-area {
+.header-widget-area.widget-area {
 	float: right;
 	text-align: right;
 	width: 720px;
@@ -127,7 +127,7 @@ h1.site-title {
 	padding-top: 15px;
 }
 
-.genesis-nav-menu .menu-item {
+.genesis-nav-menu > .menu-item {
 	display: inline-block;
 	margin: 0;
 	text-align: left;
@@ -165,28 +165,35 @@ a {
 	max-width: 255px;
 }
 
-.toc .nav > li > a {
+.toc > .nav > li > a {
 	display: block;
 	font-size: 16px;
 	padding: 4px 20px;
 	font-weight: 400;
 }
 
-.toc .nav .nav > li > a {
+.toc > .nav .nav > li > a {
 	display: block;
 	font-size: 14px;
 	padding-left: 30px;
 }
 
-.toc .nav .nav .nav > li > a {
+.toc > .nav .nav .nav > li > a {
 	display: block;
 	font-size: 12px;
 	padding-left: 40px;
 }
 
-.toc .nav li.active > a {
+.toc > .nav li.active > a {
 	border-left-style: solid;
 	border-left-width: 2px;
 	border-left-color: $link-color;
 	font-weight: 500;
+}
+
+.tab-content > h2:before, .tab-content > h3:before {
+    display: block;
+    content: "";
+    height: 100px;
+    margin: -100px 0px 0px;
 }
