@@ -333,9 +333,10 @@ class HTMLProducer(object):
     def csv_to_html_table(self, csvreader, table_class):
         html = []
         if table_class:
-            html.append('<table class="%s">' % table_class)
+            table_class += " side-scroll-table"
         else:
-            html.append('<table>')
+            table_class = "side-scroll-table"
+        html.append('<table class="%s">' % table_class)
         for rownum, row in enumerate(csvreader):
             if rownum == 0:
                 html.append('<thead><tr>')

@@ -221,3 +221,10 @@ a {
     height: 100px;
     margin: -100px 0px 0px;
 }
+
+/* tables */
+
+.side-scroll-table {
+    table-layout: fixed;
+    width: 100%;
+}
