@@ -215,11 +215,12 @@ a {
 
 /* main content */
 
-.tab-content > h2:before, .tab-content > h3:before {
-    display: block;
-    content: "";
-    height: 100px;
-    margin: -100px 0px 0px;
+.tab-content > h2, .tab-content > h3 {
+    padding-top: 106px;
+    margin-top: -96px;
+    background-clip: content-box;
+    z-index: -999;
+    pointer-events: none;
 }
 
 /* tables */
