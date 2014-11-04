@@ -9,6 +9,7 @@ js = Bundle('bower_components/jquery/dist/jquery.js',
             'bower_components/bootstrap/js/tab.js',
             'bower_components/bootstrap/js/scrollspy.js',
             'bower_components/bootstrap/js/affix.js',
+            'bower_components/prism/prism.js',
             filters='rjsmin',
             output='js/site.js')
 register('js_all', js)
@@ -21,6 +22,7 @@ standard_scss = Bundle('scss/standard.scss',
                        depends='scss/*.scss')
 
 css = Bundle('bower_components/bootstrap/dist/css/bootstrap.min.css',
+             'bower_components/prism/prism.css',
              'css/open-iconic-bootstrap.css',
              standard_scss,
              output='css/site.css')

@@ -221,6 +221,7 @@ class HTMLProducer(object):
     def __init__(self, release, std_commit):
         self.release = release
         self.std_commit = std_commit
+        self.export_dir = get_commit_export_dir(std_commit)
         self.export_docs_dir = get_commit_export_docs_dir(std_commit)
         self.html_dir = get_commit_html_dir(std_commit)
         self.dir_structure = {}
@@ -315,6 +316,19 @@ class HTMLProducer(object):
         with open(menufile, mode='w') as menu:
             menu.write(rendered_menu.encode('utf8'))
 
+    def insert_included_json(self, pq_dom):
+        include_nodes = pq_dom.find(".include-json")
+        for node in include_nodes.items():
+            json_file = node.attr['data-src']
+            if not json_file:
+                continue
+            json_path = path.join(self.export_dir, json_file)
+            if not path.isfile(json_path):
+                continue
+            with open(json_path, 'r') as f:
+                json_contents = f.read()
+            node.html('<pre><code class="language-javascript">' + json_contents + '</code></pre>')
+
     def convert_md_to_html(self, mdfile, htmlfile_stub, outer_menu_html, inner_menu_html):
         htmlfile = htmlfile_stub + '.html'
         with codecs.open(mdfile, encoding="utf8", mode='r') as md:
@@ -322,6 +336,7 @@ class HTMLProducer(object):
         htmlcontent = markdown(mdcontent, extensions=['footnotes', 'sane_lists', 'toc'])
         pq_dom = PyQuery(htmlcontent)
         self.extract_toc_to_html(pq_dom, htmlfile_stub)
+        self.insert_included_json(pq_dom)
         htmlcontent = pq_dom.html(method='html')
 
         rendered_html = render_to_string('main/menu_content.html', {
