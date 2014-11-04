@@ -224,6 +224,10 @@ a {
 
 /* tables */
 
+.include-csv, .include-json {
+    overflow: auto;
+}
+
 .side-scroll-table {
     table-layout: fixed;
     width: 100%;
