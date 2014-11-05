@@ -1,0 +1,921 @@
+<!doctype html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+  <!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+  <!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+  <!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+  <!--[if (gt IE 9)|!(IE)]><!--> <html class="modern"> <!--<![endif]-->
+  <title>OCDS Draft Standard</title>
+  <meta name="description" content="OCDS Draft Standard">
+  <meta name="author" content="Sarah Bird">
+  
+  
+      <link type="text/css" href="/standard/static/css/site.css" rel="stylesheet"/>
+  
+  
+    <link rel="stylesheet" href="http://assets.annotateit.org/annotator/v1.2.9/annotator.min.css">
+
+</head>
+
+<body>
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="/standard/" title="Go to latest release" class="navbar-brand">Open Contracting Data Standard</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/standard/" title="Home"><span class="oi oi-home navicon-legacy" aria-hidden="true"></span></a></li>
+                <li><a href="#" title="Help" data-toggle="modal" data-target="#help"><span class="oi oi-question-mark navicon-legacy" aria-hidden="true"></span></a></li>
+                
+
+<li><a title="Login" href="/standard/accounts/login/?next=/standard/r/0__3__2/" title="About"><span class="oi oi-account-login navicon-legacy" aria-hidden="true"></span></a></li>
+
+<li><a href="#" title="Change versions" data-toggle="modal" data-target="#changeVersion"><span class="oi oi-fork navicon-legacy" aria-hidden="true"></span></a></li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="main container">
+        
+    <h1 class="old-version-warning">OLD VERSION - please go to <a href="../../">the latest version</a></h1>
+        
+    <h1>Open Contracting Data Standard - 0.3.2</h1>
+    
+        <p>Released on: Wed, 03 Sep 2014 08:40:19 GMT</p>
+    
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+        <h4 class="panel-title"> <span class="glyphicon glyphicon-question-sign"></span> Share your comments</h4>
+        </div>
+        <div class="panel-body">
+            <p>The online version of this document is open for comment. You can share your comments in two ways:
+            <ul>
+                <li>Inline comments on the document - Login, by clicking on <span class="oi oi-account-login" style="font-size: .8em"></span>, and then highlight portions of text to add comment. To "reply" to an existing comment, highlight the same portion of text, and then add your comment. See <span class="oi oi-question-mark" style="font-size: .8em"></span> for more help on commenting.</li>
+                <li>Mailing list - If you have more general comments that don't fit well as inline comments, then please do join our <a href="https://groups.google.com/a/webfoundation.org/forum/#!forum/public-ocds">mailing list</a> and start a discussion with your thoughts.</li>
+            </ul>
+            Throughout this document there are specific questions for consultation included, but you are not limited to responding to these questions, we welcome all input you can offer.</p>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span> Not the latest release.</h4>
+        </div>
+        <div class="panel-body">
+            <p>You are viewing v0.3.2. The latest release is <a href="/standard/r/latest/">v0.3.3</a></p>
+        </div>
+    </div>
+    
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tabs-1" data-toggle="tab">Main</a></li>
+        <li><a href="#tabs-2" data-toggle="tab">Definitions</a></li>
+        <li><a href="#tabs-3" data-toggle="tab">Schemas</a></li>
+        <li><a href="#tabs-4" data-toggle="tab">Merging</a></li>
+        
+    </ul>
+    <div id="annotatable"> 
+        <div class="tab-content">
+            <div class="tab-pane active" id="tabs-1"> <p><br /><a id="above"></a></p>
+<div class="panel panel-warning">
+    <div class="panel-heading">
+       <h4 class="panel-title"> <span class="glyphicon glyphicon-comment"></span>Open for consultation</h4>
+     </div>
+     <div class="panel-body"><p>This version is open for consultation until September 30th. Visit <a href="http://standard.open-contracting.org">http://standard.open-contracting.org</a> for more background information.</p>
+     </div>
+</div>
+
+<div class="toc">
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#background">Background</a></li>
+<li><a href="#conceptual-model">Conceptual Model</a><ul>
+<li><a href="#the-contracting-process">The contracting process</a></li>
+<li><a href="#contracting-releases-and-record">Contracting releases and record</a></li>
+<li><a href="#data-model-and-serialisations">Data model and serialisations</a></li>
+</ul>
+</li>
+<li><a href="#release-data">Release data</a><ul>
+<li><a href="#planning">Planning</a></li>
+<li><a href="#tender">Tender</a></li>
+<li><a href="#awards">Awards</a></li>
+<li><a href="#contracts">Contracts</a></li>
+<li><a href="#performance">Performance</a></li>
+</ul>
+</li>
+<li><a href="#record-data">Record data</a></li>
+<li><a href="#common-data-elements">Common data elements</a><ul>
+<li><a href="#values">Values</a></li>
+<li><a href="#periods">Periods</a></li>
+<li><a href="#attachments">Attachments</a></li>
+<li><a href="#organization">Organization</a></li>
+<li><a href="#items">Items</a></li>
+<li><a href="#notices">Notices</a></li>
+<li><a href="#milestones">Milestones</a></li>
+<li><a href="#amendment-information">Amendment information</a><ul>
+<li><a href="#a-note-on-amendments">A note on amendments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#further-information">Further information</a><ul>
+<li><a href="#defining-a-unique-contracting-process">Defining a unique contracting process</a></li>
+<li><a href="#add-ons">Add-ons</a></li>
+<li><a href="#a-note-on-framework-contracts">A note on framework contracts</a></li>
+<li><a href="#validator">Validator</a></li>
+<li><a href="#development-process">Development process</a><ul>
+<li><a href="#1-supply-side-research">1) Supply-side research</a></li>
+<li><a href="#2-demand-side-use-cases">2) Demand-side use-cases</a></li>
+<li><a href="#3-research-on-related-initiatives">3) Research on related initiatives</a></li>
+</ul>
+</li>
+<li><a href="#next-steps">Next steps</a></li>
+<li><a href="#acknowledgements">Acknowledgements</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="purpose">Purpose</h2>
+<p>This is the beta release of the Open Contracting Data Standard. This release provides:</p>
+<ul>
+<li>A description of the overall Open Contracting Data Standard Model</li>
+<li>A JSON Schema for open contracting <strong>releases</strong> and <strong>records</strong> </li>
+<li>Details of suggested implementation.</li>
+</ul>
+<p>This beta offers early adopters the chance to test the overall data model for the standard, and to provide feedback on the coverage and definition of fields provided by the standard.</p>
+<p>Both structural and field changes should be anticipated between the beta and initial release version.</p>
+<h2 id="background">Background</h2>
+<p>Countries signing up to the Open Contracting Global Principles commit to share "information related to the formation, performance, and completion of public contracts" including data on all stages of contracting, including subcontracting arrangements.</p>
+<p>The Open Contracting Data Standard is being developed to allow as much of this information as possible to be shared as structured data in addition to documents. The objective of the OCDS is to enable the widest possible range of stakeholders to use contracting data and documents to achieve value for money for the government, a competitive playing field for the private sector, and high quality goods, works, and services for citizens.</p>
+<p>The development of the Data Model Draft has been based on:</p>
+<ul>
+<li>
+<p><strong>Assessing data currently supplied through contract portals</strong> - in order to understand the data that governments currently hold and publish, and how it is structured. To carry out this analysis we created the <a href="http://ocds.open-contracting.org/opendatacomparison/">Contracting Data Comparison tool</a>, and <a href="http://ocds.open-contracting.org/opendatacomparison/datamap/">Contracting Data Map</a> which explores the fields of data available from a wide range of different government contracting data portals around the world.</p>
+</li>
+<li>
+<p><strong>Exploring demand for data on contracting</strong> - to identify the ways in which different users think about contracting data, and how they want to use it. This work is ongoing, and initial use cases are factored into this conceptual model and will continue to shape future iterations.</p>
+</li>
+<li>
+<p><strong>A Review of existing schemas: </strong>There are already well-known schemas for Organizations, People and Addresses, and related purposes. This project will build upon existing standards efforts where appropriate. </p>
+</li>
+</ul>
+<p>The Open Contracting Data Standard is a core product of the Open Contracting Partnership. Version 1.0 of the standard is being developed for the OCP by the World Wide Web Foundation and World Bank, through a project supported by The Omidyar Network and the World Bank.</p>
+<p>More detailed information about the development process is available <a href="#development-process">below</a>.</p>
+<h2 id="conceptual-model">Conceptual Model</h2>
+<h3 id="the-contracting-process">The contracting process</h3>
+<p>The contracting process is the sequence of stages related to the lifespan of a contract, beginning with planning and culminating in contract closure.</p>
+<p><img alt="Contracting Process" src="https://raw.githubusercontent.com/open-contracting/standard/master/standard/assets/contracting%20process.png" /></p>
+<p>* Formation, when dealing with basic procurement processes, will often be referred to as Tendering & Award.</p>
+
+<p>For descriptions of the phases see the "Definitions" tab <a href="#above">above</a>.</p>
+<p>Each Open Contracting Process should be given a unique <strong>Open Contracting ID</strong> (ocid). We define an Open Contracting Process as having a single unique tendering / competitive phase, but with the possibility of this resulting in multiple awards and contracts. See defining a unique contracting process <a href="#unique">below</a> for more details. </p>
+<h3 id="contracting-releases-and-record">Contracting releases and record</h3>
+<p>Information about an Open Contracting Process may accumulate over time. As a result, the Open Contracting Data Standard provides for two kinds of data:</p>
+<ul>
+<li>
+<p><strong>Contracting releases</strong> - each release provides information pertaining to a particular stage in the contracting process -- such as tender notices, award notices, or details of a finalized contract. These releases may equate to formal legal notices as part of a procurement process, or may be new releases of information. They can have attached documents. Release may also include amendments. Once published a release should not be changed, and new information should be shared through new releases with relevant amendments. </p>
+</li>
+<li>
+<p><strong>Contracting record.</strong> - A contracting record provides a snapshot of all the key elements of a unique contracting process, including its planning, formation, performance and completion. It is updated as new information becomes available through contracting releases to accurately reflect the current state of the contract processes. The contracting record should provide an at-a-glance view of key information and can then be used to access more detailed information from the releases. A full contracting record can contain detailed revision information for fields. Contracting records may be published in full, or may contain a pointer to releases, allowing third-parties to assemble and verify a record of the whole contracting process.</p>
+</li>
+</ul>
+<p>Both <strong>contracting releases</strong> and <strong>contracting records</strong> should be provided within data packages, containing meta-data about the publisher, publication data and licensing information. </p>
+<p>Publishers can package a number of releases and records together in the same file, or can publish one release / record per-file.</p>
+<h3 id="data-model-and-serialisations">Data model and serialisations</h3>
+<p>For the beta of the Open Contracting Data Standard we have developed a <a href="http://json-schema.org/">JSON Schema</a> rendering of a data model, whilst at the same time paying attention to ensure this model can be easily serialised in other formats. We have proposed an approach to map this data model into <a href="https://github.com/open-contracting/standard/issues/32">flat file CSV and DataPackage formats</a>. </p>
+<p>We have carried out initial work to identify <a href="http://www.w3.org/TR/json-ld/">JSON-LD mapping</a> but this is <a href="https://github.com/open-contracting/standard/issues/40">not currently a development priority for version 1.0</a>. </p>
+<h2 id="release-data">Release data</h2>
+<p>A full schema for releases can be accessed from the 'Release Schema' tab above. Click each section to expand that component of the schema. </p>
+<p>A release should always contain:</p>
+<ul>
+<li><strong>ocid</strong> - the Open Contracting Identifier for this Contracting Process. This should be globally unique. </li>
+<li><strong>releaseID</strong> - this should uniquely identify this release within the current 'package'. Generally these should be unique to a publisher, but are not required to be globally unique. </li>
+<li><strong>releaseTag</strong> - A tag that helps to identify the type of release being made. These may be used for advanced validation (i.e. certain kinds of release may in future require certain fields to be provided). The current list of tags is: planning, tenderNotice, awardNotice, contractSignature, contractAmendment, report, spending, terminationNotice</li>
+<li><strong>language</strong> - An ISO 2-Digit Country code for the default language used in the document</li>
+<li><strong>buyer</strong> - identifier and address details of the buying organisation (see below for the specification of an organisation)</li>
+</ul>
+<p>A release can then contain elements within one or more of the following blocks: </p>
+<ul>
+<li>planning</li>
+<li>formation</li>
+<li>awards</li>
+<li>contracts</li>
+<li>performance</li>
+</ul>
+<p>The blocks are described in more detail below</p>
+<h3 id="planning">Planning</h3>
+<p><script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/planning"></script></p>
+<h3 id="tender">Tender</h3>
+<p><script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/tender"></script></p>
+<h3 id="awards">Awards</h3>
+<p><script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/award"></script></p>
+<h3 id="contracts">Contracts</h3>
+<p><script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/contract"></script></p>
+<h3 id="performance">Performance</h3>
+<p><script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/performance"></script></p>
+<h2 id="record-data">Record data</h2>
+<p>There should be one record for each open contracting process. The record MUST contain:</p>
+<ul>
+<li>An <strong>ocid</strong> - An globally unique Open Contracting ID for this contracting process.</li>
+<li>An array of <strong>releases</strong> - either by providing URLs to each of the releases (so that a user can compile their own record), or embedding copies of each of the releases relating to this contracting process.</li>
+</ul>
+<p>It SHOULD contain:</p>
+<ul>
+<li><strong>compiledRelease</strong> - the latest version of all open contracting process fields, represented using the release schema. For example, if a contractSignature release has been issued with with a contractValue of $100, and then a contractAmendment release has been issued with a contractValue updated to $200, the compiledRelease would have contract/contractValue of $200. </li>
+</ul>
+<p>and</p>
+<ul>
+<li><strong>versionedRelease</strong> - containing the history of the data in the compiledRecord, with all known past values of any field and the release that information came from. </li>
+</ul>
+<h2 id="common-data-elements">Common data elements</h2>
+<p>The following data elements are used in a number of places throughout the standard.</p>
+<h3 id="values">Values</h3>
+<script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/value"></script>
+
+<h3 id="periods">Periods</h3>
+<script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/period"></script>
+
+<h3 id="attachments">Attachments</h3>
+<script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/attachment"></script>
+
+<h3 id="organization">Organization</h3>
+<p>Used for representing buyers, suppliers and bidders. We follow the IATI Organisation ID Standard for organisational identifiers.</p>
+<script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/organization"></script>
+
+<h3 id="items">Items</h3>
+<p>Used to itemsToBeProcured, itemsAwarded and itemsContracted</p>
+<script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/item"></script>
+
+<h3 id="notices">Notices</h3>
+<script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/notice"></script>
+
+<h3 id="milestones">Milestones</h3>
+<script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/milestone"></script>
+
+<h3 id="amendment-information">Amendment information</h3>
+<script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/amendment"></script>
+
+<h4 id="a-note-on-amendments">A note on amendments</h4>
+<p>When amending arrays (e.g. a list of itemsToBeProcured) then the amendment should contain <em>all</em> the items in the updated array, not just new items that are being added. </p>
+<h1></h1>
+<div class="panel panel-success">
+    <div class="panel-heading">
+       <h4 class="panel-title"> <span class="glyphicon glyphicon-question-sign"></span> Consultation questions</h4>
+     </div>
+     <div class="panel-body">
+         <ul>
+             <li>Does the proposed conceptual model make sense for the ways you want to publish or use open contracting data?</li>
+             <li>Which do you need most: a summary contracting record, or detailed releases of information at each stage of the contracting process?</li>
+             <li>Do these components cover all the relevant categories of information you want to publish or access about contracting?</li>
+             <li>Are we missing key elements in our description of what each component will contain?</li>
+             <li>How does the proposed approach of having the contracting record represent the latest stage of contracting (i.e. overwriting earlier data) affect how you might publish or use open contracting data?</li>
+         </ul>     
+     </div>
+</div>
+
+<h1 id="further-information">Further information</h1>
+<p><a name="unique"></a></p>
+<h2 id="defining-a-unique-contracting-process">Defining a unique contracting process</h2>
+<p>For the data standard, defining a unique contracting process is critical for getting useful, comparable, clean data. But, there are cases where what the unique process is not obvious. For example, a framework contract has only one tender and award but many contracts associated with that award.</p>
+<p>We define a unique contracting process as that with a unique tendering / competitive phase.</p>
+<p><strong>Example 1</strong>
+<div class="pull-left"><img alt="Multiple processes" src="https://raw.githubusercontent.com/open-contracting/standard/master/standard/assets/tender_notice_with_multiple_processes.png"></div></p>
+<p>This Tender notice has a single ID and six line items. However, to secure each item suppliers must enter a separate bid and the competition is handled separately for each item leading to 6 contracts. Because the competitive process is unique for each 6 items there are 6 contracting processes here, in spite of the single Tender Notice ID.</p>
+<div class="clearfix"></div>
+
+<p><strong>Example 2</strong></p>
+<div class="pull-left"><img alt="Single process" src="https://raw.githubusercontent.com/open-contracting/standard/master/standard/assets/one_process_multiple_contracts.png"></div>
+
+<p>This snippet from a <a href="https://buyandsell.gc.ca/procurement-data/tender-notice/PW-14-00635129">tender notice</a> offers an unspecified number of contracts for the successful supplier(s). The details note that there is a limit of $25k per contract, anything higher than that must be rebid competitively. All of the $25k or less contracts that are awarded under the award that will result from this tender are part of a single contracting process, because of the single bidding process.</p>
+<div class="clearfix"></div>
+
+<h2 id="add-ons">Add-ons</h2>
+<p>In addition to the core components, there will be cases where publishers, or users, need to augment the core data with their own information. The standard will provide a mechanism for Add-On information. This will include additional fields in core components as well as Add On components (e.g. new kinds of <strong>contracting release</strong>).</p>
+<p>The publishing and re-use of add-ons will be encouraged to try and reduce duplication and facilitate reuse of tools. The use of Add-Ons will be subject to the following restrictions <sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup></p>
+<ul>
+<li>
+<p>It must not use terms from outside this specification's terms where this specification's terms would suffice</p>
+</li>
+<li>
+<p>It may use terms from outside this specification's terms where this specification's terms are insufficient.</p>
+</li>
+</ul>
+<p>We have identified that a location add-on will be a priority for future development, but as no publishers are currently providing location data, we were not able to develop this during the iterations towards the beta standard.</p>
+<h2 id="a-note-on-framework-contracts">A note on framework contracts</h2>
+<p>Many public procurements take place under framework agreements. These help facilitate routine purchasing. Suppliers are pre-approved to provide a list of goods or services. Under a framework agreement, there are typically multiple contracts that are all authorized by a single award. In the data standard, an award notice release would define the framework and this information would be stored in the contracting record under Award details. Then there will be multiple contract signature releases and each one would create a new Contract section in the contracting record. This provides a way to aggregate all the information on the contracts given under a single framework agreement.</p>
+<p>Alternative names for framework agreements: Dynamic Purchasing System (EU), Standing Offers and Supply Arrangements (buyandsell.gc.ca)</p>
+<h2 id="validator">Validator</h2>
+<p>A prototype validator is available at <a href="http://ocds.open-contracting.org/validator/">http://ocds.open-contracting.org/validator/</a> which can be used to check draft documents against the schema.</p>
+<h2 id="development-process">Development process</h2>
+<p>The development of the Data Model has been based on:</p>
+<h3 id="1-supply-side-research">1) Supply-side research</h3>
+<p>The supply-side research is focused on comparing contract data (37 datasets with over 175 </p>
+<p>downloadable assets from 27 publishers, from across the world). 26 publishers are from 15 countries that were selected as priority countries due to their current activity in open government and the Open Government Partnership (OGP) Action Plan. The effort sought to understand:</p>
+<ul>
+<li>
+<p>which elements of the contracting process are captured in currently published data;</p>
+</li>
+<li>
+<p>which fields are commonly found across different datasets;</p>
+</li>
+<li>
+<p>how do different datasets represent and model the contracting process; and</p>
+</li>
+<li>
+<p>how far are there common identifiers that can be used to link datasets.</p>
+</li>
+</ul>
+<p>To answer the above questions a Contracting Data Comparison tool was created with a team of volunteer developers to provide a platform for curating meta-data about public contracting datasets from the priority countries.</p>
+<p>The effort focused on capturing the metadata of contract data available. As it develops, the intention is for the Contracting Data Comparison tool to allow for wider public participation and thus create an ever more detailed picture of the landscape of contracting data availability and focus.</p>
+<h3 id="2-demand-side-use-cases">2) Demand-side use-cases</h3>
+<p>This draft is based primarily on research of existing published datasets. At the same time, the project has begun to explore priority use cases for open contracting data through workshops, webinars, a mailing list, and bilateral discussions with more than 200 stakeholders. The purpose of demand-side research is to capture the real needs and circumstances of the publishers and users of public contracting data. We wanted to understand who wants to use contracting information, what information do they need, how do they  want to use the information, and why? </p>
+<p>A <a href="https://docs.google.com/a/webfoundation.org/document/d/1GmOwGpvTgkPNiq1rzw1s1oj5TbE3G0KLowIaLSA19a4">questionnaire</a> was created and shared with our online community, and with specific stakeholders representing different user profiles (including government publishers, policymakers, procuring entities, auditors, donors, journalists, auditors, data aggregators, contractors, contract monitors, service delivery monitors, anti-corruption monitors, researchers, and transparency activists).</p>
+<p>In our consultations four primary use cases emerged. These users are interested to use open contracting data in order to:</p>
+<ul>
+<li>Achieve value for money for the procuring entity;</li>
+<li>Enable the private sector to compete for public contracts;</li>
+<li>Monitor service delivery for effectiveness; and</li>
+<li>Detect corruption and fraud in public contracting.</li>
+</ul>
+<p>Each of the use cases we created includes a user profile, their objectives, and their contracting information needs. This document was posted <a href="https://docs.google.com/document/d/1zdgqSf-LUFVxO6Y_7v1cQf7l0vx35-p502jAI49JRmQ/edit?usp=sharing">here</a> for public comment.</p>
+<p>Drawing on these summaries we then identified 141 specific user requirements and 145 related technical requirements for the open contracting data standard. You can find a list of all the requirements we identified <a href="https://docs.google.com/a/webfoundation.org/spreadsheets/d/1m_Kr7I5XqM7PFcz75ZNmcdFCzLaike_IsEmAh5eN-WE">here</a>. </p>
+<p>For the most recent release of the standard we have worked through over 50 of 
+the requirements identified, and have found that 30 are already handled by fields in the draft standard. For the remaining requirements, a number have resulted in <a href="https://github.com/open-contracting/standard/issues">issues</a>
+ for future cycles of development logged on the standards GitHub pages, and others highlight some of the tools that may need to be created alongside the standard, such as aggregators and analysis tools.</p>
+<p>These use cases not only demonstrate what can and could be done with open contracting data, but will also shape the development of the Open Contracting Data Standard as we move towards defining the field-level specification.</p>
+<div class="panel panel-success">
+    <div class="panel-heading">
+       <h4 class="panel-title"> <span class="glyphicon glyphicon-question-sign"></span> Consultation questions</h4>
+     </div>
+     <div class="panel-body">
+         <ul>
+             <li>In your opinion, does the proposed conceptual model work for these use cases?</li>
+             <li>Are there other important use cases we should be considering?</li>
+             <li>Are there use cases you can envisage where the proposed conceptual model does not work well?</li>
+         </ul>     
+     </div>
+</div>
+
+<h3 id="3-research-on-related-initiatives">3) Research on related initiatives</h3>
+<p>There are existing standardization efforts for budget and spending data under development through the Open Spending Project. In line with the principles of <a href="http://devinit.org/report/joined-data-building-blocks-common-standards/">Joined Up Data</a> this project will explore ways to connect data in the Open Contracting Data Standard with data in the proposed Open Spending and Open Budget Data Standards, among others.</p>
+<p>In addition, the approach taken is informed by the development of other data standards. Research related to the Data Standard Architecture and Data Standard Governance will be released separately from the Data Model Draft.</p>
+<h2 id="next-steps">Next steps</h2>
+<p>Over the coming months (September - November 2014) we are working towards a version 1.0 standard which can be implemented, with future changes taking place through an open consultative process.</p>
+<p>To get there:</p>
+<ul>
+<li>
+<p>We are inviting general feedback on the data model and fields in this beta release through the <a href="http://groups.google.com/a/webfoundation.org/group/public-ocds/">public mailing list</a> and/or by commenting on the document directly (see instructions at the top of this page);</p>
+</li>
+<li>
+<p>We are establishing working groups around the private sector, civil society, and publishers to provide additional input;  </p>
+</li>
+<li>
+<p>We will be exploring further user demands and building these into the standard by:</p>
+<ul>
+<li>Completing an assessment of user requirements and how these can be met either directly in the standard, or in accompanying tools and services;</li>
+<li>Building up a list of issues to be addressed in the next iteration of the standard as we move towards version 1.0 later in the year - and prioritising these in consultation with key potential users of open contracting data; and</li>
+<li>Using the GitHub issue tracker to identify which requirements can be met over the short-term, and which will need further development beyond the version 1.0 release.</li>
+</ul>
+</li>
+<li>
+<p>We will conduct field missions to the first two pilot countries in October 2014 to: </p>
+<ul>
+<li>Explore how the standard may be adapted to other contracting use cases outside public procurement including extractives and land;</li>
+<li>Meet and/or host workshops with civil society and government to better understand demand use-cases; and</li>
+<li>Compare the draft data standard with country-specific procurement datasets including the possibility of piloting the data standard.</li>
+</ul>
+</li>
+</ul>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>The Open Contracting Data Standard is a core product of the <a href="http://www.open-contracting.org/">Open Contracting Partnership (OCP)</a>. Version 1.0 of the standard is being developed for the OCP by the <a href="http://www.webfoundation.org">World Wide Web Foundation</a>, through a project supported by The <a href="http://www.omidyar.com/">Omidyar Network</a> and the <a href="http://www.worldbank.org">World Bank</a>".</p>
+<p>This document contains significant contributions from Sarah Bird (<a href="http://www.aptivate.org">Aptivate</a>), Ana Brandusescu and Tim Davies (World Wide Web Foundation). Other contributors include: Jose M. Alonso (World Wide Web Foundation), Steven Davenport (World Bank), Lindsey Marchessault, Michael Roberts (World Wide Web Foundation), and Marcela Rozo (World Bank).</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>The use of add-on conditions were adapted from the
+The Popolo Project - <a href="http://popoloproject.com/specs/#conformance">http://popoloproject.com/specs/#conformance</a>&#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div> </div>
+            <div class="tab-pane" id="tabs-2"> <h2 id="vocabulary">Vocabulary</h2>
+<p>The world of procurement and contracting has many specialist terms. However, the precise way that these terms are used can vary from sector to sector, and country to country. Below we define how we are using a number of key terms.</p>
+<ul>
+<li>
+<p><strong>Contract</strong> - a legally enforceable agreement between two (or more) parties. Often times, contracts are thought of as a single document, the document that is signed by the parties. However, in many cases, a contract can be made up of multiple documents incorporated by reference containing additional terms, specifications, provisions, standard forms or other information (known as addendums, annexes, appendices, schedules, riders, etc.) A contract should also be understood to include any later agreements of the parties that change the terms of the contract (amendments). As a legal document, the law (statutes, regulations, case law) may also impose additional terms or conditions or otherwise affect a contract.</p>
+</li>
+<li>
+<p><strong>Open Contracting</strong> - norms and practices for increased disclosure and participation in public contracting including tendering, performance and completion. It includes the variety of contract types, from more basic contracts for the procurement of goods, to complex contracts, joint venture agreements, licenses and production sharing agreements. Open contracting encompasses all public contracting, including contracts funded by combinations of public, private and donor sources.</p>
+</li>
+<li>
+<p><strong>Public Contracting Process</strong> - the planning, formation, award, execution, performance, and completion of a contract to which a government entity is a party.</p>
+<ul>
+<li>
+<p><strong>Planning</strong> - the process of deciding what to contract for, when and how. A procurement plan is a product of the planning process that indicates an procuring entities planned procurement activities over a period of time.</p>
+</li>
+<li>
+<p><strong>Formation</strong> - the activities undertaken in order to enter into a contract. Good public contracting practice favours open competitive bidding or tendering as a method to form contracts (the process of publicly inviting prospective contractors to submit bids for evaluation and selecting a winner or winners). However, contracts can be awarded in other ways, such as through non-competitive direct negotiation, prequalification of bidders, and other methodologies. The contract is then "awarded" to a selected contractor. Once the contractor has been selected and the terms of the contract have been agreed, the contract is signed (or executed) by the parties, and becomes active on an effective date.</p>
+</li>
+<li>
+<p><strong>Performance</strong> - the implementation of the contract in accordance with the obligations laid out therein. Often, contractors will enter into additional contracts with sub-contractors in order to implement the public contract.</p>
+</li>
+<li>
+<p><strong>Completion</strong> - the confirmation that all obligations (deliverables and payments) of the contract have been completed, or that the contract has been terminated for some other reason.</p>
+</li>
+</ul>
+</li>
+</ul> </div>
+            <div class="tab-pane" id="tabs-3">
+                <ul class="nav nav-tabs">
+                    <li><a href="#tabs-3-1" data-toggle="tab">Release</a></li>
+                    <li><a href="#tabs-3-2" data-toggle="tab">Release Package</a></li>
+                    <li><a href="#tabs-3-3" data-toggle="tab">Record Package</a></li>
+                    <li><a href="#tabs-3-4" data-toggle="tab">Versioned Release</a></li>
+                </ul>
+                <div class="tab-content">
+                    <h5 class="pull-right text-right">Written in <a href="http://json-schema.org/">JSON Schema v4</a><br /><span style="color: darkred">*</span> required field</h5>
+                    <div class="tab-pane active" id="tabs-3-1">
+                        <div class="schema-holder">
+                            
+                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__3__2/release-schema.json></script>
+                            
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tabs-3-2">
+                        <div class="schema-holder">
+                            
+                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__3__2/release-package-schema.json></script>
+                            
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tabs-3-3">
+                        <div class="schema-holder">
+                            
+                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__3__2/record-package-schema.json></script>
+                            
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tabs-3-4">
+                        <br />
+                        <br />
+                        <h5>This contains the merge strategies to build a versionedRelease for the record. Click the {} button to see the schema detail.</h5>
+                        <div class="schema-holder">
+                            
+                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__3__2/versioned-release-schema.json></script>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tabs-4"> <p><br />
+<br /></p>
+<div class="toc">
+<ul>
+<li><a href="#merging">Merging</a></li>
+<li><a href="#implementing-merging">Implementing merging</a></li>
+</ul>
+</div>
+<h2 id="merging">Merging</h2>
+<p>To turn releases into a record, they must be merged into a single record.</p>
+<p>The basic format of a record is simple. There are three component:</p>
+<ul>
+<li>A list of all the releases in the record. This can be with linked data to
+  identify the release, or embedding the release themselves.</li>
+<li>A compiled release, this is the same format as a release but contains the
+  most up-to-date information compiled from all the releases.</li>
+<li>A versioned release, this contains the information about the compiled field.
+  For each field in the release, the versioned release contains a list of objects
+  describing where the data came from and previous values of a field.</li>
+</ul>
+<p>The basic principle of of merging is very simple, the latest data overwrites
+previous data.  For example:</p>
+<pre>
+release_1 = {
+    "releaseDate": "2014-01-01",
+    "releaseID": "1",
+    "releaseTag": "tenderNotice",
+    "ocid": "A",
+    "formation": {
+        "tenderId": "A",
+        "method": "Selective"
+    } 
+}
+release_2 = {
+    "releaseDate": "2014-01-02",
+    "releaseID": "2",
+    "releaseTag": "tenderNotice",
+    "ocid": "A",
+    "formation": {
+        "tenderId": "A",
+        "method": "Open"
+    } 
+}
+record = {
+    // Other required fields omitted for clarity
+    "compiledRelease": {
+        "ocid": "A",
+        "releaseID": "2",   // Has no meaning, but kept for validation
+        "releaseDate": "2014-01-02",    // Has no meaning but kept for validation
+        "releaseTag": "compiled",
+        "formation": {
+            "tenderId": "A",
+            "method": "Open"
+        } 
+    },
+    "versionedRelease": {
+        "ocid": "A",
+        "formation": {
+            "tenderId": "A",
+            "method": [
+                {
+                    "value": "Selective",
+                    "releaseDate": "2014-01-01",
+                    "releaseTag": "tenderNotice",
+                    "releaseID": "1"
+                },
+                {
+                    "value": "Open",
+                    "releaseDate": "2014-01-02",
+                    "releaseTag": "tenderNotice",
+                    "releaseID": "2"
+                }
+            ]
+        }
+    }
+}
+</pre>
+
+<p>Merging gets more complicated when trying to merge arrays / lists of data.</p>
+<p>We adopt two approaches to merging arrays:
+- overwrite (the same treatment as the fields above)
+- overwriteByKey (overwrite looks for a uniqueID when making the merge)</p>
+<p>For most array fields, overwrite is used. </p>
+<p>OverwriteByKey is used on only two arrays:</p>
+<ul>
+<li>Awards </li>
+<li>Contracts</li>
+</ul>
+<p>First, we will discuss, basic overwrite. In this strategy a list of objects
+must <strong>always be given in the same order</strong> in each release. Whilst this 
+may be a problem for data quality, the alternative, as used in awards and contracts
+is that every object requires a unique value, which is also practically challenging.</p>
+<p>Basic, overwrite works as follows, where the value of Item 2 changes:</p>
+<pre>
+release_1_snippet = {
+    "formation": {
+        "itemsToBeProcured": [
+            {
+                "description": "Item 1",
+                "quantity": 1,
+                "valuePerUnit": {
+                    "amount": 100,
+                    "currency": "GBP"
+                }
+            },
+            {
+                "description": "Item 2",
+                "quantity": 1,
+                "valuePerUnit": {
+                    "amount": 200,
+                    "currency": "GBP"
+                }
+            }
+        ]
+    }
+}
+
+release_2_snippet = {
+    "formation": {
+        "itemsToBeProcured": [
+            {
+                "description": "Item 1",
+                "quantity": 1,
+                "valuePerUnit": {
+                    "amount": 100,
+                    "currency": "GBP"
+                }
+            },
+            {
+                "description": "Item 2",
+                "quantity": 1,
+                "valuePerUnit": {
+                    "amount": 150, // Value changed
+                    "currency": "GBP"
+                }
+            }
+        ]
+    }
+}
+
+record_snipped = {
+    "compiledRelease": {
+        "ocid": "A",
+        "releaseTag": "compiled",
+        "formation": {
+            "itemsToBeProcured": [
+                {
+                    "description": "Item 1",
+                    "quantity": 1,
+                    "valuePerUnit": {
+                        "amount": 100,
+                        "currency": "GBP"
+                    }
+                },
+                {
+                    "description": "Item 2",
+                    "quantity": 1,
+                    "valuePerUnit": {
+                        "amount": 150, // Value changed
+                        "currency": "GBP"
+                    }
+                }
+            ]
+        }
+}
+</pre>
+
+<p>If only the changed item was provided in the second release, when the entire 
+array is updated, only the second item would be available in
+the merged record, as follows.</p>
+<pre>
+release_1_snippet = {
+    "formation": {
+        "itemsToBeProcured": [
+            {
+                "description": "Item 1",
+                "quantity": 1,
+                "valuePerUnit": {
+                    "amount": 100,
+                    "currency": "GBP"
+                }
+            },
+            {
+                "description": "Item 2",
+                "quantity": 1,
+                "valuePerUnit": {
+                    "amount": 200,
+                    "currency": "GBP"
+                }
+            }
+        ]
+    }
+}
+
+release_2_snippet = {
+    "formation": {
+        "itemsToBeProcured": [
+            {
+                "description": "Item 2",
+                "quantity": 1,
+                "valuePerUnit": {
+                    "amount": 150, // Value changed
+                    "currency": "GBP"
+                }
+            }
+        ]
+    }
+}
+
+record_snippet = {
+    "compiledRelease": {
+        "ocid": "A",
+        "releaseTag": "compiled",
+        "formation": {
+            "itemsToBeProcured": [
+                {
+                    "description": "Item 2",
+                    "quantity": 1,
+                    "valuePerUnit": {
+                        "amount": 150, // Value changed
+                        "currency": "GBP"
+                    }
+                }
+            ]
+        }
+}
+</pre>
+
+<p>We have made two exceptions to this type of merging with the overwriteByKey on
+awards and contract. Over the course of a large or framework contracting process
+many awards and contracts are made, it is useful to be able to just release 
+information about one award or contract at a time rather than having to 
+include all information about all awards and contracts previously made each
+time. The items in the array are first matched on the unique identifier, awardID 
+and contractID respectively, and then the standard overwrite takes place. This
+means that awardID and contractID cannot change.</p>
+<p>A simplified example is given below (with incomplete data) to illustrate the pattern:</p>
+<pre>
+release_1 = {
+    "awards": [
+        {
+            "awardID": "ABC",
+            "awardValue": 100
+        }
+    ]
+}
+release_2 = {
+    "awards": [
+        {
+            "awardID": "DEF",
+            "awardValue": 100
+        }
+    ]
+}
+release_3 = {
+    "awards": [
+        {
+            "awardID": "DEF",  
+            "awardValue": 150 // Updating information from release_2
+        }
+    ]
+}
+
+record_snippet = {
+    "compiledRelease": {
+        "awards": [
+            {
+                "awardID": "ABC",
+                "awardValue": 100
+            },
+            {
+                "awardID": "DEF",
+                "awardValue": 150
+            }
+        ]
+    }
+}
+</pre>
+
+<h2 id="implementing-merging">Implementing merging</h2>
+<p>To merge releases into records, we use the jsonmerge library with its 
+add-ons to json schema that specify a mergeStrategy on each field.</p>
+<p>A customized version of the jsonmerge library is available at <a href="https://github.com/open-contracting/jsonmerge">https://github.com/open-contracting/jsonmerge</a> using the ocds branch (set as default).</p>
+<p>An example of merging releases into a record can be seen in this ipython notebook:
+<a href="http://nbviewer.ipython.org/github/open-contracting/sample-data/blob/master/buyandsell/processing/Demonstrate%20merging%20a%20release.ipynb">http://nbviewer.ipython.org/github/open-contracting/sample-data/blob/master/buyandsell/processing/Demonstrate%20merging%20a%20release.ipynb</a></p>
+<p>The compiledRelease is built using the mergeStrategies that are in the normal Release Schema.</p>
+<p>To build a versionedRelease, we use the mergeStrategies specified in the Versioned Release Schema.</p>
+<p>Data in the compiledRelease, should validate against the regular Release Schema. Data in a versionedRelease needs to be validated against a seperate schema, which will be published soon (and can be generated
+using the jsonmerge library).</p> </div>
+            
+        </div>
+    </div>
+    <!-- OVERLAY DIALOGS -->
+    <div class="modal fade" id="changeVersion" tabindex="-1" role="dialog" aria-labelledby="ChangeVersion" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Change release</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <ul>
+                            
+                            <li><a href="/standard/r/0__3__3/">0.3.3</a> (Last modified: Fri, 19 Sep 2014 16:18:54 GMT)</li>
+                            
+                            <li><a href="/standard/r/0__3__1/">0.3.1</a> (Last modified: Wed, 03 Sep 2014 02:43:44 GMT)</li>
+                            
+                            <li><a href="/standard/r/0__3__0/">0.3.0</a> (Last modified: Tue, 02 Sep 2014 15:55:33 GMT)</li>
+                            
+                            <li><a href="/standard/r/0__2__0/">0.2.0</a> (Last modified: Wed, 25 Jun 2014 13:07:49 GMT)</li>
+                            
+                            <li><a href="/standard/r/0__1__0/">0.1.0</a> (Last modified: Fri, 20 Jun 2014 22:17:00 GMT)</li>
+                            
+                            <li><a href="/standard/r/draft_june_20_2014_2/">Draft June 20 2014 2</a> (Last modified: Fri, 20 Jun 2014 20:14:58 GMT)</li>
+                            
+                            <li><a href="/standard/r/draft_june_20_2014/">Draft June 20 2014</a> (Last modified: Wed, 18 Jun 2014 00:20:51 GMT)</li>
+                            
+                            <li><a href="/standard/r/draft-june-5-2014/">Draft-June-5-2014</a> (Last modified: Fri, 06 Jun 2014 04:42:13 GMT)</li>
+                            
+                            <li><a href="/standard/r/draft-june-1-2014/">Draft-June-1-2014</a> (Last modified: Mon, 02 Jun 2014 02:30:45 GMT)</li>
+                            
+                        </ul>
+                        <ul>
+                            
+                            <li><a href="/standard/r/master/">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits.</li>
+                            
+                        </ul>
+                    </p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    </div>
+    
+    <!-- OVERLAY DIALOGS -->
+    <div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="Help" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Help</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        In order to comment, you must be logged in. To log in, click the <span class="oi oi-account-login" aria-hidden="true"></span>
+                        button in the top bar. After logging in you can select senctences or paragraphs in the document and an icon will appear, as shown in the
+                        image below. Click the icon and enter text to view it.
+                    </p>
+                    <p>
+                        <img src="/standard/static/images/annotation_demo.png" width="150px"/>
+                    </p>
+                    <p>
+                        If you are having any problems, please don't hesitate to email us on our <a href="https://groups.google.com/a/webfoundation.org/forum/#!forum/public-ocds">mailing list</a>.
+                    </p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <footer>
+        <div class="container">
+        <p>A site of the <a href="http://open-contracting.github.io/">Open Contracting Data Standard</a>.
+        Site built with <a href="http://getbootstrap.com">bootstrap</a>, 
+        <a href="http://subtlepatterns.com">subtle patterns</a>, 
+        and <a href="https://useiconic.com/open">open iconic</a>. 
+        Any problems with the site, please contact us through <a href="https://github.com/open-contracting/open-contracting.github.io/issues">github</a>.
+        </p>
+        </div>
+    </footer>
+    
+    
+        <script type="text/javascript" src="/standard/static/js/site.js?99066e46"></script>
+    
+
+    
+    <script src="http://assets.annotateit.org/annotator/v1.2.9/annotator-full.min.js"></script>
+    <script>
+    jQuery(function ($) {
+      if ($('html').is('.ie6, .ie7, .ie8, .ie9')) {
+        alert("This site does not work with Internet Explorer 9 or earlier. Please use a more recent version of Internet Explorer, or an open-source browser such as Firefox"); 
+      } else {
+        var PROJECTNAME = 'ocdsstandard',
+            VERSION = '0.3.2',
+            URI = 'http://ocds.open-contracting.org/standard/r/0__3__2/',
+            SITE_UNIQUE_ID = '2345SDFGertd456DGrw54trg',
+            PAGE_UNIQUE_ID = SITE_UNIQUE_ID + VERSION;
+
+        a = $('#annotatable').annotator(
+            
+               { readOnly: true }
+            
+            );
+        a.annotator('setupPlugins', {}, {
+            
+                Auth: false,
+            
+
+            Tags: false,
+            Store: false,
+            Filter: false,
+            Permissions: {
+                showViewPermissionsCheckbox: false,
+                showEditPermissionsCheckbox: false,
+                user: '',
+                permissions: {
+                    'read':   ["group:__world__"],
+                    'update': [""],
+                    'delete': [""],
+                    'admin':  [""],
+                },
+            },
+        });
+        a.annotator('addPlugin', 'Store', { 
+            prefix: 'http://annotateit.org/api',
+            annotationData: {
+                'project': PROJECTNAME,
+                'version': VERSION,
+                'uri': URI,
+                'siteuid': SITE_UNIQUE_ID,
+                'pageuid': PAGE_UNIQUE_ID,
+            },
+            loadFromSearch: {
+                
+                    'pageuid': PAGE_UNIQUE_ID.toLowerCase(),
+                
+                'limit': 1000,
+            },
+        });
+      }
+    });
+    </script>
+
+
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-47685715-2', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 $background-color: #EEE;
 $accent-color: #222;
+$legacy-accent-color: #EAEF45;
 $link-color: #95B125;
 $text-color: #505256;
 
@@ -37,6 +38,14 @@ footer {
 
 .navicon {
     color: $accent-color;
+}
+
+.navicon-legacy {
+    color: $legacy-accent-color;
+}
+
+.old-version-warning {
+    background-color: yellow;
 }
 
 .nav-tabs > li.topnav-right {

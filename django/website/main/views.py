@@ -142,6 +142,18 @@ class StandardView(TemplateView):
         return context
 
 
+class LegacyRootView(View):
+    def get(self, request, *args, **kwargs):
+        release = kwargs.get('release')
+        release_path = path.join(path.abspath(path.dirname(__file__)),
+                                 '..', 'legacytags', release + '.html')
+        if not path.isfile(release_path):
+            raise Http404
+        with open(release_path, 'r') as f:
+            doc = f.read()
+        return HttpResponse(doc, status=200)
+
+
 class SchemaView(View):
     def get(self, request, *args, **kwargs):
         repo = StandardsRepo()
