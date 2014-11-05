@@ -1,4 +1,4 @@
-# for deploy - you probably should pin to a commit
+# for deploy - pinned to a commit
 -e git+git://github.com/aptivate/dye.git@1a9a98500d61e151b00f6fc4cc43e467c21280f6#egg=dye
 
 # core django

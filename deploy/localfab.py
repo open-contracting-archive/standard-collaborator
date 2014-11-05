@@ -23,7 +23,6 @@ def deploy(revision=None, keep=None, full_rebuild=True):
     * full_rebuild is whether to do a full rebuild of the virtualenv
     """
     require('server_project_home', provided_by=env.valid_envs)
-    env.python_bin = path.join('/', 'usr', 'bin', 'python')
 
     # this really needs to be first - other things assume the directory exists
     fablib._create_dir_if_not_exists(env.server_project_home)
