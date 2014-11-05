@@ -46,6 +46,12 @@ footer {
 
 .old-version-warning {
     background-color: yellow;
+    padding: 5px;
+    border: solid 5px red;
+}
+
+.old-version-warning > a {
+    color: blue;
 }
 
 .nav-tabs > li.topnav-right {
