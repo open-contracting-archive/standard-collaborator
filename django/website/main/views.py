@@ -142,16 +142,18 @@ class StandardView(TemplateView):
         return context
 
 
-class LegacyRootView(View):
+class LegacyRootView(TemplateView):
     def get(self, request, *args, **kwargs):
-        release = kwargs.get('release')
-        release_path = path.join(path.abspath(path.dirname(__file__)),
-                                 '..', 'legacytags', release + '.html')
-        if not path.isfile(release_path):
+        self.release = kwargs.get('release')
+        return super(LegacyRootView, self).get(request, *args, **kwargs)
+
+    def get_template_names(self):
+        template_path = path.join('main', 'legacy', self.release + '.html')
+        template_file_path = path.join(path.abspath(path.dirname(__file__)),
+                                       'templates', template_path)
+        if not path.isfile(template_file_path):
             raise Http404
-        with open(release_path, 'r') as f:
-            doc = f.read()
-        return HttpResponse(doc, status=200)
+        return [template_path]
 
 
 class SchemaView(View):

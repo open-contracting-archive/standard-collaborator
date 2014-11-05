@@ -31,7 +31,7 @@
                 <li><a href="#" title="Help" data-toggle="modal" data-target="#help"><span class="oi oi-question-mark navicon-legacy" aria-hidden="true"></span></a></li>
                 
 
-<li><a title="Login" href="/standard/accounts/login/?next=/standard/r/0__1__0/" title="About"><span class="oi oi-account-login navicon-legacy" aria-hidden="true"></span></a></li>
+<li><a title="Login" href="/standard/accounts/login/?next=/standard/r/draft_june_20_2014/" title="About"><span class="oi oi-account-login navicon-legacy" aria-hidden="true"></span></a></li>
 
 <li><a href="#" title="Change versions" data-toggle="modal" data-target="#changeVersion"><span class="oi oi-fork navicon-legacy" aria-hidden="true"></span></a></li>
 
@@ -40,11 +40,11 @@
     </div>
     <div class="main container">
         
-    <h1 class="old-version-warning">OLD VERSION - please go to <a href="../../">the latest version</a></h1>
+			{% include 'main/legacy/legacy-panel.html' %}
         
-    <h1>Open Contracting Data Standard - 0.1.0</h1>
+    <h1>Open Contracting Data Standard - Draft June 20 2014</h1>
     
-        <p>Released on: Fri, 20 Jun 2014 22:17:00 GMT</p>
+        <p>Released on: Wed, 18 Jun 2014 00:20:51 GMT</p>
     
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -68,7 +68,7 @@
             <h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span> Not the latest release.</h4>
         </div>
         <div class="panel-body">
-            <p>You are viewing v0.1.0. The latest release is <a href="/standard/r/latest/">v0.3.3</a></p>
+            <p>You are viewing vdraft june 20 2014. The latest release is <a href="/standard/r/latest/">v0.3.3</a></p>
         </div>
     </div>
     
@@ -101,11 +101,10 @@
 <li><a href="#conceptual-model">Conceptual Model</a><ul>
 <li><a href="#the-contracting-process">The contracting process</a></li>
 <li><a href="#conceptual-model_1">Conceptual Model</a></li>
-<li><a href="#defining-a-unique-contracting-process">Defining a unique contracting process</a></li>
 <li><a href="#add-on-information">Add on information</a></li>
 <li><a href="#a-note-on-framework-contracts">A note on framework contracts</a></li>
 <li><a href="#linking-to-documents">Linking to documents</a></li>
-<li><a href="#a-note-on-planning">A note on planning</a></li>
+<li><a href="#defining-a-unique-contracting-process">Defining a unique contracting process</a></li>
 </ul>
 </li>
 <li><a href="#the-contracting-record">The contracting record</a></li>
@@ -124,7 +123,7 @@
 <p>It <em>does not</em> provide a field-level specification of the standard, or how the data may be represented in specific file formats. That will be provided through the beta release of the standard in Q3 2014, developed based on responses to this document. </p>
 <h2 id="background-and-context">Background and context</h2>
 <h3 id="motivation">Motivation</h3>
-<p>Countries signing up to the <a href="http://www.open-contracting.org/global_principles">Open Contracting Global Principles</a> commit to share "information related to the formation, performance, and completion of public contracts" including data on all stages of contracting, from pre-bid to performance evaluations, and information on subcontracting arrangements. </p>
+<p>Countries signing up to the <a href="http://www.open-contracting.org/global_principles">Open Contracting Global Principles</a> commit to share "information related to the formation, award, execution, performance, and completion of public contracts" including data on all stages of contracting, from pre-bid to performance evaluations, and information on subcontracting arrangements. </p>
 <p>The Open Contracting Data Standard is being developed to allow much of this information to be shared as structured data: delivered in ways that enable the widest possible range of users to benefit from greater transparency of contracting arrangements and supporting greater participation, monitoring and oversight in contracting processes.</p>
 <p>The Open Contracting Data Standard is a core product of the <a href="http://www.open-contracting.org/">Open Contracting Partnership</a>. 
 Version 1.0 of the standard is being developed for the OCP by the <a href="http://www.webfoundation.org">World Wide Web Foundation</a> and <a href="http://www.aptivate.org">Aptivate</a>, through a project supported by 
@@ -143,7 +142,7 @@ The <a href="http://www.omidyar.com/">Omidyar Network</a> and the <a href="http:
 <h3 id="sources">Sources</h3>
 <p>The development of the alpha data model has been based on:</p>
 <ul>
-<li><strong>Assessing data currently supplied through contract portals</strong> - in order to understand the data that governments currently hold and publish, and how it is structured. To carry out this analysis we created the <a href="http://ocds.open-contracting.org/opendatacomparison/">Contracting Data Comparison tool</a>, and <a href="http://ocds.open-contracting.org/opendatacomparison/datamap/">Contracting Data Map</a> which explores the fields of data available from a wide range of different government contracting data portals around the world. </li>
+<li><strong>Assessing data currently supplied through contract portals</strong> - in order to understand the data that governments currently hold and publish, and how it is structured. To carry out this analysis we created the <a href="http://ocds.aptivate.org/opendatacomparison/">Contracting Data Comparison tool</a>, and <a href="http://ocds.aptivate.org/opendatacomparison/datamap/">Contracting Data Map</a> which explores the fields of data available from a wide range of different government contracting data portals around the world. </li>
 <li><strong>Exploring demand for data on contracting</strong> - to identify the ways in which different users think about contracting data, and how they want to use it. This work is ongoing, and only initial use cases are factored into this conceptual model. In the next iteration of the conceptual model and field level information, further emphasis will be placed on use cases. </li>
 </ul>
 <p>This initial iteration of the conceptual model is focussed on procurement processes. Future iterations will look at contracts in the land and extractives sector, and we anticipate this will lead to further developments in the terminology used. </p>
@@ -152,21 +151,20 @@ The <a href="http://www.omidyar.com/">Omidyar Network</a> and the <a href="http:
 <h3 id="the-contracting-process">The contracting process</h3>
 <p>The contracting process is the sequence of events related to the lifespan of a contract, beginning with planning and culminating in contract closure. </p>
 <p><img alt="Visual of opencontrating process" src="https://raw.githubusercontent.com/open-contracting/standard/master/standard/assets/contracting%20process.png" /></p>
-<p>* Formation, when dealing with basic procurement processes, will often be referred to as Tendering & Award.</p>
-
-<p>For descriptions of the phases see the "Definitions" tab at the top.</p>
-<p>In this version of the standard, you will not see planning included. 
-Please see "<a href="#a-note-on-planning">A note on planning</a>" for a full explanation.</p>
+<p><code>*</code> Tendering &amp; Award is more broadly known as Formation to accomodate other
+types of procurement process, we use the term formation within the standard to accomodate this</p>
+<p><code>**</code> We use the term Implementation instead of Execution in the standard to refer to the period while the contract is being performed.</p>
+<p>For descriptions of the phases, taken from the book <em>Open Contracting - A guide for practitioners by practitioners</em> <sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup> above see the "Definitions" tab at the top.</p>
 <h3 id="conceptual-model_1">Conceptual Model</h3>
 <p>We propose an Open Contracting Data Standard consisting of two parts:</p>
 <ul>
 <li>
-<p>A <strong>contracting record</strong> - is used to summarize all the key
-  features of the a unique contracting process, bringing together information from 
-  all phases of the contracting process into one record. It is updated as 
-  new information becomes available to accurately reflect the current state of the 
-  contract processes. The contracting record should provide an 
-  at-a-glance view of key information and can then be used to access more detailed information from the releases.</p>
+<p>A <strong>contracting record</strong> - a core summary record used to describe key
+  features of the comple Contracting Process. It is updated as 
+  new information becomes available to accurately reflect the state of tender, 
+  award or contract processes. The contracting record should provide an 
+  at-a-glance view of key information used in locating and analysing current, 
+  past or future contracting activities.</p>
 </li>
 <li>
 <p>A set of <strong>contracting releases</strong> - specific releases of information, 
@@ -207,7 +205,7 @@ contracting process.</p>
     as we move to support other types of contract beyond procurement.</li>
 </ul>
 </li>
-<li>Formation process<ul>
+<li>Formation<ul>
 <li>In the case of standard procurement, this the information about the tender process. It may include:
     opening dates, closing dates, consultation information, the type
     of bidding process (open process, selective tendering, limited
@@ -221,7 +219,7 @@ contracting process.</p>
     other types of contracting after building out all the fields for standard procurement.</li>
 </ul>
 </li>
-<li>Award details<ul>
+<li>Award<ul>
 <li>This is information about the Contract Award e.g. the award date, and the
     awarded value. This is distinct from the contract information which reflects the
     actual contract document which is finalized and signed after an award. In the case
@@ -237,9 +235,9 @@ contracting process.</p>
     alterations, no-cost extensions)</li>
 </ul>
 </li>
-<li>Performance<ul>
-<li>In performance we store details related to the contract implementation
-    including details of payments made, evaluation, audit and performance reports.</li>
+<li>Implementation<ul>
+<li>In implementation we store details related to the contract performance
+    including details of payments made, evaluation and performance reports.</li>
 </ul>
 </li>
 </ul>
@@ -253,11 +251,43 @@ contracting process.</p>
              <li>Which do you need most: a summary contracting record, or detailed releases of information at each stage of the contracting process?</li>
              <li>Do these components cover all the relevant information you want to publish or access about contracting?</li>
              <li>Are we missing key elements in our description of what each component will contain?</li>
+             <li>Is this the right scope for the version 1.0 standard?</li>
+             <li>What are the most important fields you need in a summary contracting record?</li>
              <li>How does the proposed approach of having the contracting record represent the latest stage of contracting (i.e. overwriting earlier data) affect how you might publish or use open contracting data?</li>
          </ul>     
      </div>
 </div>
 
+<h3 id="add-on-information">Add on information</h3>
+<p>In addition to the core components, there will be cases where
+publishers, or users, need to augment the core data with their
+own information. The standard will provide a mechanism for Add-On
+information. This will include additional fields in core components as
+well as Add On components (e.g. new kinds of <strong>contracting release</strong>).</p>
+<p>The publishing and re-use of add-ons will be encouraged to try and
+reduce duplication and facilitate reuse of tools. The use of Add-Ons
+will be subject to the following restrictions<sup id="fnref:2"><a class="footnote-ref" href="#fn:2" rel="footnote">2</a></sup>:</p>
+<ul>
+<li>
+<p>It must not use terms from outside this specification's terms where
+    this specification's terms would suffice</p>
+</li>
+<li>
+<p>It may use terms from outside this specification's terms where this
+    specification's terms are insufficient.</p>
+</li>
+</ul>
+<h3 id="a-note-on-framework-contracts">A note on framework contracts</h3>
+<p>Many public procurements take place under framework agreements, or standing arrangements. These help facilitate routine purchasing. Suppliers are pre-approved to provide a list of goods or services. In
+this case, there are typically multiple contracts under a given award. In the case of a framework contract an award notice would define the framework
+and this information would be stored in the contracting record under Award. Then the multiple contracts that are issued under the contract will
+hold the seperately issued contracts under this framework award.</p>
+<h3 id="linking-to-documents">Linking to documents</h3>
+<p>There are often many documents associated with a contracting process including tender specifications, contract documents, performance reports etc. The standard will
+provide a way to link to these documents. We are considering how to handle documents in the contracting record. We
+ may have a simplified contracting record that indicates that documents are available and a full contracting record that provides links to all
+the available documents. As we flesh out the different serializations over July and August this will be defined. Document links will always 
+be available through the release that declared them.</p>
 <h3 id="defining-a-unique-contracting-process">Defining a unique contracting process</h3>
 <p>For the data standard, defining a unique contracting process is critical for getting useful, comparable, clean data. But, there are cases 
 where what the unique process is not obvious. For example, a framework contract has only one tender and award but many contracts associated with that award.</p>
@@ -273,40 +303,6 @@ where what the unique process is not obvious. For example, a framework contract 
 <p>This snippet from a <a href="https://buyandsell.gc.ca/procurement-data/tender-notice/PW-14-00635129">tender notice</a> offers an unspecified number of contracts for the successful supplier(s). The details note that there is a limit of $25k per contract, anything higher than that must be rebid competitively. All of the $25k or less contracts that are awarded under the award that will result from this tender are part of a single contracting process, because of the single bidding process.</p>
 <div class="clearfix"></div>
 
-<h3 id="add-on-information">Add on information</h3>
-<p>In addition to the core components, there will be cases where
-publishers, or users, need to augment the core data with their
-own information. The standard will provide a mechanism for Add-On
-information. This will include additional fields in core components as
-well as Add On components (e.g. new kinds of <strong>contracting release</strong>).</p>
-<p>The publishing and re-use of add-ons will be encouraged to try and
-reduce duplication and facilitate reuse of tools. The use of Add-Ons
-will be subject to the following restrictions<sup id="fnref:2"><a class="footnote-ref" href="#fn:2" rel="footnote">1</a></sup>:</p>
-<ul>
-<li>
-<p>It must not use terms from outside this specification's terms where
-    this specification's terms would suffice</p>
-</li>
-<li>
-<p>It may use terms from outside this specification's terms where this
-    specification's terms are insufficient.</p>
-</li>
-</ul>
-<h3 id="a-note-on-framework-contracts">A note on framework contracts</h3>
-<p>Many public procurements take place under framework agreements, or standing arrangements. These help facilitate routine purchasing. Suppliers are pre-approved to provide a list of goods or services. Under a framework agreement, there are typically multiple contracts that are all authorized by a single award. In the data standard, an award notice release would define the framework
-and this information would be stored in the contracting record under Award details. Then there will be multiple contract signature releases and each one would create a new Contract section in the contracting record. This provides a way to aggregate all the information on the contracts given under a single framework agreement.</p>
-<h3 id="linking-to-documents">Linking to documents</h3>
-<p>There are often many documents associated with a contracting process including tender specifications, contract documents, performance reports etc. The standard will
-provide a way to link to these documents. We are considering how to handle documents in the contracting record. We
- may have a simplified contracting record that indicates that documents are available and a full contracting record that provides links to all
-the available documents. As we flesh out the different serializations over July and August this will be defined. Document links will always 
-be available through the release that declared them.</p>
-<h3 id="a-note-on-planning">A note on planning</h3>
-<p>In this version of the standard, you will not see planning included. 
-This is because the standard, at this point, has been drafted primarily 
-on the basis of a deep search into the existing data, where we did not find planning data.
-The standard will evolve on the basis of use cases and demand for contracting data also,
-so we welcome detailed use cases regarding planning data to help us build out this area of the standard.</p>
 <h2 id="the-contracting-record">The contracting record</h2>
 <p>The contracting record is a master document that collects together a summary of key information about a contracting process. </p>
 <p>Each contracting record represents a single contracting process and should be uniquely identifiable.</p>
@@ -405,9 +401,7 @@ geo-coding information.</p>
 </div>
 
 <h2 id="next-steps">Next steps</h2>
-<p>Over June 2014 we will be validating the conceptual model proposed in this document of a Contracing Process, Contracting Records and Contracting Releases. 
-You are invited to add your comments directly to the online copy of this document at <a href="http://ocds.open-contracting.org/standard/">http://ocds.open-contracting.org/standard/</a>, 
-or to join discussions on <a href="https://groups.google.com/a/webfoundation.org/forum/#!forum/public-ocds">the project mailing list</a>. </p>
+<p>Over June 2014 we will be validating the conceptual model proposed in this document of a Contracing Process, Contracting Records and Contracting Releases. You are invited to add your comments directly to the online copy of this document at <a href="http://ocds.aptivate.org/standard/">http://ocds.aptivate.org/standard/</a>, or to join discussions on <a href="http://open-contracting.github.io/pages/community.html">the project technical e-mail list</a>. </p>
 <p>Over July and August 2014 we will be fleshing out in more detail the data fields that belong to each of the core components, and will develop a full data model. The proposed model will be validated against a range of use cases developed through demand side research. </p>
 <p>This data model will be format-agnostic. That is, it will be a generic model rather than a specific serialization in JSON, XML or CSV. </p>
 <p>Following the development and validation of the model, we will outline a number of approaches to serialize this data in different priority formats. </p>
@@ -442,24 +436,50 @@ Open Budget data standards. </p>
 <div class="footnote">
 <hr />
 <ol>
+<li id="fn:1">
+<p>The book is available free of charge at <a href="http://www.pro-act.org">http://www.pro-act.org</a>&#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
 <li id="fn:2">
 <p>The use of add-on conditions were adapted from the
-The Popolo Project - <a href="http://popoloproject.com/specs/#conformance">http://popoloproject.com/specs/#conformance</a>&#160;<a class="footnote-backref" href="#fnref:2" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+The Popolo Project - <a href="http://popoloproject.com/specs/#conformance">http://popoloproject.com/specs/#conformance</a>&#160;<a class="footnote-backref" href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div> </div>
             <div class="tab-pane" id="tabs-2"> <h2 id="vocabulary">Vocabulary</h2>
 <p>The world of procurement and contacting has many specialist terms. However, the precise way that these terms are used can vary from sector to sector, and country to country. Below we define how we are using a number of key terms. </p>
 <ul>
-<li><strong>Completion</strong> - the confirmation that all obligations (deliverables and payments) of the contract have been completed, or that the contract has been terminated for some other reason. </li>
-<li><strong>Contract</strong> - a legally enforceable agreement between two (or more) parties. Often times, contracts are thought of as a single document, the document that is signed by the parties. However, in many cases, a contract can be made up of multiple documents incorporated by reference containing additional terms, specifications, provisions, standard forms or other information (known as addendums, annexes, appendices, schedules, riders, etc.)  A contract should also be understood to include any later agreements of the parties that change the terms of the contract (amendments). As a legal document, the law (statutes, regulations, case law) may also impose additional terms or conditions or otherwise affect a contract.</li>
-<li><strong>Formation</strong> - the activities undertaken in order to enter into a contract.  Good public contracting practice favours open competitive bidding or tendering as a method to form contracts (the process of publicly inviting prospective contractors to submit bids for evaluation and selecting a winner or winners). However, contracts can be awarded in other ways, such as through non-competitive direct negotiation, prequalification of bidders, and other methodologies. The contract is then "awarded" to a selected contractor. Once the contractor has been selected and the terms of the contract have been agreed, the contract is signed (or executed) by the parties, and becomes active on an effective date.</li>
-<li><strong>Notice</strong> - a document providing information about a specific stage of the contracting process. For example, a tender notice or an award notice. </li>
-<li><strong>Open Contracting</strong> - norms and practices for increased disclosure and participation in public contracting including tendering, performance and completion. It includes the variety of contract types, from more basic contracts for the procurement of goods, to complex contracts, joint venture agreements, licenses and production sharing agreements. Open contracting encompasses all public contracting, including contracts funded by combinations of public, private and donor sources.</li>
-<li><strong>Planning</strong> - the process of deciding what to contract for, when and how. A procurement plan is a product of the planning process that indicates an procuring entities planned procurement activities over a period of time.</li>
-<li><strong>Public Contracting Process</strong> - the planning, formation, award, execution, performance, and completion of a contract to which a  government entity is a party.</li>
-<li><strong>Performance</strong> - the implementation of the contract in accordance with the obligations laid out therein. Often, contractors will enter into additional contracts with sub-contractors in order to implement the public contract.</li>
-<li><strong>Release</strong> - the publication of information about any aspect of contracting. Often in the form of a notice, but also including other supplementary releases of information. </li>
+<li>
+<p><strong>Contract</strong> - the specific document that is finally signed between the buyer (a public entity) and supplier.</p>
+</li>
+<li>
+<p><strong>Contracting</strong> - the entire process of public contracting including the
+    planning, formation, award, execution, performance, completion, and
+    evaluation of a contract. Contracting includes the variety of contract types from more basic contracts
+    for procurement of goods to complex contracts, joint venture agreements, licenses and production sharing agreements. Other terms that may be used for this process are public procurement, public tendering. </p>
+</li>
+<li>
+<p><strong>Contracting Process</strong> - is the sequence of events related to the lifespan of 
+    a contract, beginning with planning and culminating in contract closure. It is contested whether this is a chain or in fact a cycle, as the results reported throughout the process should be used to inform subsequent contracting practices.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup> See below for a detailed description of the phases of the contracting process. In addition, in the data standard, we define a unique contracting process as one with a unique procurement process (see standard for more details).</p>
+</li>
+<li>
+<p><strong>Formation</strong> - In procurement this is generally known as tendering: the process on inviting suppliers to submit bids for evaluation and selecting a winner or winners. Other types of formation include: open competitive bidding, direct / sole-source, shopping / three quotations, inverse auctions, and framework contracts. The process may only involve a negotiation between the public entity and the private entities, there may be no public or competitive element to it.</p>
+</li>
+<li>
+<p><strong>Open Contracting</strong> - norms and practices for increased disclosure and participation in public contracting. 
+    It covers the entire contracting process. Open contracting encompasses all public contracting, including contracts
+    funded by combinations of public, private and donor sources.</p>
+</li>
+<li>
+<p><strong>Notice</strong> - a document providing information about a specific stage of the contracting process. For example, a tender 
+    notice or an award notice. </p>
+</li>
+<li>
+<p><strong>Release</strong> - the publication of information about any aspect of contracting. Often in the form of a notice, but 
+    also including other supplementary releases of information. </p>
+</li>
+<li>
+<p><strong>Termination</strong> - the ending of a contract, either because the contracted activity is complete, or because of some other reason (e.g. breach of contract terms).</p>
+</li>
 </ul>
 <div class="panel panel-success">
     <div class="panel-heading">
@@ -471,6 +491,31 @@ The Popolo Project - <a href="http://popoloproject.com/specs/#conformance">http:
              <li>Are there any third-party sources we should draw upon for clear definitions of these and other terms?</li>
          </ul>     
      </div>
+</div>
+
+<h2 id="the-contracting-process">The Contracting Process</h2>
+<p>Excerpt from <em>Open Contracting - A guide for practitioners by practitioners</em> as background for the diagram documenting the Contracting Process. </p>
+<h3 id="planning">Planning</h3>
+<p>The planning stage must ensure that the contract is in line with the government's action plan and with the mission of the public entity that will oversee it. In the planning stage, the need must be identified and narrowed down, along with the associated risks. The need assesment phase must include consultation with key beneficiaries, also looking at what has worked in the past and inefficiencies of previous contracts. The budget must be allocated. Documents such as annual procurement plans and annual budgets are mandatory in several countries and mark the beginning of the planning stage. Citizens can review different documents associated with the planning stage. They should also advocate for consulations so that decisions are made on the basis of needs effectively expressed by potential beneficiaries and the have a say on the options available.</p>
+<p>Several countries have developed provisions in their laws to establilsh the role of citizens in the planning stage. For instance, infrastructure and extraction projects in many Latin American countries must be subject to hearings and agreements with the indigenous communities that will be affected by these projects. Failure to reach an agreement means cancelling or at least modifying the contract to deal with the issues raised during the hearings. This community consultation process should be advocated by any community in the world, as it implies the exercise of the right to information and free and informed consent as established by the International Labour Organisation Convention 169 and the UN Declaraion of the Rights of Indigenous People. </p>
+<p>In the specific case of a Public-Private Partnership (PPP), not only should the purpose of the project be assessed, but the citizen should alsask why the government is engaging in PPP rather than in a public work. There are certain characteristics that make this type of contract preferable in certain situations, where risks can be shared between public and private parties involved. These contracts usually have longer timeframes and larger budget dimensions, which makes them an important consideration of open contracting.</p>
+<h3 id="tendering">Tendering</h3>
+<p>Once the contract has been planned, the entity is ready to open the tendering process. This is usually done by inviting interested suppliers to submit bids that will be evaluated according to specific procedures and evaluation critera set in the bidding documents. In general, citizens should be allowed to comment on the requirements and procedures before the bids are submitted. Once the "winner" is chosen and before the contract is signed, the losing bidders should be alowed to file complaints if they find that the process has not properly followed the established rules. This means that the public entities should have transparent grievance redress mechanisms. Citizens also have a key role once the evaluation decision is announced and can ask for detailed explanations.</p>
+<p>What are the different types of tendering? In some cases, public contracting follows a direct contracting scheme, such as when only one company has the specific expertise for the work, or when urgency does not allow for the complete open tendering process. Nonetheless, the reasons for such a decision should be clearly justified in writing.</p>
+<p>Beyon direct contracting there are several modes of tendering from shopping (known as three quotations method), open competitive bidding, inverse auctions, framework contracts to more complex contractual arrangements as public-private partnerships, licenses and concessions.</p>
+<h3 id="contract-execution">Contract Execution</h3>
+<p>After the contract is awarded, the contract is signed, and the necessary guarantees are in place, the execution of the contract starts. During the execution stage, the contractor must comply with the legal requirements as well as with what was stated in the contract. The public entity is accountable for ensuring that the contract is being executed in a proper and timely manner and in compliance with what was agreed, particularly regarding payments. In case of any contract variations, the public entity should notify the relevany authority as well as keep a record of the variations and the justifications.</p>
+<p>At this stage, proper contract management procedures must be in place and citizens should ask whether ther milestones -- regarding costs and times -- are being met. Are the parties meeting the commitments that were put in the contract? If there are amendments, why are they happening? Are they justified? Quality of deliverables is also a key factor to be evaluated at several points throughout the contract execution stage.</p>
+<h3 id="closing">Closing</h3>
+<p>The contract must be closed once the obligations have been fulfiled. Nevertheless, it is important to state that it is possible for contract obligations to exceed the contract term. For example, guarantees may be enforced even after the last payment has ocurred. For instance, if a road is built and paid for, but is ruined several months later - well within the warranty period - both procuring entities and citizens should exert effort in taking the contractor into account. </p>
+<p>Likewise, post-consumption obligaions may be present, such as disposal schemes for polluting materials in the case of oil, gas and mining deals. The contract should answer the questions: Is the contractor obliged to pick up the polluting packaging? Was the community affected as a result of the contracts completion? What was the impact of the project or procurement and was it consustent with what was planned? Answers to questions like these can drive positive changes, making a contractor assume responsibility and establishing fresh grounds for government to improve future contract planning.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Source: Open Contracting - A guide for practitioners by practitioners - downloaded from <a href="http://pro-act.org/">http://pro-act.org/</a> (May 2014)&#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
 </div> </div>
             <div class="tab-pane" id="tabs-3">
                 <ul class="nav nav-tabs">
@@ -484,21 +529,21 @@ The Popolo Project - <a href="http://popoloproject.com/specs/#conformance">http:
                     <div class="tab-pane active" id="tabs-3-1">
                         <div class="schema-holder">
                             
-                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__1__0/release-schema.json></script>
+                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/draft_june_20_2014/release-schema.json></script>
                             
                         </div>
                     </div>
                     <div class="tab-pane" id="tabs-3-2">
                         <div class="schema-holder">
                             
-                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__1__0/release-package-schema.json></script>
+                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/draft_june_20_2014/release-package-schema.json></script>
                             
                         </div>
                     </div>
                     <div class="tab-pane" id="tabs-3-3">
                         <div class="schema-holder">
                             
-                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__1__0/record-package-schema.json></script>
+                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/draft_june_20_2014/record-package-schema.json></script>
                             
                         </div>
                     </div>
@@ -508,7 +553,7 @@ The Popolo Project - <a href="http://popoloproject.com/specs/#conformance">http:
                         <h5>This contains the merge strategies to build a versionedRelease for the record. Click the {} button to see the schema detail.</h5>
                         <div class="schema-holder">
                             
-                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__1__0/versioned-release-schema.json></script>
+                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/draft_june_20_2014/versioned-release-schema.json></script>
                             
                         </div>
                     </div>
@@ -540,9 +585,9 @@ The Popolo Project - <a href="http://popoloproject.com/specs/#conformance">http:
                             
                             <li><a href="/standard/r/0__2__0/">0.2.0</a> (Last modified: Wed, 25 Jun 2014 13:07:49 GMT)</li>
                             
-                            <li><a href="/standard/r/draft_june_20_2014_2/">Draft June 20 2014 2</a> (Last modified: Fri, 20 Jun 2014 20:14:58 GMT)</li>
+                            <li><a href="/standard/r/0__1__0/">0.1.0</a> (Last modified: Fri, 20 Jun 2014 22:17:00 GMT)</li>
                             
-                            <li><a href="/standard/r/draft_june_20_2014/">Draft June 20 2014</a> (Last modified: Wed, 18 Jun 2014 00:20:51 GMT)</li>
+                            <li><a href="/standard/r/draft_june_20_2014_2/">Draft June 20 2014 2</a> (Last modified: Fri, 20 Jun 2014 20:14:58 GMT)</li>
                             
                             <li><a href="/standard/r/draft-june-5-2014/">Draft-June-5-2014</a> (Last modified: Fri, 06 Jun 2014 04:42:13 GMT)</li>
                             
@@ -610,8 +655,8 @@ The Popolo Project - <a href="http://popoloproject.com/specs/#conformance">http:
         alert("This site does not work with Internet Explorer 9 or earlier. Please use a more recent version of Internet Explorer, or an open-source browser such as Firefox"); 
       } else {
         var PROJECTNAME = 'ocdsstandard',
-            VERSION = '0.1.0',
-            URI = 'http://ocds.open-contracting.org/standard/r/0__1__0/',
+            VERSION = 'draft june 20 2014',
+            URI = 'http://ocds.open-contracting.org/standard/r/draft_june_20_2014/',
             SITE_UNIQUE_ID = '2345SDFGertd456DGrw54trg',
             PAGE_UNIQUE_ID = SITE_UNIQUE_ID + VERSION;
 

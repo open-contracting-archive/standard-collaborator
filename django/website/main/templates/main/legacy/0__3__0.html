@@ -31,7 +31,7 @@
                 <li><a href="#" title="Help" data-toggle="modal" data-target="#help"><span class="oi oi-question-mark navicon-legacy" aria-hidden="true"></span></a></li>
                 
 
-<li><a title="Login" href="/standard/accounts/login/?next=/standard/r/0__3__2/" title="About"><span class="oi oi-account-login navicon-legacy" aria-hidden="true"></span></a></li>
+<li><a title="Login" href="/standard/accounts/login/?next=/standard/r/0__3__0/" title="About"><span class="oi oi-account-login navicon-legacy" aria-hidden="true"></span></a></li>
 
 <li><a href="#" title="Change versions" data-toggle="modal" data-target="#changeVersion"><span class="oi oi-fork navicon-legacy" aria-hidden="true"></span></a></li>
 
@@ -40,11 +40,11 @@
     </div>
     <div class="main container">
         
-    <h1 class="old-version-warning">OLD VERSION - please go to <a href="../../">the latest version</a></h1>
+			{% include 'main/legacy/legacy-panel.html' %}
         
-    <h1>Open Contracting Data Standard - 0.3.2</h1>
+    <h1>Open Contracting Data Standard - 0.3.0</h1>
     
-        <p>Released on: Wed, 03 Sep 2014 08:40:19 GMT</p>
+        <p>Released on: Tue, 02 Sep 2014 15:55:33 GMT</p>
     
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -68,7 +68,7 @@
             <h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span> Not the latest release.</h4>
         </div>
         <div class="panel-body">
-            <p>You are viewing v0.3.2. The latest release is <a href="/standard/r/latest/">v0.3.3</a></p>
+            <p>You are viewing v0.3.0. The latest release is <a href="/standard/r/latest/">v0.3.3</a></p>
         </div>
     </div>
     
@@ -105,7 +105,7 @@
 <li><a href="#tender">Tender</a></li>
 <li><a href="#awards">Awards</a></li>
 <li><a href="#contracts">Contracts</a></li>
-<li><a href="#performance">Performance</a></li>
+<li><a href="#awards_1">Awards</a></li>
 </ul>
 </li>
 <li><a href="#record-data">Record data</a></li>
@@ -216,7 +216,7 @@
 <p><script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/award"></script></p>
 <h3 id="contracts">Contracts</h3>
 <p><script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/contract"></script></p>
-<h3 id="performance">Performance</h3>
+<h3 id="awards_1">Awards</h3>
 <p><script src="/standard/static/docson/widget.js" data-schema="/standard/r/master/release-schema.json$/definitions/performance"></script></p>
 <h2 id="record-data">Record data</h2>
 <p>There should be one record for each open contracting process. The record MUST contain:</p>
@@ -333,21 +333,23 @@
 <p>To answer the above questions a Contracting Data Comparison tool was created with a team of volunteer developers to provide a platform for curating meta-data about public contracting datasets from the priority countries.</p>
 <p>The effort focused on capturing the metadata of contract data available. As it develops, the intention is for the Contracting Data Comparison tool to allow for wider public participation and thus create an ever more detailed picture of the landscape of contracting data availability and focus.</p>
 <h3 id="2-demand-side-use-cases">2) Demand-side use-cases</h3>
-<p>This draft is based primarily on research of existing published datasets. At the same time, the project has begun to explore priority use cases for open contracting data through workshops, webinars, a mailing list, and bilateral discussions with more than 200 stakeholders. The purpose of demand-side research is to capture the real needs and circumstances of the publishers and users of public contracting data. We wanted to understand who wants to use contracting information, what information do they need, how do they  want to use the information, and why? </p>
-<p>A <a href="https://docs.google.com/a/webfoundation.org/document/d/1GmOwGpvTgkPNiq1rzw1s1oj5TbE3G0KLowIaLSA19a4">questionnaire</a> was created and shared with our online community, and with specific stakeholders representing different user profiles (including government publishers, policymakers, procuring entities, auditors, donors, journalists, auditors, data aggregators, contractors, contract monitors, service delivery monitors, anti-corruption monitors, researchers, and transparency activists).</p>
-<p>In our consultations four primary use cases emerged. These users are interested to use open contracting data in order to:</p>
+<p>This draft is based primarily on research of existing published datasets. At the same time, the project has begun to explore priority use cases for open contracting data through workshops, webinars, a mailing list, and bilateral discussions with more than 200 stakeholders. The purpose of demand-side research is to capture the real needs and circumstances of the publishers and users of public contracting data.</p>
+<p>In our consultations with government, civil society, donors, journalists, auditors, and the private sector, four primary use cases emerged. These users are interested to use open contracting data in order to:</p>
 <ul>
-<li>Achieve value for money for the procuring entity;</li>
-<li>Enable the private sector to compete for public contracts;</li>
-<li>Monitor service delivery for effectiveness; and</li>
-<li>Detect corruption and fraud in public contracting.</li>
+<li>
+<p>Achieve value for money for the procuring entity;</p>
+</li>
+<li>
+<p>Enable the private sector to compete for public contracts;</p>
+</li>
+<li>
+<p>Monitor service delivery for effectiveness; and</p>
+</li>
+<li>
+<p>Detect corruption and fraud in public contracting.</p>
+</li>
 </ul>
-<p>Each of the use cases we created includes a user profile, their objectives, and their contracting information needs. This document was posted <a href="https://docs.google.com/document/d/1zdgqSf-LUFVxO6Y_7v1cQf7l0vx35-p502jAI49JRmQ/edit?usp=sharing">here</a> for public comment.</p>
-<p>Drawing on these summaries we then identified 141 specific user requirements and 145 related technical requirements for the open contracting data standard. You can find a list of all the requirements we identified <a href="https://docs.google.com/a/webfoundation.org/spreadsheets/d/1m_Kr7I5XqM7PFcz75ZNmcdFCzLaike_IsEmAh5eN-WE">here</a>. </p>
-<p>For the most recent release of the standard we have worked through over 50 of 
-the requirements identified, and have found that 30 are already handled by fields in the draft standard. For the remaining requirements, a number have resulted in <a href="https://github.com/open-contracting/standard/issues">issues</a>
- for future cycles of development logged on the standards GitHub pages, and others highlight some of the tools that may need to be created alongside the standard, such as aggregators and analysis tools.</p>
-<p>These use cases not only demonstrate what can and could be done with open contracting data, but will also shape the development of the Open Contracting Data Standard as we move towards defining the field-level specification.</p>
+<p>The draft use cases are being developed on an ongoing basis and can be found <a href="https://docs.google.com/document/d/1zdgqSf-LUFVxO6Y_7v1cQf7l0vx35-p502jAI49JRmQ/edit?usp=sharing">here</a>. These use cases not only demonstrate what can and could be done with open contracting data, but will also shape the development of the Open Contracting Data Standard as we move towards defining the field-level specification.</p>
 <div class="panel panel-success">
     <div class="panel-heading">
        <h4 class="panel-title"> <span class="glyphicon glyphicon-question-sign"></span> Consultation questions</h4>
@@ -365,31 +367,12 @@ the requirements identified, and have found that 30 are already handled by field
 <p>There are existing standardization efforts for budget and spending data under development through the Open Spending Project. In line with the principles of <a href="http://devinit.org/report/joined-data-building-blocks-common-standards/">Joined Up Data</a> this project will explore ways to connect data in the Open Contracting Data Standard with data in the proposed Open Spending and Open Budget Data Standards, among others.</p>
 <p>In addition, the approach taken is informed by the development of other data standards. Research related to the Data Standard Architecture and Data Standard Governance will be released separately from the Data Model Draft.</p>
 <h2 id="next-steps">Next steps</h2>
-<p>Over the coming months (September - November 2014) we are working towards a version 1.0 standard which can be implemented, with future changes taking place through an open consultative process.</p>
+<p>Over the coming months (September - November 2014) we are working towards a version 1.0 standard which can be implemented, with future changes taking place through an open consultative process. </p>
 <p>To get there:</p>
 <ul>
-<li>
-<p>We are inviting general feedback on the data model and fields in this beta release through the <a href="http://groups.google.com/a/webfoundation.org/group/public-ocds/">public mailing list</a> and/or by commenting on the document directly (see instructions at the top of this page);</p>
-</li>
-<li>
-<p>We are establishing working groups around the private sector, civil society, and publishers to provide additional input;  </p>
-</li>
-<li>
-<p>We will be exploring further user demands and building these into the standard by:</p>
-<ul>
-<li>Completing an assessment of user requirements and how these can be met either directly in the standard, or in accompanying tools and services;</li>
-<li>Building up a list of issues to be addressed in the next iteration of the standard as we move towards version 1.0 later in the year - and prioritising these in consultation with key potential users of open contracting data; and</li>
-<li>Using the GitHub issue tracker to identify which requirements can be met over the short-term, and which will need further development beyond the version 1.0 release.</li>
-</ul>
-</li>
-<li>
-<p>We will conduct field missions to the first two pilot countries in October 2014 to: </p>
-<ul>
-<li>Explore how the standard may be adapted to other contracting use cases outside public procurement including extractives and land;</li>
-<li>Meet and/or host workshops with civil society and government to better understand demand use-cases; and</li>
-<li>Compare the draft data standard with country-specific procurement datasets including the possibility of piloting the data standard.</li>
-</ul>
-</li>
+<li>We are inviting feedback on the data model and fields in this beta release;</li>
+<li>We will be exploring further user demands and building these into the standard;</li>
+<li>We will be exploring how the standard may be adapted to other contracting use cases outside public procurement</li>
 </ul>
 <h2 id="acknowledgements">Acknowledgements</h2>
 <p>The Open Contracting Data Standard is a core product of the <a href="http://www.open-contracting.org/">Open Contracting Partnership (OCP)</a>. Version 1.0 of the standard is being developed for the OCP by the <a href="http://www.webfoundation.org">World Wide Web Foundation</a>, through a project supported by The <a href="http://www.omidyar.com/">Omidyar Network</a> and the <a href="http://www.worldbank.org">World Bank</a>".</p>
@@ -442,21 +425,21 @@ The Popolo Project - <a href="http://popoloproject.com/specs/#conformance">http:
                     <div class="tab-pane active" id="tabs-3-1">
                         <div class="schema-holder">
                             
-                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__3__2/release-schema.json></script>
+                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__3__0/release-schema.json></script>
                             
                         </div>
                     </div>
                     <div class="tab-pane" id="tabs-3-2">
                         <div class="schema-holder">
                             
-                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__3__2/release-package-schema.json></script>
+                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__3__0/release-package-schema.json></script>
                             
                         </div>
                     </div>
                     <div class="tab-pane" id="tabs-3-3">
                         <div class="schema-holder">
                             
-                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__3__2/record-package-schema.json></script>
+                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__3__0/record-package-schema.json></script>
                             
                         </div>
                     </div>
@@ -466,7 +449,7 @@ The Popolo Project - <a href="http://popoloproject.com/specs/#conformance">http:
                         <h5>This contains the merge strategies to build a versionedRelease for the record. Click the {} button to see the schema detail.</h5>
                         <div class="schema-holder">
                             
-                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__3__2/versioned-release-schema.json></script>
+                                <script src="/standard/static/docson/widget.js" data-schema=/standard/r/0__3__0/versioned-release-schema.json></script>
                             
                         </div>
                     </div>
@@ -778,9 +761,9 @@ using the jsonmerge library).</p> </div>
                             
                             <li><a href="/standard/r/0__3__3/">0.3.3</a> (Last modified: Fri, 19 Sep 2014 16:18:54 GMT)</li>
                             
-                            <li><a href="/standard/r/0__3__1/">0.3.1</a> (Last modified: Wed, 03 Sep 2014 02:43:44 GMT)</li>
+                            <li><a href="/standard/r/0__3__2/">0.3.2</a> (Last modified: Wed, 03 Sep 2014 08:40:19 GMT)</li>
                             
-                            <li><a href="/standard/r/0__3__0/">0.3.0</a> (Last modified: Tue, 02 Sep 2014 15:55:33 GMT)</li>
+                            <li><a href="/standard/r/0__3__1/">0.3.1</a> (Last modified: Wed, 03 Sep 2014 02:43:44 GMT)</li>
                             
                             <li><a href="/standard/r/0__2__0/">0.2.0</a> (Last modified: Wed, 25 Jun 2014 13:07:49 GMT)</li>
                             
@@ -856,8 +839,8 @@ using the jsonmerge library).</p> </div>
         alert("This site does not work with Internet Explorer 9 or earlier. Please use a more recent version of Internet Explorer, or an open-source browser such as Firefox"); 
       } else {
         var PROJECTNAME = 'ocdsstandard',
-            VERSION = '0.3.2',
-            URI = 'http://ocds.open-contracting.org/standard/r/0__3__2/',
+            VERSION = '0.3.0',
+            URI = 'http://ocds.open-contracting.org/standard/r/0__3__0/',
             SITE_UNIQUE_ID = '2345SDFGertd456DGrw54trg',
             PAGE_UNIQUE_ID = SITE_UNIQUE_ID + VERSION;
 
