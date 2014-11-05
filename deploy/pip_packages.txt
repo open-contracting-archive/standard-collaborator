@@ -1,5 +1,5 @@
 # for deploy - you probably should pin to a commit
--e git+git://github.com/aptivate/dye.git@7a6fc28c23cbb8aaf00709ceafe2e0cf7d99b94b#egg=dye
+-e git+git://github.com/aptivate/dye.git@1a9a98500d61e151b00f6fc4cc43e467c21280f6#egg=dye
 
 # core django
 Django>=1.6, <1.7
