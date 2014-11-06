@@ -224,9 +224,16 @@ a {
 	padding-left: 40px;
 }
 
+.toc > .nav > li > .nav > li > .nav > li > .nav > li > a {
+	display: block;
+	font-size: 12px;
+	padding-left: 50px;
+}
+
 .toc > .nav > li > .nav > li > .nav > li > .nav {
   display:none;
 }
+
 
 .toc > .nav > li > .nav > li > .nav > li.active > .nav {
   display:block;
