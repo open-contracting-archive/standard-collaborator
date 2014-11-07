@@ -83,3 +83,15 @@ def test_django_templatevar_conversion():
     post_pq_html = pq_dom.outerHtml()
     repaired_html = hp.repair_django_tags(post_pq_html)
     assert pre_html == repaired_html
+
+
+def test_django_templatetag_url_conversion():
+    hp = create_htmlproducer()
+    pre_html = """<div class="something">
+<div class="test"></div>
+<a href="{% url 'schema' release_name 'release_package' %}">text</a>
+</div>"""
+    pq_dom = PyQuery(pre_html)
+    post_pq_html = pq_dom.outerHtml()
+    repaired_html = hp.repair_django_tags(post_pq_html)
+    assert pre_html == repaired_html

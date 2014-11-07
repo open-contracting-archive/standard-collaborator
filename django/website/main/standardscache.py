@@ -7,6 +7,7 @@ from os import path
 import re
 import shutil
 import subprocess
+import urllib
 from django.conf import settings
 from django.http import Http404
 from django.template.loader import render_to_string
@@ -27,6 +28,8 @@ NUMERIC_PREFIX_RE = re.compile(r'^\d\d_')
 LANG_CODE_RE = re.compile(r'^[a-z]{2}([-_][a-z]{2,5})?$')
 # check for full length SHA
 GIT_SHA_RE = re.compile(r'^[0-9a-fA-F]{40}$')
+# look for url encoded {%...%}
+TEMPLATETAG_RE = re.compile(r'%7B%%20.*?%20%%7D')  # .*? is non-greedy
 
 
 def get_commit_export_dir(commit):
@@ -370,6 +373,17 @@ class HTMLProducer(object):
         # URL encoded "{{ " and " }}"
         htmlcontent = htmlcontent.replace('%7B%7B%20', '{{ ')
         htmlcontent = htmlcontent.replace('%20%7D%7D', ' }}')
+        # URL encoded {% ... %} is %7B%%20 ... %20%%7D
+        last_match_end = 0
+        newhtml = []
+        for match in TEMPLATETAG_RE.finditer(htmlcontent):
+            # add string up to last match and update last_match_end
+            newhtml.append(htmlcontent[last_match_end:match.start()])
+            last_match_end = match.end()
+            # then url decode the matched text and add the string
+            newhtml.append(urllib.unquote(match.group()))
+        newhtml.append(htmlcontent[last_match_end:])
+        htmlcontent = ''.join(newhtml)
         return htmlcontent
 
     def convert_md_to_html(self, mdcontent, outer_menu_html, inner_menu_html):
