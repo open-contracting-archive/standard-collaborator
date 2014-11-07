@@ -32,12 +32,11 @@ class StandardRedirectView(RedirectView):
         return reverse('standard', kwargs=kwargs)
 
 
-class LatestView(StandardRedirectView):
+class LatestView(RedirectView):
 
-    def get(self, request, *args, **kwargs):
-        self.release = StandardsRepo().get_latest_tag_name()
-        self.lang = settings.STANDARD_DEFAULT_LANG
-        return super(LatestView, self).get(request, *args, **kwargs)
+    def get_redirect_url(self, *args, **kwargs):
+        release = StandardsRepo().get_latest_tag_name()
+        return reverse('standard-root', args=[release])
 
 
 class StandardRootView(StandardRedirectView):
