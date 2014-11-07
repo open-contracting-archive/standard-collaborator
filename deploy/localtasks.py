@@ -26,7 +26,10 @@ def build_webassets():
 
 def ensure_static_is_writable():
     if env['environment'] in ('staging', 'production'):
-        owner = 'apache'
+        if env['environment'] == 'staging':
+            owner = 'apache'
+        elif env['environment'] == 'production':
+            owner = 'www-data'
         static_path = path.join(env['django_dir'], 'static')
         _check_call_wrapper(['chown', '-R', owner, static_path])
 
@@ -35,8 +38,10 @@ def ensure_working_directory_and_repo_exist():
     """We need to ensure we have a working directory to use, and have a clone
     of the standards repo
     """
-    if env['environment'] in ('staging', 'production'):
+    if env['environment'] == 'staging':
         owner = 'apache'
+    elif env['environment'] == 'production':
+        owner = 'www-data'
     else:
         owner = None
     working_dir = path.join(env['django_dir'], 'working')
@@ -57,12 +62,3 @@ def ensure_working_directory_and_repo_exist():
         from settings import STANDARD_GITHUB_REPO
         github_repo = 'https://github.com/' + STANDARD_GITHUB_REPO
         _check_call_wrapper(['git', 'clone', github_repo, repo_dir])
-
-
-def copy_legacy_files_into_place():
-    """We will have a directory with copies of the old index.html files
-    in it that can be copied into the relevant place in the directory
-    structure.
-    """
-    # TODO
-    pass
