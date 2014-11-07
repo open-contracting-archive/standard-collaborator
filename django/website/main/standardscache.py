@@ -303,19 +303,22 @@ class HTMLProducer(object):
             html_content_stub = path.join(
                 html_dir, export_md_file_to_name(content_file)
             )
-            self.convert_md_to_html(export_content_file, html_content_stub, outer_menu_html, inner_menu_html)
+            self.convert_mdfile_to_htmlfile(export_content_file, html_content_stub, outer_menu_html, inner_menu_html)
 
-    def extract_toc_to_html(self, pq_dom, htmlfile_stub):
+    def convert_django_template_var(self, htmlstring):
+        return htmlstring
+
+    def extract_toc_to_html(self, pq_dom):
         toc = pq_dom(".toc")
+        if not toc:
+            return ''
         toc.find('ul').addClass('nav')
         toc_html = toc.outerHtml()
         pq_dom.remove(".toc")
         rendered_menu = render_to_string('main/sidemenu.html', {
             'toc': toc_html
         })
-        menufile = htmlfile_stub + '_menu.html'
-        with open(menufile, mode='w') as menu:
-            menu.write(rendered_menu.encode('utf8'))
+        return rendered_menu
 
     def insert_included_json(self, pq_dom):
         include_nodes = pq_dom.find(".include-json")
@@ -364,24 +367,39 @@ class HTMLProducer(object):
                 csv_contents = self.csv_to_html_table(csvreader, table_class)
             node.html(csv_contents)
 
-    def convert_md_to_html(self, mdfile, htmlfile_stub, outer_menu_html, inner_menu_html):
-        htmlfile = htmlfile_stub + '.html'
-        with codecs.open(mdfile, encoding="utf8", mode='r') as md:
-            mdcontent = md.read()
+    def repair_django_tags(self, htmlcontent):
+        # URL encoded "{{ " and " }}"
+        htmlcontent = htmlcontent.replace('%7B%7B%20', '{{ ')
+        htmlcontent = htmlcontent.replace('%20%7D%7D', ' }}')
+        return htmlcontent
+
+    def convert_md_to_html(self, mdcontent, outer_menu_html, inner_menu_html):
         htmlcontent = markdown(mdcontent, extensions=['footnotes', 'sane_lists', 'toc'])
         pq_dom = PyQuery(htmlcontent)
-        self.extract_toc_to_html(pq_dom, htmlfile_stub)
+        rendered_menu = self.extract_toc_to_html(pq_dom)
         self.insert_included_json(pq_dom)
         self.insert_included_csv(pq_dom)
-        htmlcontent = pq_dom.html(method='html')
-
+        htmlcontent = pq_dom.outerHtml()
+        htmlcontent = self.repair_django_tags(htmlcontent)
         rendered_html = render_to_string('main/menu_content.html', {
             'outer_menu': outer_menu_html,
             'inner_menu': inner_menu_html,
             'html_content': htmlcontent,
         })
-        with open(htmlfile, mode='w') as html:
+        return rendered_html, rendered_menu
+
+    def convert_mdfile_to_htmlfile(self, mdfile, htmlfile_stub,
+                                   outer_menu_html, inner_menu_html):
+        with codecs.open(mdfile, encoding="utf8", mode='r') as md:
+            mdcontent = md.read()
+
+        rendered_html, rendered_menu = self.convert_md_to_html(
+            mdcontent, outer_menu_html, inner_menu_html)
+
+        with open(htmlfile_stub + '.html', mode='w') as html:
             html.write(rendered_html.encode('utf8'))
+        with open(htmlfile_stub + '_menu.html', mode='w') as menu:
+            menu.write(rendered_menu.encode('utf8'))
 
     def outer_menu_data(self, lang):
         """ return something like
