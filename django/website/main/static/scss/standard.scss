@@ -264,3 +264,11 @@ a {
     width:auto;
     font-size:10pt;
   }
+
+/* Stop anchors being hidden behind header */  
+h2:before, h3:before, h4:before {
+    display: block;
+    content: "";
+    height: 100px;
+    margin: -100px 0px 0px;
+}
