@@ -199,8 +199,7 @@ class StandardsRepo(object):
 
     def get_file_contents(self, commit, file_name):
         export_dir = self.export_commit(commit)
-        file_path = path.join(
-            export_dir, settings.STANDARD_EXAMPLE_PATH, file_name)
+        file_path = path.join(export_dir, file_name)
         return self.get_contents(file_path)
 
     def get_contents(self, file_path):

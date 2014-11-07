@@ -172,7 +172,18 @@ class SchemaView(View):
         return HttpResponse(doc, content_type="application/json", status=200)
 
 
-class ExampleView(View):
+class GetRepoFileView(View):
+    CONTENT_TYPES = {
+        'json': 'application/json',
+        'csv': 'text/csv',
+        'png': 'image/png',
+        'jpg': 'image/jpeg',
+        'jpeg': 'image/jpeg',
+        'gif': 'image/gif',
+        'svg': 'image/svg+xml',
+        'md': 'text/plain',
+    }
+
     def get(self, request, *args, **kwargs):
         repo = StandardsRepo()
         file_name = kwargs.get('file_name')
@@ -181,15 +192,23 @@ class ExampleView(View):
         if release == 'standard':
             release = 'master'
 
-        doc = repo.get_file_contents(release, file_name)
-        if file_name.endswith('.json'):
-            if doc == "":
-                # Set to blank json if no doc so docson has something to render
-                doc = "{}"
-            response = HttpResponse(doc, content_type="application/json", status=200)
-        elif file_name.endswith('.csv'):
-            response = HttpResponse(doc, content_type="text/csv", status=200)
+        file_path = path.join(self.DIR_PATH, file_name)
+        doc = repo.get_file_contents(release, file_path)
+        file_type = file_name.split('.')[-1]
+        content_type = self.CONTENT_TYPES.get(file_type, None)
+
+        if file_type == 'json' and doc == "":
+            doc = "{}"
+
+        response = HttpResponse(doc, content_type=content_type, status=200)
+        if file_type == 'csv':
             response['Content-Disposition'] = 'attachment; filename="%s"' % file_name
-        else:
-            response = HttpResponse(doc, status=200)
         return response
+
+
+class ExampleView(GetRepoFileView):
+    DIR_PATH = settings.STANDARD_EXAMPLE_PATH
+
+
+class AssetView(GetRepoFileView):
+    DIR_PATH = settings.STANDARD_ASSET_PATH

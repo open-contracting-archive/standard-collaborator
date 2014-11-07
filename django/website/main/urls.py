@@ -9,7 +9,8 @@ from .views import (
     LatestView,
     CommitRedirectView,
     SchemaView,
-    ExampleView
+    ExampleView,
+    AssetView
 )
 
 urlpatterns = patterns(
@@ -26,6 +27,7 @@ urlpatterns = patterns(
     url(r'^r/(?P<release>[a-zA-Z0-9_.-]+)/(?P<lang>[a-z]{2}([-_][a-z]{2,5})?)/(?P<path>[-.\w/]+)/$', StandardView.as_view(), name='standard'),
     url(r'^r/(?P<release>[a-zA-Z0-9_.-]+)/(?P<schema_name>[a-zA-Z0-9_.-]+).json$', SchemaView.as_view(), name='schema'),
     url(r'^r/(?P<release>[a-zA-Z0-9_.-]+)/example/(?P<file_name>[a-zA-Z0-9_.-]+)$', ExampleView.as_view(), name='example'),
+    url(r'^r/(?P<release>[a-zA-Z0-9_.-]+)/assets/(?P<file_name>[a-zA-Z0-9_.-]+)$', AssetView.as_view(), name='example'),
     url(r'^$', LatestView.as_view(), name='latest'),
 )
 

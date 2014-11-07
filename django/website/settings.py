@@ -395,6 +395,7 @@ else:
 STANDARD_DOCS_PATH = 'standard/docs'
 STANDARD_SCHEMA_PATH = 'standard/schema'
 STANDARD_EXAMPLE_PATH = 'standard/examples'
+STANDARD_ASSET_PATH = 'standard/assets'
 STANDARD_DEFAULT_LANG = 'en'
 
 LANG_CODE_NAME = {
