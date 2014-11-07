@@ -44,6 +44,4 @@ try:
 except Exception as e:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-STANDARD_GITHUB_REPO = 'practicalparticipation/standard'
-
 # vi: ft=python
