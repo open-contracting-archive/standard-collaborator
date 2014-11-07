@@ -16,7 +16,6 @@ def post_deploy(environment):
     # building webassets as root can change directory ownership, so we need to
     # correct it
     ensure_static_is_writable()
-    copy_legacy_files_into_place()
 
 
 def build_webassets():
