@@ -3,138 +3,149 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-28 11:26+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2014-11-10 19:14+0100\n"
+"Last-Translator: Andrea García-Falces Fernández <infor@tamizdepalabras.es>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #: custom_registration/templates/registration/activate.html:6
 msgid "Account activation failed"
-msgstr ""
+msgstr "Se ha producido un error durante la activación de la cuenta."
 
 #: custom_registration/templates/registration/activation_complete.html:5
 msgid "Your account is now activated."
-msgstr ""
+msgstr "Su cuenta ya está activada."
 
 #: custom_registration/templates/registration/activation_email.txt:2
 msgid "Activate account at"
-msgstr ""
+msgstr "Activar cuenta en "
 
 #: custom_registration/templates/registration/activation_email.txt:6
 #, python-format
 msgid "Link is valid for %(expiration_days)s days."
-msgstr ""
+msgstr "La validez del enlace es de %(expiration_days)s días."
 
 #: custom_registration/templates/registration/activation_email_subject.txt:1
 msgid "Account activation on"
-msgstr ""
+msgstr "Cuenta activada el "
 
 #: custom_registration/templates/registration/login.html:10
 msgid "Log in"
-msgstr ""
+msgstr "Iniciar sesión"
 
 #: custom_registration/templates/registration/logout.html:5
 msgid "Logged out"
-msgstr ""
+msgstr "Sesión cerrada"
 
 #: custom_registration/templates/registration/password_change_done.html:5
 msgid "Password changed"
-msgstr ""
+msgstr "La contraseña ha sido modificada."
 
 #: custom_registration/templates/registration/password_change_form.html:10
 #: custom_registration/templates/registration/password_reset_confirm.html:12
 #: custom_registration/templates/registration/password_reset_form.html:11
 #: custom_registration/templates/registration/registration_form.html:13
 msgid "Submit"
-msgstr ""
+msgstr "Enviar"
 
 #: custom_registration/templates/registration/password_reset_complete.html:6
 msgid "Password reset successfully"
-msgstr ""
+msgstr "El cambio de contraseña se ha realizado con éxito."
 
 #: custom_registration/templates/registration/password_reset_complete.html:8
 msgid "Go to standard."
-msgstr ""
+msgstr "Ir al estándar."
 
 #: custom_registration/templates/registration/password_reset_confirm.html:17
 msgid "Password reset failed"
-msgstr ""
+msgstr "El cambio de contraseña no ha podido llevarse a cabo."
 
 #: custom_registration/templates/registration/password_reset_done.html:5
 msgid "Email with password reset instructions has been sent."
 msgstr ""
+"Se le acaba de enviar un correo electrónico con las instrucciones para "
+"cambiar su contraseña."
 
 #: custom_registration/templates/registration/password_reset_email.html:2
 #, python-format
 msgid "Reset password at %(site_name)s"
-msgstr ""
+msgstr "Cambie su contraseña en %(site_name)s"
 
 #: custom_registration/templates/registration/registration_closed.html:5
 msgid "Registration is currently closed."
-msgstr ""
+msgstr "Actualmente ya no es posible registrarse."
 
 #: custom_registration/templates/registration/registration_complete.html:5
 msgid "You are now registered. Activation email sent."
 msgstr ""
+"Ya está registrado. Se le acaba de enviar un correo electrónico de "
+"activación."
 
 #: main/templates/main/standard.html:9
 msgid "Change language"
-msgstr ""
+msgstr "Cambiar de idioma"
 
 #: main/templates/main/standard.html:11
 msgid "Logout"
-msgstr ""
+msgstr "Cerrar sesión"
 
 #: main/templates/main/standard.html:13
 msgid "Login"
-msgstr ""
+msgstr "Iniciar sesión"
 
 #: main/templates/main/standard.html:15
 msgid "Change versions"
-msgstr ""
+msgstr "Cambiar de versión"
 
 #: main/templates/main/standard.html:19 templates/base.html:56
 msgid "Open Contracting Data Standard"
-msgstr ""
+msgstr "Estándar de Datos para las Contrataciones Abiertas"
 
 #: main/templates/main/standard.html:21 main/templates/main/standard.html:74
 msgid "Last modified:"
-msgstr "Última modificación"
+msgstr "Última modificación:"
 
 #: main/templates/main/standard.html:23
 msgid "Released on:"
-msgstr ""
+msgstr "Fecha de publicación:"
 
 #: main/templates/main/standard.html:28
 msgid ""
 "You are viewing master, comments may not appear if they were on previous "
 "versions of master."
 msgstr ""
+"Está viendo el documento maestro, por lo que es posible que no vea los "
+"comentarios realizados en versiones anteriores del mismo."
 
 #: main/templates/main/standard.html:31
 msgid ""
 "You are reading the very latest version of the standard. Not an official "
 "release. The latest release is "
 msgstr ""
+"Está leyendo la versión más actualizada del estándar. Sin embargo, no se "
+"trata de una publicación oficial. La publicación más reciente es "
 
 #: main/templates/main/standard.html:32
 msgid ""
 "The master document is a living document that is changing as we update it. "
 msgstr ""
+"El documento maestro es un texto que cambia constantemente a medida que se "
+"introducen actualizaciones."
 
 #: main/templates/main/standard.html:33
 msgid "This version of master is identified by its unique id:"
 msgstr ""
+"Esta versión del documento maestro se distingue por su código de "
+"identificación único:"
 
 #: main/templates/main/standard.html:34
 #, python-format
@@ -142,15 +153,19 @@ msgid ""
 "Any comments you make will not show up if master is updated, but will always "
 "be available <a href=\"%(commit_url)s\">here</a>"
 msgstr ""
+"Todos los comentarios que haga dejarán de ser visibles si se actualiza el "
+"documento maestro, pero estarán siempre disponibles <a href=\"%(commit_url)s"
+"\">aquí</a>."
 
 #: main/templates/main/standard.html:41
 #, python-format
 msgid " You are the version of the standard at commit %(commit)s."
 msgstr ""
+"La versión del estándar que está viendo ha sido modificada %(commit)s veces."
 
 #: main/templates/main/standard.html:44
 msgid "The lastest version of the standard is always changing."
-msgstr ""
+msgstr "La última versión del estándar está siempre en constante modificación."
 
 #: main/templates/main/standard.html:45
 #, python-format
@@ -158,6 +173,8 @@ msgid ""
 "The <a href=\"%(master_url)s\">master document</a> is a living document that "
 "is changing as we update it."
 msgstr ""
+"El <a href=\"%(master_url)s\">documento maestro</a> es un texto que cambia "
+"constantemente a medida que se introducen actualizaciones."
 
 #: main/templates/main/standard.html:46
 #, python-format
@@ -165,6 +182,8 @@ msgid ""
 "This is a specific version of the standard for viewing comments on this "
 "specific version (%(commit)s)."
 msgstr ""
+"Esta es una versión específica del estándar que permite ver los comentarios "
+"realizados sobre esta versión concreta (%(commit)s)."
 
 #: main/templates/main/standard.html:47
 #, python-format
@@ -172,10 +191,13 @@ msgid ""
 "You may have ended up here by mistake and want to view the <a href="
 "\"%(latest_url)s\">latest released version of the standard</a>."
 msgstr ""
+"Es posible que haya acabado aquí por error y que desee ver la <a href="
+"\"%(latest_url)s\">versión más actualizada que se ha publicado del estándar</"
+"a>."
 
 #: main/templates/main/standard.html:54
 msgid "Not the latest release."
-msgstr ""
+msgstr "Esta no es la versión más actualizada."
 
 #: main/templates/main/standard.html:57
 #, python-format
@@ -183,10 +205,13 @@ msgid ""
 "You are viewing v%(current_release.display_name)s. The latest release is <a "
 "href=\"%(latest_url2)s\">v%(other_releases.0.display_name)s</a>"
 msgstr ""
+"Esta es la versión v%(current_release.display_name)s. La versión más "
+"actualizada es <a href=\"%(latest_url2)s\">v"
+"%(other_releases.0.display_name)s</a>."
 
 #: main/templates/main/standard.html:68
 msgid "Change release"
-msgstr ""
+msgstr "Cambiar de versión publicada"
 
 #: main/templates/main/standard.html:79
 #, python-format
@@ -195,10 +220,14 @@ msgid ""
 "standard. This is not a release, it is our working copy currently undergoing "
 "edits."
 msgstr ""
+"<a href=\"%(master_url)s\">Documento maestro</a>: el borrador del estándar "
+"sobre el que se está trabajando actualmente. No se trata de un documento "
+"oficial, sino de la versión en la que estamos trabajando e introduciendo "
+"modificaciones actualmente."
 
 #: main/templates/main/standard.html:93
 msgid "Change Language"
-msgstr ""
+msgstr "Cambiar de idioma"
 
 #: main/templates/main/standard.html:114
 msgid ""
@@ -206,72 +235,80 @@ msgid ""
 "more recent version of Internet Explorer, or an open-source browser such as "
 "Firefox"
 msgstr ""
+"Este sitio web no es compatible con Internet Explorer 9 o versiones "
+"anteriores. Por favor, utilice una versión más reciente de Internet Explorer "
+"o bien un navegador de código abierto, como Firefox."
 
 #: templates/404.html:3
 msgid "Page not found"
-msgstr ""
+msgstr "No se ha encontrado la página."
 
 #: templates/404.html:6
 msgid "The page you are looking for does not appear to exist on this site."
-msgstr ""
+msgstr "Parece que la página que busca no existe en este sitio web."
 
 #: templates/500.html:4
 msgid "Server Error (500)"
-msgstr ""
+msgstr "Error del servidor (500)"
 
 #: templates/500.html:7
 msgid "Server Error <em>(500)</em>"
-msgstr ""
+msgstr "Error del servidor <em>(500)</em>"
 
 #: templates/500.html:8
 msgid ""
 "There's been an error. It's been reported to the site administrators via e-"
 "mail and should be fixed shortly. Thanks for your patience."
 msgstr ""
+"Se ha producido un error, pero se ha informado a los administradores de la "
+"página del problema por correo electrónico, por lo que seguramente se "
+"solucione en breve. Gracias por su paciencia."
 
 #: templates/base.html:12 templates/base.html.py:13
 msgid "OCDS Draft Standard"
-msgstr ""
+msgstr "Versión Beta del estándar OCDS"
 
 #: templates/base.html:29
 msgid "Open Contracting Data Standard (OCDS) Project Site"
 msgstr ""
+"Sitio web del proyecto del Estándar de Datos para las Contrataciones "
+"Abiertas (OCDS)"
 
 #: templates/base.html:37
 msgid "Project"
-msgstr ""
+msgstr "Proyecto"
 
 #: templates/base.html:38
 msgid "Standard"
-msgstr ""
+msgstr "El estándar"
 
 #: templates/base.html:39
 msgid "Progress"
-msgstr ""
+msgstr "Avances"
 
 #: templates/base.html:40
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 #: templates/base.html:41
 msgid "Resources"
-msgstr ""
+msgstr "Recursos"
 
 #: templates/base.html:42
 msgid "Get Involved"
-msgstr ""
+msgstr "Participe"
 
 #: templates/base.html:56
 msgid "Go to latest release"
-msgstr ""
+msgstr "Ir a la versión más actualizada"
 
 #: templates/base.html:59
 msgid "Home"
-msgstr ""
+msgstr "Inicio"
 
 #: templates/base.html:60 templates/base.html.py:72 templates/base.html:77
 msgid "Help"
-msgstr ""
+msgstr "Ayuda"
 
 #: templates/base.html:81
 msgid ""
@@ -283,6 +320,13 @@ msgid ""
 "                        image below. Click the icon and enter text to view "
 "it."
 msgstr ""
+"Para poder hacer comentarios, debe iniciar sesión. Para ello, haga clic "
+"sobre el <span class=\"oi oi-account-login\" aria-hidden=\"true\"></span>\n"
+"                        botón que aparece en la barra superior. Una vez "
+"inicie sesión, podrá seleccionar frases o párrafos del documento. Cuando lo "
+"haga aparecerá el icono que se muestra en la\n"
+"                        imagen de abajo. Haga clic sobre el icono para "
+"introducir el texto que quiera y que este sea visible."
 
 #: templates/base.html:89
 msgid ""
@@ -290,6 +334,9 @@ msgid ""
 "href=\"https://groups.google.com/a/webfoundation.org/forum/#!forum/public-"
 "ocds\">mailing list</a>."
 msgstr ""
+"Si tiene algún problema, no dude en enviar un correo electrónico a nuestra "
+"<a href=\"https://groups.google.com/a/webfoundation.org/forum/#!forum/public-"
+"ocds\">lista de distribución</a>."
 
 #: templates/base.html:98
 msgid ""
@@ -303,3 +350,13 @@ msgid ""
 "\">github</a>.\n"
 "        "
 msgstr ""
+"Sitio web del <a href=\"http://open-contracting.github.io/\">Estándar de "
+"Datos para las Contrataciones Abiertas</a>.\n"
+"        Sitio web desarrollado con <a href=\"http://getbootstrap.com"
+"\">bootstrap</a>, \n"
+"        <a href=\"http://subtlepatterns.com\">subtle patterns</a> \n"
+"        y <a href=\"https://useiconic.com/open\">open iconic</a>. \n"
+"        Si tiene algún problema con el sitio web, póngase en contacto con "
+"nosotros a través de <a href=\"https://github.com/open-contracting/open-"
+"contracting.github.io/issues\">github</a>.\n"
+"        "
