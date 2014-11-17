@@ -30,6 +30,7 @@ SECRET_KEY = private_settings.SECRET_KEY
 ADMINS = (
     ('Aptivate standard-collaborator team', 'standard-collaborator-team@aptivate.org'),
     ('Sarah Bird', 'sarah@aptivate.org'),  # this is in case the above email doesn't work
+    ('Hamish', 'hamish@aptivate.org'),  # this is in case the above email doesn't work
 )
 
 MANAGERS = ADMINS
