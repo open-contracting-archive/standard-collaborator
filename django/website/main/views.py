@@ -33,6 +33,7 @@ class StandardRedirectView(RedirectView):
 
 
 class LatestView(RedirectView):
+    permanent = False
 
     def get_redirect_url(self, *args, **kwargs):
         release = StandardsRepo().get_latest_tag_name()
