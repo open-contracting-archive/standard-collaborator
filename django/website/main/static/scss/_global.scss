@@ -7,6 +7,11 @@
     font-size: 16px;
 }
 
+/* don't let prism hijack the fonts */
+code[class*="language-"], pre[class*="language-"]{
+    font-family: font-family: monospace,serif;
+}
+
 /* hide the sidemenu on small screens so responsive works */
 @media only screen and (max-width: 1200px) {
     .col-lg-3 {
@@ -64,4 +69,9 @@
 /* When a ul is next to a p, don't have the space after the p*/
 p ~ ul {
     margin-top: -24px;
+}
+
+/* tabbables need some space below */
+.tabbable {
+    margin-bottom: 24px;
 }
