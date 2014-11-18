@@ -64,6 +64,8 @@ code[class*="language-"], pre[class*="language-"]{
 .standard-docs h1 {
     color: $background-color;
     height: 200px;
+    position: relative;
+    z-index: -1;
 }
 
 /* When a ul is next to a p, don't have the space after the p*/
