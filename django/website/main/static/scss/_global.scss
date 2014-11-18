@@ -28,8 +28,15 @@
 
 /* Make menu levels clearer */
 .outer-menu {
-    background: $bootstrap-gray;
+    background-color: $bootstrap-gray;
     border-radius: 4px 4px 0 0;
+}
+.outer-menu.nav-tabs > li.active > a, .outer-menu.nav-tabs > li.active > a:hover, .outer-menu.nav-tabs > li.active > a:focus {
+    background-color: #f9f9f9;
+}
+
+.inner-menu {
+    background-color: #f9f9f9;
 }
 
 /* Stop anchors being hidden behind header */  
