@@ -46,3 +46,7 @@ h1:before, h2:before, h3:before, h4:before {
     height: 200px;
 }
 
+/* When a ul is next to a p, don't have the space after the p*/
+p ~ ul {
+    margin-top: -24px;
+}
