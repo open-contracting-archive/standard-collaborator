@@ -18,8 +18,10 @@ urlpatterns = patterns(
     '',
     # commit redirect views - to catch people using old URLs
     url(r'^r/commit/(?P<release>[a-zA-Z0-9_.-]+)/(?P<old_url_path>[-./\w]+)$', CommitRedirectView.as_view(), name='commit-redirect'),
-    # see below for what this should match
+
+    # Legacy urls
     url(r'^r/0__3__3/$', LatestView.as_view()),
+    url(r'^r/latest/$', LatestView.as_view()),
     url(r'^r/(?P<release>(0__3__[0-3]|0__[12]__0|draft-june-(1-|5-|20_)2014(_2)?))/$', LegacyRedirectView.as_view(), name='legacy-redirect'),
     url(r'^legacy/r/(?P<release>(0__3__[0-3]|0__[12]__0|draft-june-(1-|5-|20_)2014(_2)?))/$', LegacyRootView.as_view(), name='legacy-root'),
 
