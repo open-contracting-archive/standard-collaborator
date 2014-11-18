@@ -24,41 +24,62 @@
 
 <div class="site-container">
 
-<header itemtype="http://schema.org/WPHeader" itemscope="itemscope" role="banner" class="site-header">
-    <div class="wrap">
-        <div class="title-area">
-            <h1 itemprop="headline" class="site-title">
-                <a href="http://standard.open-contracting.org/">Open Contracting Data Standard (OCDS) Project Site</a>
-            </h1>
+    <header itemtype="http://schema.org/WPHeader" itemscope="itemscope" role="banner" class="site-header">
+        <div class="wrap">
+            <div class="title-area">
+                <h1 itemprop="headline" class="site-title">
+                    <a href="http://standard.open-contracting.org/">Open Contracting Data Standard (OCDS) Project Site</a>
+                </h1>
+            </div>
+            <aside class="widget-area header-widget-area">
+                <section class="widget widget_nav_menu" id="nav_menu-2">
+                    <div class="widget-wrap">
+                        <nav itemtype="http://schema.org/SiteNavigationElement" itemscope="itemscope" role="navigation" class="nav-header">
+                            <ul class="menu genesis-nav-menu" id="menu-main-menu">
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-568" id="menu-item-568"><a onclick="_gaq.push(['_trackEvent', 'outbound-widget-int', 'http://standard.open-contracting.org/project/', 'Project']);" href="http://standard.open-contracting.org/project/">Project</a></li>
+                                <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-682" id="menu-item-682"><a onclick="_gaq.push(['_trackEvent', 'outbound-widget-int', 'http://ocds.open-contracting.org/standard/r/1__0__RC', 'Standard']);" href="http://ocds.open-contracting.org/standard/r/1__0__RC">Standard</a></li>
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-570" id="menu-item-570"><a onclick="_gaq.push(['_trackEvent', 'outbound-widget-int', 'http://standard.open-contracting.org/progress/', 'Progress']);" href="http://standard.open-contracting.org/progress/">Progress</a></li>
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-608" id="menu-item-608"><a onclick="_gaq.push(['_trackEvent', 'outbound-widget-int', 'http://standard.open-contracting.org/blog/', 'Blog']);" href="http://standard.open-contracting.org/blog/">Blog</a></li>
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-576" id="menu-item-576"><a onclick="_gaq.push(['_trackEvent', 'outbound-widget-int', 'http://standard.open-contracting.org/resources/', 'Resources']);" href="http://standard.open-contracting.org/resources/">Resources</a></li>
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-580" id="menu-item-580"><a onclick="_gaq.push(['_trackEvent', 'outbound-widget-int', 'http://standard.open-contracting.org/getinvolved/', 'Get Involved']);" href="http://standard.open-contracting.org/getinvolved/">Get Involved</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </section>
+            </aside>
         </div>
-        <aside class="widget-area header-widget-area">
-            <section class="widget widget_nav_menu" id="nav_menu-2">
-                <div class="widget-wrap">
-                    <nav itemtype="http://schema.org/SiteNavigationElement" itemscope="itemscope" role="navigation" class="nav-header">
-                        <ul class="menu genesis-nav-menu" id="menu-main-menu">
-                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-568" id="menu-item-568"><a onclick="_gaq.push(['_trackEvent', 'outbound-widget-int', 'http://standard.open-contracting.org/project/', 'Project']);" href="http://standard.open-contracting.org/project/">Project</a></li>
-                            <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-682" id="menu-item-682"><a onclick="_gaq.push(['_trackEvent', 'outbound-widget-int', 'http://ocds.open-contracting.org/standard/r/1__0__RC', 'Standard']);" href="http://ocds.open-contracting.org/standard/r/1__0__RC">Standard</a></li>
-                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-570" id="menu-item-570"><a onclick="_gaq.push(['_trackEvent', 'outbound-widget-int', 'http://standard.open-contracting.org/progress/', 'Progress']);" href="http://standard.open-contracting.org/progress/">Progress</a></li>
-                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-608" id="menu-item-608"><a onclick="_gaq.push(['_trackEvent', 'outbound-widget-int', 'http://standard.open-contracting.org/blog/', 'Blog']);" href="http://standard.open-contracting.org/blog/">Blog</a></li>
-                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-576" id="menu-item-576"><a onclick="_gaq.push(['_trackEvent', 'outbound-widget-int', 'http://standard.open-contracting.org/resources/', 'Resources']);" href="http://standard.open-contracting.org/resources/">Resources</a></li>
-                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-580" id="menu-item-580"><a onclick="_gaq.push(['_trackEvent', 'outbound-widget-int', 'http://standard.open-contracting.org/getinvolved/', 'Get Involved']);" href="http://standard.open-contracting.org/getinvolved/">Get Involved</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </section>
-        </aside>
-    </div>
-</header>
+    </header>
 
-<div class="site-tagline"></div>
-<div class="site-inner">
-
-    <div class="wrap">
-        {% block content %}
-        {% endblock content %}
+    <div class="site-tagline"></div>
+    <div class="site-inner">
+        <div class="wrap">
+            {% block content %}
+            {% endblock content %}
+        </div>
     </div>
-    
-    <!-- OVERLAY DIALOGS -->
+
+    <footer itemtype="http://schema.org/WPFooter" itemscope="itemscope" role="contentinfo" class="site-footer">
+        <div class="wrap">
+            <div class="standard-advanced">
+                <h5>
+                    Standard tools:
+                    <a href="#" title="{% trans "Change versions" %}" data-toggle="modal" data-target="#changeVersion"><span class="oi oi-fork navicon" aria-hidden="true"></span></a>
+                    {% if request.user.is_authenticated %}
+                    <a title="{% trans "Logout" %}" href="{% url 'auth_logout' %}?next={{ request.path }}"><span class="oi oi-account-logout navicon" aria-hidden="true"></span></a>
+                    {% else %}
+                    <a title="{% trans "Login" %}" href="{% url 'auth_login' %}?next={{ request.path }}"><span class="oi oi-account-login navicon" aria-hidden="true"></span></a>
+                    {% endif %}
+                    <a href="#" title="{% trans "Help" %}" data-toggle="modal" data-target="#help"><span class="oi oi-question-mark navicon" aria-hidden="true"></span></a>
+                </h5>
+            </div>
+            <img width="905" height="39" alt="line" src="http://ocds.wpengine.com/wp-content/uploads/2011/02/line.png" class="aligncenter wp-image-586 size-full">
+            <h5>
+                The Open Contracting Data Standard is a core product of the <a htef="http://www.open-contracting.org">Open Contracting Partnership (OCP)</a>.<br>Version 1.0 of the standard is being developed for the OCP by the <a href="http://www.webfoundation.org">World Wide Web Foundation</a>,<br>through a project supported by <a href="http://www.omidyar.com">Omidyar Network</a> and the <a href="http://www.worldbank.org">World Bank</a>.
+                <div class="neostyle3"><a href="https://creativecommons.org/licenses/by/4.0/"></a><h5><a href="https://creativecommons.org/licenses/by/4.0/">Except where otherwise noted, content on this site is licensed<br>under a Creative Commons Attribution 4.0 International license.</a></h5></div>
+            </h5>
+        </div>
+    </footer>
+    <!-- OVERLAY DIALOGS CONTENT -->
     <div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="{% trans "Help" %}" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -82,30 +103,55 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <div class="modal fade" id="changeVersion" tabindex="-1" role="dialog" aria-labelledby="ChangeVersion" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title">{% trans "Change release" %}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <ul>
+                            {% for release in other_releases %}
+                                                        <li><a href="{% url 'standard-lang' release.name lang %}">{{ release.display_name|title }}</a> ({% trans "Last modified:" %} {{ release.last_modified }})</li>
+                            {% endfor %}
+                        </ul>
+                        <ul>
+                            {% if not current_release.is_master %}
+                                                        <li>{% url 'standard-lang' 'master' lang as master_url %}{% blocktrans %}<a href="{{ master_url }}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits.{% endblocktrans %}</li>
+                            {% endif %}
+                        </ul>
+                    </p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-</div><!--/.site-inner -->
+    <!-- LANGUAGE NOT CURRENTLY ACTIVE AS CONTENT IS NOT READY
+    <div class="modal fade" id="changeLanguage" tabindex="-1" role="dialog" aria-labelledby="ChangeLanguage" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title">{% trans "Change Language" %}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <ul>
+                            {% for alt_lang in lang_list %}
+                            <li><a href="{% url 'standard-lang' release alt_lang.code %}">{{ alt_lang.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    -->
 
-<footer itemtype="http://schema.org/WPFooter" itemscope="itemscope" role="contentinfo" class="site-footer">
-    <div class="wrap">
-        <div class="standard-advanced">
-            <h5>
-                Standard tools:
-                <a href="#" title="{% trans "Change versions" %}" data-toggle="modal" data-target="#changeVersion"><span class="oi oi-fork navicon" aria-hidden="true"></span></a>
-                {% if request.user.is_authenticated %}
-                <a title="{% trans "Logout" %}" href="{% url 'auth_logout' %}?next={{ request.path }}"><span class="oi oi-account-logout navicon" aria-hidden="true"></span></a>
-                {% else %}
-                <a title="{% trans "Login" %}" href="{% url 'auth_login' %}?next={{ request.path }}"><span class="oi oi-account-login navicon" aria-hidden="true"></span></a>
-                {% endif %}
-                <a href="#" title="{% trans "Help" %}" data-toggle="modal" data-target="#help"><span class="oi oi-question-mark navicon" aria-hidden="true"></span></a>
-            </h5>
-        </div>
-        <img width="905" height="39" alt="line" src="http://ocds.wpengine.com/wp-content/uploads/2011/02/line.png" class="aligncenter wp-image-586 size-full">
-        <h5>
-            The Open Contracting Data Standard is a core product of the <a htef="http://www.open-contracting.org">Open Contracting Partnership (OCP)</a>.<br>Version 1.0 of the standard is being developed for the OCP by the <a href="http://www.webfoundation.org">World Wide Web Foundation</a>,<br>through a project supported by <a href="http://www.omidyar.com">Omidyar Network</a> and the <a href="http://www.worldbank.org">World Bank</a>.
-            <div class="neostyle3"><a href="https://creativecommons.org/licenses/by/4.0/"></a><h5><a href="https://creativecommons.org/licenses/by/4.0/">Except where otherwise noted, content on this site is licensed<br>under a Creative Commons Attribution 4.0 International license.</a></h5></div>
-        </h5>
-    </div>
-</footer>
+    <!-- /OVERLAY DIALOGS -->
+
 </div><!-- /.site-container -->
     
     {% assets "js_all" %}
