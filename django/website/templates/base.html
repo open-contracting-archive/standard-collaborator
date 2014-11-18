@@ -85,7 +85,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{% trans "Help" %}</h4>
+                    <h2 class="modal-title">{% trans "Help" %}</h2>
                 </div>
                 <div class="modal-body">
                     <p>
@@ -108,21 +108,32 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title">{% trans "Change release" %}</h4>
+                    <h2 class="modal-title">{% trans "Change release from" %} v.{{ current_release.display_name|title }} </h2>
                 </div>
                 <div class="modal-body">
                     <p>
-                        <ul>
-                            {% for release in other_releases %}
-                                                        <li><a href="{% url 'standard-lang' release.name lang %}">{{ release.display_name|title }}</a> ({% trans "Last modified:" %} {{ release.last_modified }})</li>
-                            {% endfor %}
-                        </ul>
-                        <ul>
-                            {% if not current_release.is_master %}
-                                                        <li>{% url 'standard-lang' 'master' lang as master_url %}{% blocktrans %}<a href="{{ master_url }}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits.{% endblocktrans %}</li>
-                            {% endif %}
-                        </ul>
+                    {% blocktrans with version=current_release.display_name|title %} You are currently viewing version {{ version }} of the Open Contracting Data Standard. {% endblocktrans %}
+                    {% if current_release.is_master %}
+                        {% trans "Last modified:" %} {{ current_release.last_modified }}
+                    {% else %}
+                        {% trans "Released on:" %} {{ current_release.last_modified }}
+                    {% endif %}
+                    
+                    {% trans "Use the following links to change to a different version:" %}
                     </p>
+                    <ul>
+                        {% for release in other_releases %}
+                            {% if release.name not in legacy_releases %}
+                            <li><a href="{% url 'standard-lang' release.name lang %}">{{ release.display_name|title }}</a> ({% trans "Last modified:" %} {{ release.last_modified }})</li>
+                            {% else %}
+                            <li><a href="{% url 'legacy-root' release.name %}">{{ release.display_name|title }}</a> ({% trans "Last modified:" %} {{ release.last_modified }})</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    
+                    {% if not current_release.is_master %}
+                        <p>{% url 'standard-lang' 'master' lang as master_url %}{% blocktrans %}<a href="{{ master_url }}">Master</a> - the current working draft of the standard. This is not a release, it is our working copy currently undergoing edits.{% endblocktrans %}</p>
+                    {% endif %}
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

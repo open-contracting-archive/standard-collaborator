@@ -131,7 +131,9 @@ class StandardView(TemplateView):
             'lang': self.lang,
             'lang_list': lang_list,
             'file_path': self.path,
-            'form': AuthenticationForm()
+            'form': AuthenticationForm(),
+            'legacy_releases': ['0__3__3', '0__3__2', '0__3__1', '0__2__0', '0__1__0']
+
         }
         if self.is_commit_id:
             context_dict['commit'] = self.release
