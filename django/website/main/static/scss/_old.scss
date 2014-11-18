@@ -25,66 +25,6 @@ footer {
     }
 }
 
-/* Side navigation */
-
-.side-nav.affix {
-	max-width: 255px;
-}
-
-.nav > li.active > a {
-	border-left-style: solid;
-	border-left-width: 2px;
-	border-left-color: $link-color;
-	font-weight: 500;
-}
-
-.toc > .nav > li > a {
-	display: block;
-	font-size: 16px;
-	padding: 4px 20px;
-	font-weight: 400;
-}
-
-.toc > .nav > li > .nav > li > a {
-	display: block;
-	font-size: 14px;
-	padding-left: 30px;
-}
-
-.toc > .nav > li > .nav > li > .nav {
-  padding-left:15px;
-}
-
-.toc > .nav > li > .nav > li > .nav {
-  display:none;
-}
-
-.toc > .nav > li > .nav > li.active > .nav {
-  display:block;
-}
-
-.toc > .nav > li > .nav > li > .nav > li > a {
-	display: block;
-	font-size: 12px;
-	padding-left: 40px;
-}
-
-.toc > .nav > li > .nav > li > .nav > li > .nav > li > a {
-	display: block;
-	font-size: 12px;
-	padding-left: 50px;
-}
-
-.toc > .nav > li > .nav > li > .nav > li > .nav {
-  display:none;
-}
-
-
-.toc > .nav > li > .nav > li > .nav > li.active > .nav {
-  display:block;
-}
-
-
 /* HEADER */
 
 .navbar-inverse {
@@ -237,15 +177,6 @@ a {
 
 
 /* main content */
-
-.tab-content > h2, .tab-content > h3 {
-    padding-top: 106px;
-    margin-top: -96px;
-    background-clip: content-box;
-    z-index: -999;
-    pointer-events: none;
-}
-
 /* tables */
 
 .include-csv, .include-json {
@@ -262,10 +193,3 @@ a {
     font-size:10pt;
   }
 
-/* Stop anchors being hidden behind header */  
-h2:before, h3:before, h4:before {
-    display: block;
-    content: "";
-    height: 100px;
-    margin: -100px 0px 0px;
-}

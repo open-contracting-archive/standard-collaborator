@@ -1,0 +1,61 @@
+/* Side navigation */
+
+.side-nav.affix {
+	max-width: 255px;
+}
+
+.nav > li.active > a {
+	border-left-style: solid;
+	border-left-width: 2px;
+	border-left-color: $link-color;
+	font-weight: 500;
+}
+
+.toc > .nav > li > a {
+	display: block;
+	font-size: 16px;
+	padding: 4px 20px;
+	font-weight: 400;
+}
+
+.toc > .nav > li > .nav > li > a {
+	display: block;
+	font-size: 14px;
+	padding-left: 30px;
+}
+
+.toc > .nav > li > .nav > li > .nav {
+  padding-left:15px;
+}
+
+.toc > .nav > li > .nav > li > .nav {
+  display:none;
+}
+
+.toc > .nav > li > .nav > li.active > .nav {
+  display:block;
+}
+
+.toc > .nav > li > .nav > li > .nav > li > a {
+	display: block;
+	font-size: 12px;
+	padding-left: 40px;
+}
+
+.toc > .nav > li > .nav > li > .nav > li > .nav > li > a {
+	display: block;
+	font-size: 12px;
+	padding-left: 50px;
+}
+
+.toc > .nav > li > .nav > li > .nav > li > .nav {
+  display:none;
+}
+
+
+.toc > .nav > li > .nav > li > .nav > li.active > .nav {
+  display:block;
+}
+
+
+

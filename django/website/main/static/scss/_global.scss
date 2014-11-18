@@ -1,0 +1,48 @@
+
+.standard-advanced {
+    margin-top: 15px;
+}
+
+.site-inner {
+    font-size: 16px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .col-lg-3 {
+        display: none;
+    }
+}
+
+.tab-content > h2, .tab-content > h3 {
+    padding-top: 106px;
+    margin-top: -96px;
+    background-clip: content-box;
+    z-index: -999;
+    pointer-events: none;
+}
+
+/* When heading is close to bottom, need to make sure menu is still on top */
+.toc {
+    background: $background-color;
+}
+
+/* Make menu levels clearer */
+.outer-menu {
+    background: $bootstrap-gray;
+    border-radius: 4px 4px 0 0;
+}
+
+/* Stop anchors being hidden behind header */  
+h1:before, h2:before, h3:before, h4:before {
+    display: block;
+    content: "";
+    height: 200px;
+    margin: -200px 0px 0px;
+}
+
+/* h1's are a little too much */
+.standard-docs h1 {
+    color: $background-color;
+    height: 200px;
+}
+
