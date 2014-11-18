@@ -1,6 +1,6 @@
 (function($){
 
-    $("header .genesis-nav-menu").before('<div id="responsive-menu-icon" class="oi oi-menu"></div>');
+    $("header .genesis-nav-menu").addClass("responsive-menu").before('<div id="responsive-menu-icon" class="oi oi-menu"></div>');
     
     $("#responsive-menu-icon").click(function(){
         $("header .genesis-nav-menu").slideToggle();
