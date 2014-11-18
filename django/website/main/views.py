@@ -144,6 +144,13 @@ class StandardView(TemplateView):
         return context
 
 
+class LegacyRedirectView(RedirectView):
+    permanent = False
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse('legacy-root', args=[kwargs.get('release')])
+
+
 class LegacyRootView(TemplateView):
     def get(self, request, *args, **kwargs):
         self.release = kwargs.get('release')
