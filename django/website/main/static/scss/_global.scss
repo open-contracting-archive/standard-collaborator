@@ -75,3 +75,14 @@ p ~ ul {
 .tabbable {
     margin-bottom: 24px;
 }
+
+/* remove underling in panel title */
+h4.panel-title {
+    text-decoration: none;
+}
+
+/* fix h1 obscuring panel link */
+.panel {
+    position: relative;
+    z-index: 1;
+}

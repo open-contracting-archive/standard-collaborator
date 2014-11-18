@@ -11,7 +11,7 @@
     {% if current_release.is_master %}
     <div class="panel panel-danger">
         <div class="panel-heading">
-					<h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span>{% trans "You are viewing master, comments may not appear if they were on previous versions of master." %}</h4>
+					<h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span> {% trans "You are viewing master, comments may not appear if they were on previous versions of master." %}</h4>
         </div>
         <div class="panel-body">
 					<p>{% trans "You are reading the very latest version of the standard. Not an official release. The latest release is " %}<a href="{% url 'standard-lang' other_releases.0.name lang %}">{{ other_releases.0.display_name }}</a></p>
