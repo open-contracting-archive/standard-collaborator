@@ -86,7 +86,20 @@
 </div><!--/.site-inner -->
 
 <footer itemtype="http://schema.org/WPFooter" itemscope="itemscope" role="contentinfo" class="site-footer">
-    <div class="wrap"><img width="905" height="39" alt="line" src="http://ocds.wpengine.com/wp-content/uploads/2011/02/line.png" class="aligncenter wp-image-586 size-full">
+    <div class="wrap">
+        <div class="standard-advanced">
+            <h5>
+                Standard extras
+                <a href="#" title="{% trans "Change versions" %}" data-toggle="modal" data-target="#changeVersion"><span class="oi oi-fork navicon" aria-hidden="true"></span></a>
+                {% if request.user.is_authenticated %}
+                <a title="{% trans "Logout" %}" href="{% url 'auth_logout' %}?next={{ request.path }}"><span class="oi oi-account-logout navicon" aria-hidden="true"></span></a>
+                {% else %}
+                <a title="{% trans "Login" %}" href="{% url 'auth_login' %}?next={{ request.path }}"><span class="oi oi-account-login navicon" aria-hidden="true"></span></a>
+                {% endif %}
+                <a href="#" title="{% trans "Help" %}" data-toggle="modal" data-target="#help"><span class="oi oi-question-mark navicon" aria-hidden="true"></span></a>
+            </h5>
+        </div>
+        <img width="905" height="39" alt="line" src="http://ocds.wpengine.com/wp-content/uploads/2011/02/line.png" class="aligncenter wp-image-586 size-full">
         <h5>
             The Open Contracting Data Standard is a core product of the <a htef="http://www.open-contracting.org">Open Contracting Partnership (OCP)</a>.<br>Version 1.0 of the standard is being developed for the OCP by the <a href="http://www.webfoundation.org">World Wide Web Foundation</a>,<br>through a project supported by <a href="http://www.omidyar.com">Omidyar Network</a> and the <a href="http://www.worldbank.org">World Bank</a>.
             <div class="neostyle3"><a href="https://creativecommons.org/licenses/by/4.0/"></a><h5><a href="https://creativecommons.org/licenses/by/4.0/">Except where otherwise noted, content on this site is licensed<br>under a Creative Commons Attribution 4.0 International license.</a></h5></div>

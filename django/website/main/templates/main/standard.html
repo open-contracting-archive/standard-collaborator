@@ -8,12 +8,6 @@
 {% block content %}
 {% include menu_path %}
 <div class="col-md-9">
-	<h1>{% trans "Open Contracting Data Standard" %} - {{ current_release.display_name|title }}</h1>
-    {% if current_release.is_master %}
-		<p>{% trans "Last modified:" %} {{ current_release.last_modified }}</p>
-    {% else %}
-		<p>{% trans "Released on:" %} {{ current_release.last_modified }}</p>
-    {% endif %}
     {% if current_release.is_master %}
     <div class="panel panel-danger">
         <div class="panel-heading">
