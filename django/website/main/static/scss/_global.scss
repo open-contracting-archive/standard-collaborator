@@ -1,4 +1,4 @@
-
+/* basic layout stuff */
 .standard-advanced {
     margin-top: 15px;
 }
@@ -7,6 +7,7 @@
     font-size: 16px;
 }
 
+/* hide the sidemenu on small screens so responsive works */
 @media only screen and (max-width: 1200px) {
     .col-lg-3 {
         display: none;
@@ -39,12 +40,19 @@
     background-color: #f9f9f9;
 }
 
-/* Stop anchors being hidden behind header */  
-.wrap h1:before, .wrap h2:before, .wrap h3:before, .wrap h4:before {
+/* Stop anchors being hidden behind header - use .wrap so legacy works*/  
+.wrap h1:before {
     display: block;
     content: "";
     height: 200px;
     margin: -200px 0px 0px;
+}
+
+.wrap h2:before, .wrap h3:before, .wrap h4:before {
+    display: block;
+    content: "";
+    height: 100px;
+    margin: -100px 0px 0px;
 }
 
 /* h1's are a little too much */
