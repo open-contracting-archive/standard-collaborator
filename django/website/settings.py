@@ -124,7 +124,6 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     'south',
     'django_extensions',
-    'haystack',
     'django_assets',
     'registration',
     'bootstrapform',
@@ -197,20 +196,6 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ########## END AUTHENTICATION CONFIGURATION
 
-
-########## HAYSTACK SEARCH CONFIGURATION
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': 'http://127.0.0.1:9200/',
-        'INDEX_NAME': 'standard-collaborator',
-    },
-}
-
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
-HAYSTACK_SEARCH_RESULTS_PER_PAGE = 1000
-########## END HAYSTACK SEARCH CONFIGURATION
-#
 
 ########## Custom user app defaults
 # Select the correct user model
