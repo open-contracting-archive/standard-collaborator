@@ -4,7 +4,7 @@ python:
 install:
   - pip install -r deploy/pip_packages.txt
   - ln -s local_settings.py.travis django/website/local_settings.py 
-  - echo "SECRET_KEY = 'test'; ANNOTATEIT_KEY = ''; ANNOTATEIT_SECRET = ''" > django/website/private_settings.py
+  - echo "SECRET_KEY = 'test'; ANNOTATEIT_KEY = ''; ANNOTATEIT_SECRET = ''; RAVEN_CONFIG = {}" > django/website/private_settings.py
 script:
     - "python django/website/manage.py test"
 after_success:
