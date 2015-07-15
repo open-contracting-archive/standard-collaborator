@@ -123,7 +123,6 @@ DJANGO_APPS = (
     # Admin
 )
 THIRD_PARTY_APPS = (
-    'south',
     'django_extensions',
     'django_assets',
     'registration',
