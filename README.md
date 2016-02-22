@@ -1,5 +1,7 @@
 Tool to publish and collaborate on OCDS standard.
 
+*Note: This has now been replace by the Sphinx setup in https://github.com/open-contracting/standard*
+
 Requirements
 ============
 You will need:
